@@ -1,0 +1,393 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.mainPageContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  width: 1200px;
+  margin: 0 auto;
+  position: absolute;
+  z-index: 2;
+  top: 70px;
+  left: 50%;
+  border-radius: 10px;
+  transform: translate(-50%, 0%);
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  margin-left: 20px;
+  height: 80px;
+}
+
+.logo img {
+  margin-top: 10px;
+  width: 148px;
+  height: 60px;
+}
+
+.profile {
+  position: absolute;
+  right: -20px;
+  top: -70px;
+  width: 200px;
+  text-align: center;
+}
+
+/* 나중에 애니메이션 효과로 바꾸기 */
+.profile:hover .profileSelector {
+  display: block;
+}
+
+.profileSelector {
+  display: none;
+  border: 2px solid grey;
+  border-radius: 10px;
+  background-color: white;
+  padding: 5px;
+  line-height: 30px;
+  animation-duration: 1s;
+  /* transition: all 0.5s; */
+  cursor: pointer;
+}
+
+.profileSelect {
+  font-weight: bold;
+}
+
+.profileSelect:hover a {
+  color: black;
+  text-decoration: underline;
+}
+
+.profileSelect > a {
+  color: rgb(155, 155, 155);
+}
+
+.menuContainer {
+  width: 800px;
+  align-items: center;
+  display: flex;
+}
+
+.menus {
+  flex: 1;
+  display: flex;
+}
+
+.menu {
+  flex: 1;
+  text-align: center;
+  margin: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-right: 1px solid #595959;
+}
+
+.menu:last-child {
+  border-right: 0;
+}
+
+.menus ul {
+  display: none;
+}
+
+.menus:hover {
+  /* height: 200px; */
+}
+
+.menus:hover ul {
+  display: block;
+}
+
+.link {
+  text-decoration: none;
+  display: block;
+  color: black;
+}
+
+.imageContainer {
+  position: relative;
+  background-color: rgb(212, 212, 212);
+  height: 700px;
+  /* 내용물에따라 수정 */
+  width: 100%;
+  margin: 0 auto;
+}
+
+.imageLeft {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+.imageRight {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+.search {
+  position: absolute;
+  top: 250px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 50%;
+  height: 50px;
+  padding: 5px 20px;
+  border-radius: 25px;
+  border: 0;
+  font-size: 1.2rem;
+  opacity: 0.7;
+}
+
+.search:focus {
+  outline: none;
+  box-shadow: 3px 3px 5px rgb(192, 192, 192);
+}
+
+.imageContainer image {
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.imageInfo {
+  position: absolute;
+  color: white;
+  text-shadow: -1px 0px gray, 0px 1px gray, 1px 0px gray, 0px -1px gray;
+  font-size: 1.3rem;
+  bottom: 20px;
+  right: 20px;
+}
+
+.contentContainer {
+  height: 2000px;
+  /* 내용물에따라 수정 */
+  width: 940px;
+  margin: 0 auto;
+}
+
+.containerFaker {
+  flex: 1;
+  height: 100px;
+}
+
+.boardViews {
+  margin-top: 40px;
+  display: flex;
+  height: 380px;
+}
+
+.boardFree {
+  width: 470px;
+}
+
+.boardTitle {
+  padding-left: 10px;
+  font-weight: bold;
+}
+
+.boardParty {
+  width: 470px;
+}
+
+.line {
+  margin-top: 3px;
+  border-bottom: 1px solid #adadad;
+  margin-right: 6px;
+  margin-left: 6px;
+}
+
+.line2 {
+  margin-top: 3px;
+  border-bottom: 1px solid #dddddd;
+  margin-right: 6px;
+  margin-left: 6px;
+  margin-bottom: 3px;
+}
+
+.contents {
+  margin-top: 5px;
+  width: auto;
+  padding: 0 5px 0 5px;
+}
+
+.contents ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  text-align: center;
+}
+
+.writer {
+  margin-left: auto;
+}
+
+.listLink:link {
+  color: black;
+}
+
+.listLink:visited {
+  color: #595959;
+}
+
+.listLink:hover {
+  text-decoration: underline;
+}
+
+.PaginationBox {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.PaginationBox ul {
+  list-style: none;
+  padding: 0;
+}
+
+.PaginationBox li {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  /*border: 1px solid #e2e2e2;*/
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.PaginationBox li:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.PaginationBox li:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.PaginationBox li a {
+  text-decoration: none;
+  color: #18415c;
+  font-size: 1rem;
+}
+
+.PaginationBox li.active a {
+  color: white;
+}
+
+.PaginationBox li.active {
+  background-color: #18415c;
+}
+
+.PaginationBox li a:hover,
+.PaginationBox li a.active {
+  color: black;
+}
+
+.floatingContainer {
+  /* position: absolute;
+  left: 1360px;
+  top: 630px; */
+
+  /* position: relative;
+  left: 670px;
+  bottom: 2000px; */
+  flex: 1;
+}
+
+.floatingBanner {
+  /* position: sticky;
+  top: 0; */
+  position: sticky;
+  top: 100px;
+}
+
+.testWrap {
+  display: flex;
+  flex-direction: row;
+}
+.boardUp {
+  margin-top: 60px;
+  display: flex;
+  position: relative;
+}
+
+.festivalContainer {
+  margin-top: 350px;
+}
+.imageWrap {
+  border: 1px none none;
+  padding: 20px;
+  background-color: white;
+  border-radius: 20px;
+}
+.bannerOnText {
+  position: absolute;
+  top: 870px;
+  padding-left: 30px;
+  width: 70%;
+}
+.bannerOnTextH2 {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -3px;
+  line-height: 40px;
+  max-width: 420px;
+  width: 410px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.bannerOnTextP {
+  margin-top: 40px;
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: -0.5px;
+  width: 410px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.boardImg {
+  margin: auto;
+}
+
+.boardTextBox {
+  margin-left: 50px;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: center;
+  position: absolute;
+  top: 28%;
+  color: rgb(62, 62, 62);
+}
+.boardText1 {
+  font-weight: bold;
+  font-size: 1.9rem;
+  margin-bottom: 30px;
+}
+
+.boardText2 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+.boardText3 {
+  font-size: 1.2rem;
+}
+
+.line3 {
+  margin-top: 30px;
+  border-bottom: 1px solid #adadad;
+  margin-right: 6px;
+  margin-left: 6px;
+}

@@ -1,0 +1,107 @@
+.headerContainer {
+  background-color: red;
+  width: 940px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.logoHeaderContainer {
+  background-color: blueviolet;
+  height: 90px;
+}
+.menuHedaerContainer {
+  background-color: brown;
+  height: 65px;
+}
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+}
+.logoBox {
+  border: 1px solid black;
+  width: 300px;
+  height: 100px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+.email {
+  margin: 0 auto;
+  margin-top: 50px;
+}
+.email textarea {
+  width: 400px;
+  height: 50px;
+  border-radius: 5px;
+  color: #555555;
+  border: #d6d7d9 solid 1px;
+  text-indent: 42px;
+  font-size: 15px;
+  box-sizing: border-box;
+  resize: none;
+  line-height: 44px;
+  font-size: 17px;
+}
+.password {
+  margin: 0 auto;
+  margin-top: 10px;
+}
+.password textarea {
+  width: 400px;
+  height: 50px;
+  border-radius: 5px;
+  color: #555555;
+  border: #d6d7d9 solid 1px;
+  text-indent: 42px;
+  font-size: 15px;
+  box-sizing: border-box;
+  resize: none;
+  line-height: 44px;
+  font-size: 17px;
+}
+.loginButton {
+  margin: 0 auto;
+}
+.loginButton button {
+  width: 400px;
+  height: 55px;
+  margin-top: 10px;
+  background: orange;
+  font-size: 19px;
+  font-weight: normal;
+  line-height: 59px;
+  text-align: center;
+  color: #ffffff;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  line-height: 16px;
+}
+.loginButton button:hover {
+  background: #002ead;
+}
+
+.loginOptions {
+  margin: 0 auto;
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+.first {
+  display: flex;
+  padding-left: 200px;
+}
+
+.findEmail {
+  cursor: pointer;
+}
+
+.resetPassword {
+  float: right;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.createAccount {
+  margin-left: 326px;
+  cursor: pointer;
+}

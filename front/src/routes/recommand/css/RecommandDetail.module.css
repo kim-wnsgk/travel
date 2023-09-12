@@ -1,0 +1,28 @@
+.container {
+    position: relative;
+    margin: 0 auto;
+}
+
+.content {
+    width: 940px;
+    margin: 0 auto;
+}
+
+.lists {
+    list-style: none;
+}
+
+.list {
+    display: flex;
+    align-items: center;
+}
+
+.imageContainer {
+    margin-right: 20px;
+}
+
+.image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}

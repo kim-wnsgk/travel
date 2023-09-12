@@ -1,0 +1,71 @@
+.container {
+    width: 600px;
+    margin: 0 auto;
+}
+
+.logoContainer {
+    height: 90px;
+    text-align: center;
+}
+
+.contentContainer {
+    margin-top: 50px;
+}
+
+.title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.inputs {
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 3px 3px 5px rgb(192, 192, 192);
+}
+
+.inputContainer {}
+
+.input {
+    width: 100%;
+    height: 70px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    border: 1.7px solid rgb(180, 180, 180);
+    font-size: 1.5rem;
+}
+
+.loginButton {
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    font-size: 1.5rem;
+    border-radius: 3px;
+    background-color: rgb(137, 168, 255);
+    cursor: pointer;
+}
+
+.loginButton:hover {
+    font-weight: bold;
+}
+
+.others {
+    margin-top: 20px;
+    display: flex;
+}
+
+.other {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+    color: grey;
+}
+
+.other:hover {
+    font-weight: bold;
+    color: black;
+}

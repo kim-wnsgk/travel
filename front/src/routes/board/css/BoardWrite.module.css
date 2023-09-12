@@ -1,0 +1,60 @@
+.mainPageContainer {
+  display: flex;
+  flex-direction: column;
+}
+.headerContainer {
+  background-color: red;
+  width: 940px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.logoHeaderContainer {
+  background-color: blueviolet;
+  height: 90px;
+}
+.menuHedaerContainer {
+  background-color: brown;
+  height: 65px;
+}
+.mainImageContainer {
+  background-color: blue;
+  height: 450px; /* 내용물에따라 수정 */
+  width: 100%;
+  margin: 0 auto;
+}
+.contentContainer {
+  height: 1000px; /* 내용물에따라 수정 */
+  width: 940px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.boardTitle {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 10px;
+  font-size: 20px;
+  border-bottom: 10px;
+}
+.boardTitleTextArea {
+  margin-top: 10px;
+  width: 100%;
+  height: 15px;
+  border: none;
+  border-bottom: 1px solid #e8e8e8;
+  resize: none;
+}
+.boardTitleTextArea:focus {
+  outline: none;
+}
+.boardContent {
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.boardTitleWrite {
+}
+.boardFileUpload {
+}

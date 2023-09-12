@@ -1,0 +1,95 @@
+a {
+  text-decoration: none;
+  color: none;
+}
+
+.container {
+  width: 940px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.logoContainer {
+  height: 90px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.profile {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 200px;
+  text-align: center;
+}
+
+/* 나중에 애니메이션 효과로 바꾸기 */
+.profile:hover .profileSelector {
+  display: block;
+}
+
+.profileSelector {
+  display: none;
+  border: 2px solid grey;
+  border-radius: 10px;
+  background-color: white;
+  padding: 5px;
+  line-height: 30px;
+  animation-duration: 1s;
+  /* transition: all 0.5s; */
+  cursor: pointer;
+}
+
+@keyframes slide {
+  from {
+    display: none;
+  }
+
+  to {
+    display: inline-block;
+  }
+}
+
+.profileSelect {
+  font-weight: bold;
+}
+
+.profileSelect:hover a {
+  color: black;
+  text-decoration: underline;
+}
+
+.profileSelect > a {
+  color: rgb(155, 155, 155);
+}
+
+.menuContainer {
+  height: 80px;
+  display: flex;
+  line-height: 60px;
+  background-color: rgb(236, 236, 236);
+  border-radius: 25px;
+  box-shadow: 3px 3px 5px rgb(237, 237, 237);
+}
+
+.menus {
+  flex: 1;
+  text-align: center;
+  /* border-radius: 5px; */
+  /* background-color: rgb(233, 238, 243); */
+  margin: 10px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  /* box-shadow: 3px 3px 5px rgb(192, 192, 192); */
+  border-left: 2px solid rgb(196, 196, 196);
+}
+
+.menus:first-child {
+  border-left: none;
+}
+
+.link {
+  text-decoration: none;
+  display: block;
+  color: black;
+}

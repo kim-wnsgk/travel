@@ -1,0 +1,89 @@
+.contents {
+    width: 940px;
+    margin: 50px auto;
+}
+
+.regionContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.selector{
+    display:flex;
+}
+
+.yesorno{
+    flex:1;
+    font-size: 2rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+.selected {
+    background-color: #cccccc;
+    color:black;
+    font-weight: bold;
+    /* 다른 스타일 속성들을 추가로 지정할 수 있습니다 */
+  }
+  
+  .do {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+    color:#999999
+  }
+  
+  .doName {
+    font-size: 1.3rem;
+    padding: 5px 10px;
+    margin:20px;
+    border-radius: 25px;
+    cursor: pointer;
+    text-align: center;
+}
+  
+  .si {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    margin:5px;
+    border-top: 1px solid #cccccc;
+    color:#999999
+  
+  }
+  
+  .siName{
+    padding: 5px 10px;
+    margin:10px;
+    cursor: pointer;
+    border-radius: 25px;
+}
+  
+.topcat {
+    display: flex;
+    font-size: 1.5rem;
+    border-top:1px solid #cccccc;
+    text-align: center;
+}
+
+.selectTopcat {
+    flex: 1;
+    margin: 10px;
+    cursor: pointer;
+    display: flex;
+}
+
+.midcat{
+    display: flex;
+    font-size: 1.2rem;
+    border-top:1px solid #cccccc;
+    flex-wrap: wrap;
+}
+
+.selectMidcat{
+    margin: 20px;
+    cursor: pointer;
+}

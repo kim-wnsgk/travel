@@ -1,0 +1,80 @@
+.mainPageContainer {
+  display: flex;
+  flex-direction: column;
+}
+.headerContainer {
+  background-color: red;
+  width: 940px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.logoHeaderContainer {
+  background-color: blueviolet;
+  height: 90px;
+}
+.menuHedaerContainer {
+  background-color: brown;
+  height: 65px;
+}
+.mainImageContainer {
+  background-color: blue;
+  height: 450px; /* 내용물에따라 수정 */
+  width: 100%;
+  margin: 0 auto;
+}
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+.email {
+  margin-top: 30px;
+}
+.password {
+  margin-top: 30px;
+}
+.name {
+  margin-top: 30px;
+}
+.email textarea {
+  width: 400px;
+  height: 50px;
+  border-radius: 5px;
+  color: #555555;
+  border: #d6d7d9 solid 1px;
+  text-indent: 42px;
+  font-size: 15px;
+  box-sizing: border-box;
+  resize: none;
+  line-height: 44px;
+  font-size: 17px;
+}
+
+.password textarea {
+  width: 400px;
+  height: 50px;
+  border-radius: 5px;
+  color: #555555;
+  border: #d6d7d9 solid 1px;
+  text-indent: 42px;
+  font-size: 15px;
+  box-sizing: border-box;
+  resize: none;
+  line-height: 44px;
+  font-size: 17px;
+}
+
+.name textarea {
+  width: 400px;
+  height: 50px;
+  border-radius: 5px;
+  color: #555555;
+  border: #d6d7d9 solid 1px;
+  text-indent: 42px;
+  font-size: 15px;
+  box-sizing: border-box;
+  resize: none;
+  line-height: 44px;
+  font-size: 17px;
+}

@@ -1,0 +1,83 @@
+.content {
+    width: 940px;
+    margin: 0 auto;
+}
+
+.title{
+    font-size:2rem;
+    font-weight:bold;
+}
+
+.profile{
+    display:flex;
+    height:250px;
+    border:1px solid #eeeeee;
+    padding:20px;
+}
+
+.image{
+    flex:1;
+    background-color: antiquewhite;
+    margin:20px;
+    border-radius: 150px;
+}
+.detail {
+    flex:3;
+    display:flex;
+    flex-direction: column;
+    position:relative;
+}
+
+.name{
+    flex:1;
+    font-size: 1.5rem;
+}
+
+.gender{
+    flex:1;
+    font-size: 1.2rem;
+}
+.birth {
+    flex:1;
+    font-size: 1.2rem;
+}
+
+.buttons{
+    position:absolute;
+    bottom:0;
+    right:0;
+    overflow: hidden;
+    font-size:1.2rem;
+}
+
+.edit{
+    float:left;
+    background-color: rgb(183, 232, 255);
+    padding:5px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.delete{
+    float:left;
+    background-color: rgba(254, 59, 59, 0.601);
+    padding:5px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left:10px;
+}
+
+.meeting{
+    margin-top:20px;
+    border:1px solid #eeeeee;
+}
+
+.meetingTitle{
+    font-size:1.5rem;
+}
+
+.meetingList{
+    font-size: 1.2rem;
+    margin-left:40px;
+}
+

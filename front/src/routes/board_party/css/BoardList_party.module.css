@@ -1,0 +1,151 @@
+.mainPageContainer {
+  display: flex;
+  flex-direction: column;
+}
+.headerContainer {
+  background-color: red;
+  width: 940px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.logoHeaderContainer {
+  background-color: blueviolet;
+  height: 90px;
+}
+.menuHedaerContainer {
+  background-color: brown;
+  height: 65px;
+}
+.contentContainer {
+  height: 1000px; /* 내용물에따라 수정 */
+  width: 940px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.BoardListTitle {
+  font-size: 30px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.BoardListAttribute {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  margin-left: 10px;
+  text-align: center;
+}
+.BoardListAttributeTitle {
+  width: 55%;
+  border-bottom: 2px solid #e8e8e8;
+}
+.BoardListAttributeViews {
+  width: 15%;
+  border-bottom: 2px solid #e8e8e8;
+}
+.BoardListAttributeDate {
+  width: 15%;
+  border-bottom: 2px solid #e8e8e8;
+}
+.BoardListAttributeComents {
+  width: 15%;
+  border-bottom: 2px solid #e8e8e8;
+}
+.BoardListAttributeUser {
+  width: 15%;
+  border-bottom: 2px solid #e8e8e8;
+}
+.BoardList {
+  display: flex;
+  flex-direction: column;
+}
+.BoardList ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  text-align: center;
+}
+
+.BoardList li:nth-child(1) {
+  width: 55%;
+}
+.BoardList li:nth-child(2) {
+  width: 15%;
+}
+.BoardList li:nth-child(3) {
+  width: 15%;
+}
+.BoardList li:nth-child(4) {
+  width: 15%;
+}
+.BoardList li:nth-child(5) {
+  width: 15%;
+}
+
+.PaginationBox {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.PaginationBox ul {
+  list-style: none;
+  padding: 0;
+}
+
+.PaginationBox li {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  /*border: 1px solid #e2e2e2;*/
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.PaginationBox li:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.PaginationBox li:last-child {
+  border-radius: 0 5px 5px 0;
+}
+.PaginationBox li a {
+  text-decoration: none;
+  color: #18415c;
+  font-size: 1rem;
+}
+
+.PaginationBox li.active a {
+  color: white;
+}
+
+.PaginationBox li.active {
+  background-color: #18415c;
+}
+
+.PaginationBox li a:hover,
+.PaginationBox li a.active {
+  color: black;
+}
+
+.listLink:link {
+  color: black;
+}
+.listLink:visited {
+  color: #595959;
+}
+.listLink:hover {
+  text-decoration: underline;
+}
+
+.BoardListEach {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.BoardListEach :first-child {
+  margin-top: 15px;
+}

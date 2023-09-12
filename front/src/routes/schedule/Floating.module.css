@@ -1,0 +1,150 @@
+.container {
+  width: 300px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 30px;
+  border: 1px solid none;
+  border-radius: 15px;
+  background-color: rgba(109, 103, 34, 0.566);
+}
+.selGath {
+  flex: 1;
+  display: flex;
+  overflow-x: scroll;
+}
+.selGath::-webkit-scrollbar {
+  width: 8px;
+}
+
+.selGath::-webkit-scrollbar-thumb {
+  height: 30%;
+  background: #8af421;
+  border-radius: 10px;
+}
+
+.selGath::-webkit-scrollbar-track {
+  background: rgba(33, 122, 244, 0.1);
+}
+.selButton {
+  align-items: center;
+  margin: auto;
+  margin-left: 10px;
+  background-color: orange;
+  min-width: 100px;
+  width: 50px;
+  height: 70%;
+  flex-grow: 1;
+  border: none;
+  border-radius: 15px;
+}
+
+.selButton:hover {
+  background-color: yellow;
+  cursor: pointer;
+}
+.selButtons {
+  align-items: center;
+  margin: auto;
+  margin-left: 10px;
+  background-color: #b2f76c;
+  color: white;
+  min-width: 100px;
+  width: 50px;
+  height: 70%;
+  flex-grow: 1;
+  border: none;
+  border-radius: 15px;
+}
+
+.selButtons:hover {
+  cursor: pointer;
+  width: 55px;
+  height: 75%;
+}
+
+.info {
+  flex: 1.5;
+  margin: auto;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.404);
+}
+.pickdate {
+  flex: 1;
+  display: flex;
+  overflow-x: scroll;
+}
+.pickdate::-webkit-scrollbar {
+  width: 4px;
+}
+
+.pickdate::-webkit-scrollbar-thumb {
+  height: 10%; /* ?ㅽ겕濡ㅻ컮??湲몄씠 */
+  background: #b2f76c; /* ?ㅽ겕濡ㅻ컮???됱긽 */
+  border-radius: 5px;
+}
+
+.pickdate::-webkit-scrollbar-track {
+  background: rgba(33, 122, 244, 0.1); /*?ㅽ겕濡ㅻ컮 ??諛곌꼍 ?됱긽*/
+}
+.selButton2 {
+  align-items: center;
+  margin: auto;
+  margin-left: 10px;
+  background-color: white;
+
+  min-width: 70px;
+  width: 50px;
+  height: 70%;
+  flex-grow: 1;
+  border: none;
+  border-radius: 10px;
+}
+.selButton2:hover {
+  width: 55px;
+  height: 75%;
+  cursor: pointer;
+}
+.selButton2s {
+  align-items: center;
+  margin: auto;
+  margin-left: 10px;
+  background-color: #b2f76c;
+  color: white;
+  min-width: 70px;
+  width: 50px;
+  height: 70%;
+  flex-grow: 1;
+  border: none;
+  border-radius: 10px;
+}
+.selButton2s:hover {
+  width: 55px;
+  height: 75%;
+}
+.schedule {
+  flex: 5;
+  display: flex;
+  overflow-y: scroll;
+  flex-direction: column;
+}
+.schedule::-webkit-scrollbar {
+  display: none;
+}
+
+.ele {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  border-bottom: 1px solid rgb(184, 184, 184);
+}
+.schduleSite {
+  margin-bottom: 5px;
+}
+
+.floatingBannerMain {
+  margin: auto;
+}

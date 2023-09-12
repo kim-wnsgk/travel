@@ -1,0 +1,71 @@
+.container {
+  margin-top: 100px;
+  width: 80%;
+  display: flex;
+  height: 800px;
+  margin: auto;
+  flex-direction: column;
+}
+
+.main {
+  flex: 3;
+  display: flex;
+}
+
+.side {
+  flex: 1;
+  display: flex;
+  background-color: brown;
+  flex-direction: column;
+  align-items: center;
+}
+
+.side_image {
+  flex: 1;
+  width: 70%;
+  margin: 5%;
+  background-color: aqua;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.regionImage {
+  text-align: center;
+  margin: auto;
+  margin-top: 5%;
+  width: 80%;
+  height: 70%;
+  border: 1px solid black;
+  border-radius: 10%;
+  background-color: blue;
+}
+
+.center {
+  flex: 3;
+  background-color: salmon;
+}
+
+.list {
+  flex: 1;
+  display: flex;
+  background-color: blueviolet;
+
+}
+
+.listInner {
+  flex: 1;
+  margin: 5%;
+  height: 20%;
+}
+
+.listInner:hover .detail {
+  display: block;
+  z-index: 1;
+}
+
+.detail {
+  display: none;
+  z-index: 1;
+  margin-top: auto;
+}

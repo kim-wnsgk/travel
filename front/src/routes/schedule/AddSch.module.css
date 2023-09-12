@@ -1,0 +1,73 @@
+.container {
+  width: 400px;
+  /* height: 250px; */
+  display: flex;
+  flex-direction: column;
+  /*나중에 100% 로 변경*/
+  margin: auto;
+  /* background-color: rgba(109, 103, 34, 0.566); */
+  color: white;
+}
+.gathering::-webkit-scrollbar {
+  width: 8px;
+}
+
+.gathering::-webkit-scrollbar-thumb {
+  height: 30%;
+  background: #8af421;
+  border-radius: 10px;
+}
+
+.gathering::-webkit-scrollbar-track {
+  background: rgba(80, 232, 90, 0.1);
+}
+.gathering {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  overflow-x: scroll;
+  height: 120px;
+  align-items: center;
+}
+.gatheringEle {
+  flex: 1;
+  font-size: 0.8rem;
+  /* border: 1px solid black; */
+  background-color: #b2f76c;
+  cursor: pointer;
+  margin: auto;
+  margin: 5%;
+  min-width: 100px;
+  height: 20px;
+  border: none;
+  border-radius: 5px;
+  max-width: 150px;
+  color: white;
+}
+.gatheringEle:hover {
+  /* background-color: black;
+  color: white; */
+  height: 23px;
+  /* font-size: large; */
+  font-size: 1rem;
+}
+.gatheringEles {
+  flex: 1;
+  /* border: 1px solid black; */
+  border: none;
+  background-color: #22832d;
+  cursor: pointer;
+  margin: auto;
+  margin: 5%;
+  min-width: 100px;
+  height: 20px;
+  border-radius: 5px;
+  max-width: 150px;
+  color: white;
+}
+.gatheringEles:hover {
+  /* background-color: black; */
+  /* color: white; */
+  height: 23px;
+  font-size: 1rem;
+}
