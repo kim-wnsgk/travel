@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./css/Login.module.css";
 
 function Login() {
+  const navigate = useNavigate();
   const [id, setId] = useState("");
   const onIdChange = (e) => {
     setId(e.target.value);
@@ -14,7 +15,6 @@ function Login() {
   const onPwChange = (e) => {
     setPw(e.target.value);
   };
-  console.log(id, pw);
   return (
     <div className={styles.container}>
       <div className={styles.logoContainer}>
@@ -65,6 +65,7 @@ function Login() {
                     .then((json) => {
                       if (json.isLogin === "True") {
                         alert("로그인에 성공했습니다.");
+                        // navigate('/');
                       } else {
                         alert(json.isLogin);
                       }
@@ -76,7 +77,7 @@ function Login() {
           <div className={styles.others}>
             <div className={styles.other}>아이디 찾기</div>
             <div className={styles.other}>비밀번호 찾기</div>
-            <div className={styles.other}>회원가입</div>
+            <Link to='/register'><div className={styles.other}>회원가입</div></Link>
           </div>
         </div>
       </div>

@@ -18,7 +18,6 @@ import banner from "./img/banner.png";
 
 function Main() {
   const [testId, setTestId] = useState("sls9905");
-
   const getMeta = (url) =>
     new Promise((resolve, reject) => {
       const img = new Image();
@@ -27,11 +26,24 @@ function Main() {
       img.src = url;
     });
 
-  // Usage example:
-
   const [islogin, setIslogin] = useState(false);
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // 서버의 /authcheck 엔드포인트에 요청을 보내고 응답을 처리합니다.
+    axios.get("http://localhost:3001/authcheck")
+      .then(response => {
+        // 서버로부터 받은 데이터를 사용하여 isLogin 값을 설정
+        const { data } = response;
+        console.log("Data: ", data);
+        setIslogin(data.isLogin == "True");
+      })
+      .catch(error => {
+        console.error("Error fetching authcheck:", error);
+      });
+  }, []);
+  console.log("login: ", islogin);
 
   const onSearchChange = (e) => {
     setSearchText(e.target.value);
@@ -134,9 +146,7 @@ function Main() {
         const response = await axios.post("http://localhost:3001/query", {
           query: "SELECT * FROM festival WHERE image LIKE 'h%'",
         });
-        console.log("ㅗ디ㅣ");
         console.log(response.data);
-        console.log("ㅗ디ㅣ");
         setFestivalData(response.data);
       } catch (error) {
         console.log(error);
@@ -213,8 +223,10 @@ function Main() {
               <Link to="./">정보 수정</Link>
             </div>
             <div className={styles.profileSelect}>
-              {islogin ? <div>로그아웃</div> : <div>로그인</div>}
-              <Link to="./">로그아웃</Link>
+              {islogin ? <div onClick={() => {
+                axios.get('http://localhost:3001/logout')
+              }}>로그아웃</div> :
+                <Link to='/login'><div>로그인</div></Link>}
             </div>
           </div>
         </div>
