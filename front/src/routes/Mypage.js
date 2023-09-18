@@ -63,7 +63,7 @@ function Mypage() {
                     </div>
                 </div>
                 <div>
-                    <button onClick={showModal}>일정 생성</button>
+                    <button onClick={showModal}>모임 만들기</button>
                     {modalOpen && <Gather_new setModalOpen={setModalOpen} />}
                 </div>
                 <div className={styles.meeting}>

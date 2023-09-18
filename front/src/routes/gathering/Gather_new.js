@@ -37,7 +37,7 @@ function Gather_new({setModalOpen}) {
           navigate(-1);
       }
     return (
-      <div className={styles.modalBackground} onClick={quit}>
+      <div className={styles.modalBackground}>
         <div className={styles.modalContainer}>
           <div className={styles.header}>모임 생성</div>
           <table className={styles.tab}>

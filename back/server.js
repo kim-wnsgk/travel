@@ -5,9 +5,20 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 
-const MySQLStore = require("express-mysql-session")(session);
-const Memorystore = require('memorystore')(session);
+const sessionOption = {
+  host: "127.0.0.1",
+  user: "manager",
+  password: "test1234",
+  database: "travel",
+  port: 3306,
+  clearExpired: true, // 만료된 세션 자동 확인 및 지우기 여부
+  checkExpirationInterval: 10000, // 만료된 세션이 지워지는 빈도 (milliseconds)
+  expiration: 1000 * 60 * 60 * 2, // 유효한 세션의 최대 기간 2시간으로 설정 (milliseconds)
+};
 
+var MySQLStore = require("express-mysql-session")(session);
+const Memorystore = require('memorystore')(session);
+var sessionStore = new MySQLStore(sessionOption)
 app.use(cors());
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -32,24 +43,15 @@ app.use("/festival", festival);
 app.use("/gathering", gathering);
 app.use("/schedule", schedule);
 
-const sessionOption = {
-  host: "127.0.0.1",
-  user: "manager",
-  password: "test1234",
-  database: "travel",
-  port: 3306,
-  clearExpired: true, // 만료된 세션 자동 확인 및 지우기 여부
-  checkExpirationInterval: 10000, // 만료된 세션이 지워지는 빈도 (milliseconds)
-  expiration: 1000 * 60 * 60 * 2, // 유효한 세션의 최대 기간 2시간으로 설정 (milliseconds)
-};
+
 
 app.use(
   session({
     key: "session",
     secret: "session",
-    store: new Memorystore({ checkPeriod: 1000 * 60 * 60 * 24 }),
+    store: sessionStore,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
       is_logined: false,
       secure: false,
@@ -204,6 +206,10 @@ app.get("/boardList", (req, res) => {
     }
   );
 });
+
+app.get("/Session",(req,res) =>{
+  res.send(req.session)
+})
 
 app.get("/BoardList_party", (req, res) => {
   connection.query(
