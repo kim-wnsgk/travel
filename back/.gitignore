@@ -24,3 +24,5 @@ yarn-error.log*
 
 # API_KEY
 .env
+
+/sessions

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import styles from "./css/Login.module.css";
 
@@ -54,21 +55,23 @@ function Login() {
                     userId: id,
                     userPassword: pw,
                   };
-                  fetch("http://localhost:3001/login", {
-                    method: "post",
+                  axios.post('http://localhost:3001/login', userData, {
                     headers: {
-                      "content-type": "application/json",
+                      'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(userData), //userData라는 객체를 보냄
+                    withCredentials: true,
                   })
-                    .then((res) => res.json())
-                    .then((json) => {
-                      if (json.isLogin === "True") {
-                        alert("로그인에 성공했습니다.");
-                        // navigate('/');
+                    .then((response) => {
+                      const res = response.data;
+                      if (res.isLogin === 'True') {
+                        alert('로그인에 성공했습니다.');
+                        navigate('/');
                       } else {
-                        alert(json.isLogin);
+                        alert(res.isLogin);
                       }
+                    })
+                    .catch((error) => {
+                      console.error('로그인 요청 중 오류 발생:', error);
                     });
                 }}
               />

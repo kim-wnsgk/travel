@@ -19,8 +19,8 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
-    "sharp": "^0.32.1",
     "react-time-picker": "^6.2.0",
+    "sharp": "^0.32.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -31,19 +31,17 @@ function Main() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 서버의 /authcheck 엔드포인트에 요청을 보내고 응답을 처리합니다.
-    axios.get("http://localhost:3001/authcheck")
+    // 로그인 확인
+    axios.get("http://localhost:3001/authcheck", { withCredentials: true })
       .then(response => {
         // 서버로부터 받은 데이터를 사용하여 isLogin 값을 설정
         const { data } = response;
-        console.log("Data: ", data);
         setIslogin(data.isLogin == "True");
       })
       .catch(error => {
         console.error("Error fetching authcheck:", error);
       });
   }, []);
-  console.log("login: ", islogin);
 
   const onSearchChange = (e) => {
     setSearchText(e.target.value);
@@ -223,9 +221,13 @@ function Main() {
               <Link to="./">정보 수정</Link>
             </div>
             <div className={styles.profileSelect}>
-              {islogin ? <div onClick={() => {
-                axios.get('http://localhost:3001/logout')
-              }}>로그아웃</div> :
+              {islogin ?
+                <div onClick={() => {
+                  axios.get('http://localhost:3001/logout', { withCredentials: true });
+                  window.location.reload();
+                }}>
+                  로그아웃
+                </div> :
                 <Link to='/login'><div>로그인</div></Link>}
             </div>
           </div>
