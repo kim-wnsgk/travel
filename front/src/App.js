@@ -8,7 +8,7 @@ import Class from "./routes/Class.js";
 import Login from "./routes/Login.js";
 import Register from "./routes/Register.js";
 import AddSchedule from "./routes/AddSchedule.js";
-
+import Map from "./routes/schedule/MapSch.js"
 import Admin from "./routes/Admin.js";
 
 import SearchDetail from "./routes/SearchDetail.js";
@@ -57,7 +57,6 @@ function App() {
         <Route path="/addschedule" element={<AddSchedule />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/searchDetail" element={<SearchDetail />} />
-
         <Route path="/regionmain" element={<RegionMain />} />
         <Route path="/regions" element={<Regions />} />
         <Route path="/regiondetail" element={<RegionDetail />} />
@@ -77,6 +76,7 @@ function App() {
         <Route path="/gather_new" element={<Gather_new />} />
         <Route path="/addSch" element={<AddSch/>} />
         <Route path="/floating" element={<Floating />} />
+        <Route path="/map" element={<Map/>}/>
       </Routes>
     </Router>
   );

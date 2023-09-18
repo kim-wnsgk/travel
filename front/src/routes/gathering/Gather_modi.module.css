@@ -15,3 +15,32 @@
   border: 1px solid black;
   border-radius: 10%;
 }
+.modalContainer{
+  width: 300px;
+  height: 200px;
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(194, 212, 115);
+  border-radius: 5%;
+  border: 1px solid black;
+  text-align: center;
+  align-items: center;
+}
+.modalBackground{
+  position: fixed;
+  top:0; left: 0; bottom: 0; right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  transition: all ease 2s 0s;
+}
+.header{
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.tab{
+  align-items: center;
+  text-align: center ;
+  margin:auto;
+}
