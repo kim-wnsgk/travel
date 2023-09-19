@@ -2,16 +2,12 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
-
 import Header from "../components/Header";
-
 import styles from "./css/Main.module.css";
 import axios from "axios";
-
 import dayjs from "dayjs";
 import Pagination from "react-js-pagination";
 import Floating from "./schedule/Floating";
-
 import img2 from "./img/rptlvks.jpg";
 import img3 from "./img/picnic5.jpg";
 import banner from "./img/banner.png";
@@ -56,7 +52,6 @@ function Main() {
       console.error(error);
     }
   };
-
   const enterKeyPress = (e) => {
     if (e.key === "Enter") {
       searchKeyword(); // Enter 입력이 되면 클릭 이벤트 실행
@@ -215,10 +210,15 @@ function Main() {
           <CgProfile size={"50px"} color="rgb(72, 72, 72)" cursor="pointer" />
           <div className={styles.profileSelector}>
             <div className={styles.profileSelect}>
-              <Link to="/mypage">내정보</Link>
+            {islogin ?
+                <Link to="/mypage">내정보</Link> :
+                <Link onClick={()=>alert("먼저 로그인 하세요")}>내정보</Link>}
             </div>
             <div className={styles.profileSelect}>
-              <Link to="./">정보 수정</Link>
+            {islogin ?
+              <Link to="/mypage">정보수정</Link> :
+              <Link onClick={()=>alert("먼저 로그인 하세요")}>정보수정</Link>}
+            
             </div>
             <div className={styles.profileSelect}>
               {islogin ?
