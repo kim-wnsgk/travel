@@ -1,8 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-
 const router = express.Router();
-
+const cors = require("cors");
+router.use(cors());
 const connection = require("../db");
 connection.connect((error) => {
   if (error) {
@@ -15,7 +15,6 @@ connection.connect((error) => {
     "Connected to MySQL server as id(gathering) " + connection.threadId
   );
 });
-
 router.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 router.use(bodyParser.json({ limit: "50mb" }));
 
@@ -26,8 +25,8 @@ router.get("/select", function (req, res) {
       if (error) {
         console.log(error);
       } else {
-        console.log(results);
-        res.json(results);
+        console.log("이거", results);
+        res.send(results);
       }
     }
   );

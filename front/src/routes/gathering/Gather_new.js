@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import * as dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import styles from "./Gather_modi.module.css";
-function Gather_new({setModalOpen}) {
+function Gather_new({setModalOpen, user}) {
     const navigate = useNavigate()
     const [startDate, setStartDate] = useState(new Date());
     const [date_long, setDate_long] = useState();
@@ -25,7 +25,7 @@ function Gather_new({setModalOpen}) {
           .get("http://localhost:3001/gathering/insert", {
             params: {
               name: name,
-              user: 12345,
+              user: user,
               startDate : dayjs(startDate).format('YYYY-MM-DD'),
               date_long : date_long
             },

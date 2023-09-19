@@ -46,6 +46,7 @@ app.use(cors({
   credentials: true, // credentials 모드를 사용할 경우 true로 설정
 }));
 
+
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(bodyParser.json({ limit: "50mb" }));
 
@@ -219,6 +220,13 @@ app.get("/authcheck", (req, res, next) => {
   }
 });
 
+app.get("/getProfile",(req, res, next)=>{
+  if (req.session.logined) {
+    res.send(req.session)
+  } else {
+    res.send({ isLogin: "False" });
+  }
+})
 
 app.listen(3001, () => {
   console.log("3001 port running");
