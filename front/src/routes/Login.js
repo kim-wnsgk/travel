@@ -2,10 +2,16 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import styles from "./css/Login.module.css";
 
 function Login() {
+  function session() {
+    axios
+      .get("http://localhost:3001/session")
+      .then(function (response) {
+        console.log(response);
+      });
+  }
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const onIdChange = (e) => {
@@ -84,6 +90,7 @@ function Login() {
           </div>
         </div>
       </div>
+      <button onClick={session}>세션확인</button>
     </div>
   );
 }

@@ -234,14 +234,18 @@ app.listen(3001, () => {
 //   );
 // });
 
-// app.get("/BoardList_party", (req, res) => {
-//   connection.query(
-//     "SELECT * FROM board_party",
-//     function (error, results, fields) {
-//       res.send(results);
-//     }
-//   );
-// });
+app.get("/Session", (req, res) => {
+  res.send(req.session)
+})
+
+app.get("/BoardList_party", (req, res) => {
+  connection.query(
+    "SELECT * FROM board_party",
+    function (error, results, fields) {
+      res.send(results);
+    }
+  );
+});
 
 // app.get("/boardViewComment2", (req, res) => {
 //   const id = req.query.id;

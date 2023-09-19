@@ -4,9 +4,14 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from "./css/Mypage.module.css";
 import { Link } from 'react-router-dom';
+import Gather_new from './gathering/Gather_new';
 
 function Mypage() {
     const [data, setData] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
+    const showModal = () => {
+        setModalOpen(true);
+    };
     function drop(item) {
         if (window.confirm("정말 삭제합니까?")) {
             axios
@@ -57,7 +62,10 @@ function Mypage() {
                         </div>
                     </div>
                 </div>
-                <Link to ="/gather_new">모임 생성</Link>
+                <div>
+                    <button onClick={showModal}>모임 만들기</button>
+                    {modalOpen && <Gather_new setModalOpen={setModalOpen} />}
+                </div>
                 <div className={styles.meeting}>
                     <div className={styles.meetingTitle}>참여중인 모임</div>
                     <ol>
