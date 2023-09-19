@@ -212,12 +212,12 @@ function Main() {
             <div className={styles.profileSelect}>
             {islogin ?
                 <Link to="/mypage">내정보</Link> :
-                <Link onClick={()=>alert("먼저 로그인 하세요")}>내정보</Link>}
+                <Link onClick={()=>alert("먼저 로그인 해주세요")}>내정보</Link>}
             </div>
             <div className={styles.profileSelect}>
             {islogin ?
               <Link to="/mypage">정보수정</Link> :
-              <Link onClick={()=>alert("먼저 로그인 하세요")}>정보수정</Link>}
+              <Link onClick={()=>alert("먼저 로그인 해주세요")}>정보수정</Link>}
             
             </div>
             <div className={styles.profileSelect}>
