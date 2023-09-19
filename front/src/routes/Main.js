@@ -42,7 +42,6 @@ function Main() {
   const onSearchChange = (e) => {
     setSearchText(e.target.value);
   };
-
   const searchKeyword = () => {
     try {
       navigate("/searchDetail", {
@@ -212,13 +211,12 @@ function Main() {
             <div className={styles.profileSelect}>
             {islogin ?
                 <Link to="/mypage">내정보</Link> :
-                <Link onClick={()=>alert("먼저 로그인 해주세요")}>내정보</Link>}
+                <button className={styles.prof} onClick={()=>{alert("먼저 로그인 해주세요");navigate("/login")}}>내정보</button>}
             </div>
             <div className={styles.profileSelect}>
             {islogin ?
               <Link to="/mypage">정보수정</Link> :
-              <Link onClick={()=>alert("먼저 로그인 해주세요")}>정보수정</Link>}
-            
+              <button className={styles.prof}onClick={()=>{alert("먼저 로그인 해주세요");navigate("/login")}}>정보수정</button>}
             </div>
             <div className={styles.profileSelect}>
               {islogin ?
