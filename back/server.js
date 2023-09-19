@@ -14,6 +14,9 @@ const options = {
   database: "travel",
 };
 
+const FileStore = require("session-file-store")(session);
+const MemoryStore = require("memorystore")(session);
+
 const app = express();
 
 app.use(
@@ -21,7 +24,9 @@ app.use(
     secret: "secret key",
     resave: false,
     saveUninitialized: true,
-    store: new MySQLStore(options),
+    store: new MemoryStore({
+      checkPeriod: 86400000, // 24 hours (= 24 * 60 * 60 * 1000 ms)
+    }),
   })
 );
 
