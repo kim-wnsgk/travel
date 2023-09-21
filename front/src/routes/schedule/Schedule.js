@@ -119,7 +119,7 @@ function Schedule() {
                                         {item.name}
                                     </div>
                                     <div className={styles.date}>
-                                        {dayjs(item.start).format("YYYY-MM-DD. ddd")} ~ {dayjs(item.start).add(item.date, 'day').format("YYYY-MM-DD. ddd")}
+                                        {dayjs(item.start).format("YYYY-MM-DD. ddd")} ~ {dayjs(item.start).add(item.date - 1, 'day').format("YYYY-MM-DD. ddd")}
                                     </div>
                                     <div className={styles.dday} style={ddayStyle}>
                                         {ddayString}
