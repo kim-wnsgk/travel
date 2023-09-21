@@ -52,7 +52,7 @@ function Main() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const td = await axios.get("http://localhost:3001/boardList");
+        const td = await axios.get("http://localhost:3001/board/boardList");
         setBoardFreeData(td.data);
       } catch (e) {
         console.log(e);
@@ -66,7 +66,7 @@ function Main() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const td = await axios.get("http://localhost:3001/BoardList_party");
+        const td = await axios.get("http://localhost:3001/board/BoardList_party");
         //console.log(td.data);
         setBoardPartyData(td.data);
       } catch (e) {

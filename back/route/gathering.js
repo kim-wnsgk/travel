@@ -26,7 +26,6 @@ router.get("/select", function (req, res) {
       if (error) {
         console.log(error);
       } else {
-        console.log("이거", results);
         res.send(results);
       }
     }
@@ -47,6 +46,7 @@ router.get("/selMem", function (req, res) {
   );
 });
 
+// 일정 추가 - gathering, schdule_info DB에 추가
 router.get("/insert", function (req, res) {
   var id = "";
   connection.query(
@@ -69,6 +69,21 @@ router.get("/insert", function (req, res) {
           }
         }
       );
+    }
+  );
+});
+
+//gathering, schedule_info Join 테이블 중 해당 user만 응답
+router.get("/select/gathering-scheculeinfo", function (req, res) {
+  connection.query(
+    `SELECT * FROM gathering JOIN schedule_info ON gathering.id = schedule_info.id WHERE user='${req.query.user}'`,
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(results);
+        res.send(results);
+      }
     }
   );
 });

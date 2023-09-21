@@ -61,7 +61,7 @@ function Login() {
                     userId: id,
                     userPassword: pw,
                   };
-                  axios.post('http://localhost:3001/login', userData, {
+                  axios.post('http://localhost:3001/user/login', userData, {
                     headers: {
                       'Content-Type': 'application/json',
                     },

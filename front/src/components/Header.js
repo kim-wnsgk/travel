@@ -11,7 +11,7 @@ function Header() {
   const [islogin, setIslogin] = useState(false);
   useEffect(() => {
     // 로그인 확인
-    axios.get("http://localhost:3001/authcheck", { withCredentials: true })
+    axios.get("http://localhost:3001/user/authcheck", { withCredentials: true })
       .then(response => {
         // 서버로부터 받은 데이터를 사용하여 isLogin 값을 설정
         const { data } = response;
@@ -90,7 +90,7 @@ function Header() {
           <div className={styles.profileSelect}>
             {islogin ?
               <div onClick={() => {
-                axios.get('http://localhost:3001/logout', { withCredentials: true });
+                axios.get('http://localhost:3001/user/logout', { withCredentials: true });
                 window.location.reload();
               }}>
                 로그아웃

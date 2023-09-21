@@ -1,7 +1,7 @@
 import Header from '../../components/Header';
 import styles from './Schedule.module.css';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Pagination from "react-js-pagination";
 
 import DatePicker from "react-datepicker";
@@ -10,8 +10,6 @@ import * as dayjs from "dayjs";
 import axios from "axios";
 
 function Schedule() {
-
-
     const [page, setPage] = useState(1);
     const [items] = useState(5);
     const handlePageChange = (page) => {
@@ -45,7 +43,31 @@ function Schedule() {
         setShowModal(!showModal);
     };
 
-    const writer = "sls9905"; // 테스트용 아이디
+    const [user, setUser] = useState(""); // 테스트용 아이디
+
+    const [schedule, setSchedule] = useState([]);
+    useEffect(() => {
+        axios
+            .get("http://localhost:3001/user/getProfile", { withCredentials: true })
+            .then(function (response) {
+                const session = response.data;
+                console.log(session);
+                setUser(session.user);
+            });
+    }, []);
+    useEffect(() => {
+        axios
+            .get("http://localhost:3001/gathering/select/gathering-scheculeinfo", {
+                params: {
+                    user
+                },
+            })
+            .then(function (response) {
+                const data = response.data;
+                console.log(data);
+                setSchedule(data);
+            });
+    }, [user]);
 
     const [name, setName] = useState("");
     const handelName = (e) => {
@@ -62,8 +84,8 @@ function Schedule() {
         axios
             .get("http://localhost:3001/gathering/insert", {
                 params: {
-                    name: name,
-                    user: writer,
+                    name,
+                    user,
                     startDate: dayjs(startDate).format("YYYY-MM-DD"),
                     date_long: diffDays,
                 },
@@ -81,20 +103,31 @@ function Schedule() {
                     내 일정
                 </div>
                 <div className={styles.lists}>
-                    {scheduleList &&
-                        scheduleList.slice(items * (page - 1), items * (page - 1) + items).map((item, index) => (
-                            <div className={styles.list} key={index}>
-                                <div className={styles.title}>
-                                    {item.title}
+                    {schedule &&
+                        schedule.slice(items * (page - 1), items * (page - 1) + items).map((item, index) => {
+                            const dday = Math.round(Math.abs((dayjs(item.start) - dayjs(new Date())) / (24 * 60 * 60 * 1000)));
+                            const ddayString = dday === 0 ? 'D-Day' : dday < 0 ? `D+${Math.abs(dday)}` : `D-${dday}`;
+                            const ddayColor = dday === 0 ? 'red' : dday < 0 ? 'blue' : 'black'; // 색상 조건에 따라 변경
+                            const ddayStyle = {
+                                color: ddayColor,
+                                fontWeight: 'bold',
+                            };
+
+                            return (
+                                <div className={styles.list} key={index}>
+                                    <div className={styles.title}>
+                                        {item.name}
+                                    </div>
+                                    <div className={styles.date}>
+                                        {dayjs(item.start).format("YYYY-MM-DD. ddd")} ~ {dayjs(item.start).add(item.date, 'day').format("YYYY-MM-DD. ddd")}
+                                    </div>
+                                    <div className={styles.dday} style={ddayStyle}>
+                                        {ddayString}
+                                    </div>
                                 </div>
-                                <div className={styles.date}>
-                                    {item.date}
-                                </div>
-                                <div className={styles.dday}>
-                                    {item.dday}
-                                </div>
-                            </div>
-                        ))}
+                            );
+                        })
+                    }
                     <div className={styles.PaginationBox}>
                         <Pagination
                             className={styles.Pagination}
@@ -126,6 +159,8 @@ function Schedule() {
                                         <input
                                             className={styles.boardTitleTextArea}
                                             placeholder="일정 제목을 입력하세요"
+                                            onChange={handelName}
+                                            value={name}
                                         />
                                     </div>
                                     <div className={styles.date}>
@@ -168,7 +203,24 @@ function Schedule() {
                                     </div>
                                 </div>
                                 <div className={styles.modalFooter}>
-                                    <button className={styles.addButton}>추가</button>
+                                    <button
+                                        className={styles.addButton}
+                                        onClick={() => {
+                                            if (name) {
+                                                insert();
+                                                toggleModal();
+                                                setName("");
+                                                setStartDate(new Date())
+                                                setEndDate(new Date())
+                                                alert(`'${name}' 일정이 추가되었습니다.`)
+                                            }
+                                            else {
+                                                alert('일정 제목을 입력해주세요.');
+                                            }
+
+                                        }}>
+                                        추가
+                                    </button>
                                 </div>
                             </div>
                         </div>
