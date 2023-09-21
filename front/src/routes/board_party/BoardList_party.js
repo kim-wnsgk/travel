@@ -21,7 +21,7 @@ const BoardList_party = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const td = await axios.get("http://localhost:3001/BoardList_party");
+        const td = await axios.get("http://localhost:3001/board/BoardList_party");
         console.log(td.data);
         setData(td.data);
       } catch (e) {

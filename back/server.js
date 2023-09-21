@@ -5,16 +5,6 @@ const bcrypt = require("bcrypt");
 const session = require("express-session");
 const axios = require('axios');
 
-const MySQLStore = require("express-mysql-session")(session);
-const options = {
-  host: "localhost",
-  port: 3306,
-  user: "manager",
-  password: "test1234",
-  database: "travel",
-};
-
-const FileStore = require("session-file-store")(session);
 const MemoryStore = require("memorystore")(session);
 
 const app = express();
@@ -34,15 +24,17 @@ const data = require("./route/data");
 const festival = require("./route/festival");
 const gathering = require("./route/gathering");
 const schedule = require("./route/schedule");
+const board = require("./route/board");
 
 
 app.use("/data", data);
 app.use("/festival", festival);
 app.use("/gathering", gathering);
 app.use("/schedule", schedule);
+app.use("/board", board);
 
 app.use(cors({
-  origin: 'http://localhost:3000', // 허용할 도메인
+  origin: true, // 모든 출처를 허용
   credentials: true, // credentials 모드를 사용할 경우 true로 설정
 }));
 
@@ -220,7 +212,7 @@ app.get("/authcheck", (req, res, next) => {
   }
 });
 
-app.get("/getProfile",(req, res, next)=>{
+app.get("/getProfile", (req, res, next) => {
   if (req.session.logined) {
     res.send(req.session)
   } else {
@@ -232,135 +224,7 @@ app.listen(3001, () => {
   console.log("3001 port running");
 });
 
-///규철 게시판 관련 시작///
-// app.get("/boardList", (req, res) => {
-//   connection.query(
-//     "SELECT * FROM board_free",
-//     function (error, results, fields) {
-//       res.send(results);
-//     }
-//   );
-// });
-
 app.get("/Session", (req, res) => {
   res.send(req.session)
 })
 
-app.get("/BoardList_party", (req, res) => {
-  connection.query(
-    "SELECT * FROM board_party",
-    function (error, results, fields) {
-      res.send(results);
-    }
-  );
-});
-
-// app.get("/boardViewComment2", (req, res) => {
-//   const id = req.query.id;
-//   connection.query(
-//     "SELECT * FROM board_free_comment WHERE id = ?",
-//     [id],
-//     function (error, results, fields) {
-//       res.send(results);
-//     }
-//   );
-// });
-
-// app.post("/BoardWriteComment", (req, res) => {
-//   const writer = req.body.writer;
-//   const id = req.body.id;
-//   const comment = req.body.comment;
-//   if (writer && id && comment) {
-//     connection.query(
-//       "INSERT INTO board_free_comment (writer, id,comment, create_date) VALUES(?,?,?,CURRENT_TIMESTAMP)",
-//       [writer, id, comment, 0]
-//     );
-//   }
-// });
-
-// app.post("/BoardWrite_party_Comment", (req, res) => {
-//   const writer = req.body.writer;
-//   const id = req.body.id;
-//   const comment = req.body.comment;
-//   if (writer && id && comment) {
-//     connection.query(
-//       "INSERT INTO board_party_comment (writer, id,comment, create_date) VALUES(?,?,?,CURRENT_TIMESTAMP)",
-//       [writer, id, comment, 0]
-//     );
-//   }
-// });
-
-// app.get("/boardView_party_Comment2", (req, res) => {
-//   const id = req.query.id;
-//   connection.query(
-//     "SELECT * FROM board_party_comment WHERE id = ?",
-//     [id],
-//     function (error, results, fields) {
-//       res.send(results);
-//     }
-//   );
-// });
-
-// app.post("/BoardWrite", (req, res) => {
-//   const writer = req.body.writer;
-//   const title = req.body.title;
-//   const content = req.body.content;
-//   const regdate = req.body.regdate;
-//   const updatedate = req.body.updatedate;
-//   const viewcount = req.body.viewcount;
-//   const image = req.body.image;
-//   const sendData = { isSuccess: "" };
-
-//   if (writer && title && content && regdate) {
-//     console.log("글작성중");
-//     connection.query(
-//       "INSERT INTO board_free (writer, title, content, regdate) VALUES(?,?,?,CURRENT_TIMESTAMP)",
-//       [writer, title, content, 0]
-//       // 여기 에러남 알아봐야함 ㅠㅠ
-//       // function (error, data) {
-//       //   if (error) throw error;
-//       //   req.session.save(function () {
-//       //     sendData.isSuccess = "True";
-//       //     res.send(sendData);
-//       //   });
-//       // }
-//     );
-//   } else {
-//     sendData.isSuccess = "제목, 본문을 작성해주세요.";
-//   }
-// });
-
-// app.post("/BoardWrite_party", (req, res) => {
-//   console.log("게시글 작성(파티)");
-//   const writer = req.body.writer;
-//   const title = req.body.title;
-//   const content = req.body.content;
-//   const regdate = req.body.regdate;
-//   const start_date = req.body.start_date;
-//   const end_date = req.body.end_date;
-//   const updatedate = req.body.updatedate;
-//   const viewcount = req.body.viewcount;
-//   const image = req.body.image;
-//   const number = req.body.number;
-//   const sendData = { isSuccess: "" };
-//   const name = req.body.gather_name;
-
-//   if (writer && title && content && regdate) {
-//     connection.query(
-//       "INSERT INTO board_party (writer, title, content,  start_date, end_date, number,regdate,gather_name) VALUES(?,?,?,?,?,?,CURRENT_TIMESTAMP,?)",
-//       [writer, title, content, start_date, end_date, number, name]
-//       // 여기 에러남 알아봐야함 ㅠㅠ
-//       // function (error, data) {
-//       //   if (error) throw error;
-//       //   req.session.save(function () {
-//       //     sendData.isSuccess = "True";
-//       //     res.send(sendData);
-//       //   });
-//       // }
-//     );
-//   } else {
-//     sendData.isSuccess = "제목, 본문을 작성해주세요.";
-//   }
-// });
-
-///규철 게시판 관련 끝///

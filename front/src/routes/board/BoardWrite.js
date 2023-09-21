@@ -22,7 +22,7 @@ function BoardWrite() {
         const files = result;
         alert("저장 완료");
       })
-      .catch(function (err) {});
+      .catch(function (err) { });
   }
 
   const [boaderTitleText, setBoaderTitleText] = useState("");
@@ -85,7 +85,7 @@ function BoardWrite() {
                 viewcount: null,
                 image: null,
               };
-              fetch("http://localhost:3001/BoardWrite", {
+              fetch("http://localhost:3001/board/BoardWrite", {
                 method: "post",
                 headers: {
                   "content-type": "application/json",

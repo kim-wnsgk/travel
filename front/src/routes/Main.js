@@ -209,14 +209,14 @@ function Main() {
           <CgProfile size={"50px"} color="rgb(72, 72, 72)" cursor="pointer" />
           <div className={styles.profileSelector}>
             <div className={styles.profileSelect}>
-            {islogin ?
+              {islogin ?
                 <Link to="/mypage">내정보</Link> :
-                <button className={styles.prof} onClick={()=>{alert("먼저 로그인 해주세요");navigate("/login")}}>내정보</button>}
+                <button className={styles.prof} onClick={() => { alert("먼저 로그인 해주세요"); navigate("/login") }}>내정보</button>}
             </div>
             <div className={styles.profileSelect}>
-            {islogin ?
-              <Link to="/mypage">정보수정</Link> :
-              <button className={styles.prof}onClick={()=>{alert("먼저 로그인 해주세요");navigate("/login")}}>정보수정</button>}
+              {islogin ?
+                <Link to="/mypage">정보수정</Link> :
+                <button className={styles.prof} onClick={() => { alert("먼저 로그인 해주세요"); navigate("/login") }}>정보수정</button>}
             </div>
             <div className={styles.profileSelect}>
               {islogin ?

@@ -32,7 +32,7 @@ function BoardWrite_party() {
         const files = result;
         alert("저장 완료");
       })
-      .catch(function (err) {});
+      .catch(function (err) { });
   }
 
   const [boaderTitleText, setBoaderTitleText] = useState("");
@@ -63,7 +63,7 @@ function BoardWrite_party() {
 
   function insert() {
     const oneDay = 24 * 60 * 60 * 1000; // 1일의 밀리초 수
-    const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay))+1;
+    const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay)) + 1;
     axios
       .get("http://localhost:3001/gathering/insert", {
         params: {
@@ -221,7 +221,7 @@ function BoardWrite_party() {
               console.log(boardData.start_date);
               console.log(boardData.end_date);
               console.log("테스트중이용~");
-              fetch("http://localhost:3001/BoardWrite_party", {
+              fetch("http://localhost:3001/board/BoardWrite_party", {
                 method: "post",
                 headers: {
                   "content-type": "application/json",
