@@ -22,7 +22,7 @@ const BoardList = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const td = await axios.get("http://localhost:3001/boardList");
+        const td = await axios.get("http://localhost:3001/board/boardList");
         setData(td.data);
       } catch (e) {
         console.log(e);

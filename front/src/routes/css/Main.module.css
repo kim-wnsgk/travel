@@ -1,127 +1,20 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-.mainPageContainer {
+.container {
   display: flex;
   flex-direction: column;
 }
 
-.header {
-  width: 1200px;
-  margin: 0 auto;
+.mainHeader {
   position: absolute;
   z-index: 2;
   top: 70px;
   left: 50%;
-  border-radius: 10px;
   transform: translate(-50%, 0%);
-  background-color: white;
-  display: flex;
-  justify-content: space-between;
-}
-
-.logo {
-  margin-left: 20px;
-  height: 80px;
-}
-
-.logo img {
-  margin-top: 10px;
-  width: 148px;
-  height: 60px;
-}
-
-.profile {
-  position: absolute;
-  right: -20px;
-  top: -70px;
-  width: 200px;
-  text-align: center;
-}
-
-/* 나중에 애니메이션 효과로 바꾸기 */
-.profile:hover .profileSelector {
-  display: block;
-}
-
-.profileSelector {
-  display: none;
-  border: 2px solid grey;
-  border-radius: 10px;
-  background-color: white;
-  padding: 5px;
-  line-height: 30px;
-  animation-duration: 1s;
-  /* transition: all 0.5s; */
-  cursor: pointer;
-}
-
-.profileSelect {
-  font-weight: bold;
-}
-
-.profileSelect:hover a {
-  color: black;
-  text-decoration: underline;
-}
-
-.profileSelect > a {
-  color: rgb(155, 155, 155);
-}
-.prof{
-  border:none;
-  background-color: white;
-  cursor:pointer;
-  font-weight: bold;
-  font-size: medium;
-  color:rgb(155, 155, 155)
-}
-.prof:hover {
-  text-decoration-line: underline;
-  color : black
-}
-.menuContainer {
-  width: 800px;
-  align-items: center;
-  display: flex;
-}
-
-.menus {
-  flex: 1;
-  display: flex;
-}
-
-.menu {
-  flex: 1;
-  text-align: center;
-  margin: 10px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  border-right: 1px solid #595959;
-}
-
-.menu:last-child {
-  border-right: 0;
-}
-
-.menus ul {
-  display: none;
-}
-
-.menus:hover {
-  /* height: 200px; */
-}
-
-.menus:hover ul {
-  display: block;
-}
-
-.link {
-  text-decoration: none;
-  display: block;
-  color: black;
 }
 
 .imageContainer {
@@ -325,6 +218,7 @@
   display: flex;
   flex-direction: row;
 }
+
 .boardUp {
   margin-top: 60px;
   display: flex;
@@ -334,18 +228,21 @@
 .festivalContainer {
   margin-top: 350px;
 }
+
 .imageWrap {
   border: 1px none none;
   padding: 20px;
   background-color: white;
   border-radius: 20px;
 }
+
 .bannerOnText {
   position: absolute;
   top: 870px;
   padding-left: 30px;
   width: 70%;
 }
+
 .bannerOnTextH2 {
   font-size: 36px;
   font-weight: 800;
@@ -382,6 +279,7 @@
   top: 28%;
   color: rgb(62, 62, 62);
 }
+
 .boardText1 {
   font-weight: bold;
   font-size: 1.9rem;
@@ -392,6 +290,7 @@
   font-size: 1.2rem;
   margin-bottom: 15px;
 }
+
 .boardText3 {
   font-size: 1.2rem;
 }

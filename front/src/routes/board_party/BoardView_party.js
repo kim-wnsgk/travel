@@ -28,7 +28,7 @@ const BoardView_party = () => {
   useEffect(() => {
     async function fetchData() {
       axios
-        .get("http://localhost:3001/BoardView_party_Comment2", {
+        .get("http://localhost:3001/board/BoardView_party_Comment2", {
           params: {
             id: board_id,
           },
@@ -51,7 +51,7 @@ const BoardView_party = () => {
       id: board_id,
     };
     //comment의 내용을 db로 전송 -> 내용을 댓글 리스트에 표현.
-    fetch("http://localhost:3001/BoardWrite_party_Comment", {
+    fetch("http://localhost:3001/board/BoardWrite_party_Comment", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -108,7 +108,7 @@ const BoardView_party = () => {
                 <div className={styles.commentWriterBox}>
                   <span className={styles.commentWriter}>{p.writer}</span>
                   {board_data.writer === writer ? (
-                    <button className={styles.commentAddParty} onClick={()=>addMem(p.writer)}>
+                    <button className={styles.commentAddParty} onClick={() => addMem(p.writer)}>
                       모임원 추가
                     </button>
                   ) : null}
