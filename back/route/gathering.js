@@ -18,6 +18,7 @@ connection.connect((error) => {
 router.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 router.use(bodyParser.json({ limit: "50mb" }));
 
+// 해당 user의 모임(일정) 모두 불러오기
 router.get("/select", function (req, res) {
   connection.query(
     `SELECT name, admin FROM gathering WHERE user='${req.query.user}'`,
@@ -32,6 +33,7 @@ router.get("/select", function (req, res) {
   );
 });
 
+// 
 router.get("/selMem", function (req, res) {
   connection.query(
     `SELECT user,admin FROM gathering WHERE admin='${req.query.user}' AND name='${req.query.name}'`,
