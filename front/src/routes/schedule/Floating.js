@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import styles from "./Floating.module.css";
 import axios from "axios";
 import * as dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 function Floating() {
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState(0);
   const [selected2, setSelected2] = useState(0);
   const [date, setDate] = useState([]);
   const [sch, setSch] = useState([]);
-
+  const [user, setUser] = useState();
+  const navigate = useNavigate();
   function select(index) {
     setSelected(index);
   }
@@ -16,16 +18,27 @@ function Floating() {
   function select2(index) {
     setSelected2(index);
   }
-
+  useEffect(() => {
+    axios
+        .get("http://localhost:3001/user/getProfile", { withCredentials: true })
+        .then(function (response) {
+            const session = response.data;
+            console.log(session);
+            setUser(session.user);
+            
+        });
+}, []);
+console.log(user)
   async function fetchData() {
     await axios
       .get("http://localhost:3001/gathering/select", {
         params: {
-          user: "sls9905",
+          user: user
         },
       })
       .then(function (response) {
         setData(response.data);
+        console.log("이거",response)
       });
   }
   async function fetchGathering() {
@@ -33,8 +46,9 @@ function Floating() {
       await axios
         .get("http://localhost:3001/schedule/checkDate", {
           params: {
-            name: data[selected].name,
-            admin: data[selected].admin,
+            id : data[selected].id
+            // name: data[selected].name,
+            // admin: data[selected].admin,
           },
         })
         .then(function (response) {
@@ -69,7 +83,7 @@ function Floating() {
   }
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     fetchGathering();
@@ -78,7 +92,7 @@ function Floating() {
   useEffect(() => {
     fetchSch();
   }, [selected2,date]);
-
+  console.log(sch, selected2)
   return (
     <div className={styles.container}>
       <div className={styles.selGath}>
@@ -140,11 +154,12 @@ function Floating() {
               <div className={styles.schduleTime}>
                 일정 시간 : {item.start} ~ {item.end}
               </div>
-              <div onClick={()=>delSch(item.aid)} style={{ textAlign: "right" }}>{item.aid}</div>
+              <div className={styles.schDel} onClick={()=>delSch(item.aid)} style={{ textAlign: "right" }}>X</div>
             </div>
           ))
         )}
       </div>
+      <div className={styles.GoMap} onClick={()=>navigate('./map',{state:{name:data[selected].name,id:data[selected].id,offset:selected2,date:date[0]?.date}})}>지도로 보기</div>
     </div>
   );
 }

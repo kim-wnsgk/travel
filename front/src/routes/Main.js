@@ -14,6 +14,7 @@ import banner from "./img/banner.png";
 
 function Main() {
   const [testId, setTestId] = useState("sls9905");
+  const [user, setUser] = useState("");
   const getMeta = (url) =>
     new Promise((resolve, reject) => {
       const img = new Image();
@@ -24,8 +25,6 @@ function Main() {
 
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
-
-
   const onSearchChange = (e) => {
     setSearchText(e.target.value);
   };

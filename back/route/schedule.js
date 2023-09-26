@@ -16,13 +16,11 @@ connection.connect((error) => {
 
 router.get("/checkDate", function (req, res) {
   connection.query(
-    `SELECT *
-    FROM schedule_info
-    WHERE id IN (
-        SELECT id
-        FROM gathering
-        WHERE name = '${req.query.name}' AND admin = '${req.query.admin}' AND user = '${req.query.admin}'
-    );`,
+    `SELECT * FROM schedule_info where id = ${req.query.id};`,
+    // WHERE id IN (
+    //     SELECT id
+    //     FROM gathering
+    //     WHERE name = '${req.query.name}' AND admin = '${req.query.admin}' AND user = '${req.query.admin}'
     function (error, results, fields) {
       if (error) {
         console.log(error);
@@ -54,7 +52,7 @@ router.get("/getSchedule", async function (req, res) {
   try {
     const results = await new Promise((resolve, reject) => {
       connection.query(
-        `SELECT * FROM schedule WHERE id='${req.query.id}' AND offset='${req.query.offset}';`,
+        `SELECT * FROM schedule WHERE id='${req.query.id}' AND offset='${req.query.offset}' order by start asc;`,
         function (error, results, fields) {
           if (error) {
             reject(error);
@@ -91,6 +89,7 @@ router.get("/getSchedule", async function (req, res) {
     console.log(error);
   }
 });
+
 router.get("/delSch", function (req, res) {
   console.log(req.query);
   connection.query(
@@ -99,6 +98,20 @@ router.get("/delSch", function (req, res) {
       if (error) {
         console.log(error);
       } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
+router.get("/convertAddr", function (req, res) {
+  connection.query(
+    `select addr from sight where contentId in (select sight_id from schedule where id=${req.query.id} and offset = ${req.query.offset})`,
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(results)
         res.json(results);
       }
     }
