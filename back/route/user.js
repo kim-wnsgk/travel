@@ -43,12 +43,11 @@ router.post("/signup", (req, res) => {
     const username = req.body.userId;
     const password = req.body.userPassword;
     const password2 = req.body.userPassword2;
-
+    console.log(req.query)
     const sendData = { isSuccess: "" };
-
     if (username && password && password2) {
         connection.query(
-            "SELECT * FROM usertable WHERE username = ?",
+            "SELECT * FROM usertable WHERE id = ?",
             [username],
             function (error, results, fields) {
                 if (error) throw error;
@@ -56,7 +55,7 @@ router.post("/signup", (req, res) => {
                     const hashedPassword = bcrypt.hashSync(password, 10);
 
                     connection.query(
-                        "INSERT INTO usertable (username, userchn) VALUES (?, ?)",
+                        "INSERT INTO usertable (id, userchn) VALUES (?, ?)",
                         [username, hashedPassword],
                         function (error, data) {
                             if (error) throw error;
@@ -89,7 +88,7 @@ router.post("/login", (req, res) => {
 
     if (username && password) {
         connection.query(
-            "SELECT * FROM usertable WHERE username = ?",
+            "SELECT * FROM usertable WHERE id = ?",
             [username],
             function (error, results, fields) {
                 if (error) throw error;

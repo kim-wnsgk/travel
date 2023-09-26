@@ -25,12 +25,13 @@ function Register() {
             userPassword: password,
             userPassword2: password2,
           };
-          fetch("http://localhost:3001/signup", { //signin 주소에서 받을 예정
+          fetch("http://localhost:3001/user/signup",{ //signin 주소에서 받을 예정
             method: "post", // method :통신방법
             headers: {      // headers: API 응답에 대한 정보를 담음
-              "content-type": "application/json",
+              'Content-Type': "application/json",
             },
             body: JSON.stringify(userData), //userData라는 객체를 보냄
+            
           })
             .then((res) => res.json())
             .then((json) => {
@@ -41,6 +42,7 @@ function Register() {
               else {
                 alert(json.isSuccess)
               }
+              console.log(userData)
             });
         }} /></p>
       </div>
