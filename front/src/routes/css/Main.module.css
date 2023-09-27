@@ -52,11 +52,17 @@
   border: 0;
   font-size: 1.2rem;
   opacity: 0.7;
+  box-shadow: 3px 3px 5px black;
+  transition: all 0.3s ease-in-out;
 }
 
 .search:focus {
+  top:240px;
+  width:60%;
+  height:70px;
   outline: none;
-  box-shadow: 3px 3px 5px rgb(192, 192, 192);
+  box-shadow: 3px 3px 5px black(192, 192, 192);
+
 }
 
 .imageContainer image {
@@ -74,7 +80,7 @@
 }
 
 .contentContainer {
-  height: 2000px;
+  height: 2200px;
   /* 내용물에따라 수정 */
   width: 940px;
   margin: 0 auto;
@@ -212,6 +218,7 @@
   top: 0; */
   position: sticky;
   top: 100px;
+  margin-top: 535px;
 }
 
 .testWrap {

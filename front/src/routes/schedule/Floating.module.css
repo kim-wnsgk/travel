@@ -8,6 +8,7 @@
   border: 1px solid none;
   border-radius: 15px;
   background-color: rgba(109, 103, 34, 0.566);
+  padding-top:2%;
 }
 .selGath {
   flex: 1;
@@ -147,4 +148,28 @@
 
 .floatingBannerMain {
   margin: auto;
+}
+
+.schDel{
+  cursor:pointer;
+  color : red;
+  font-size: x-large;
+  font-weight: bolder;
+}
+
+.GoMap{
+  cursor:pointer;
+  height: 50px;
+  width: 100px;
+  margin:10px;
+  border-radius: 10%;
+  background-color: orange;
+  color:white;
+  font-size: larger;
+  text-align: center;
+  display : flex;
+	justify-content : center;
+  align-items: center;
+
+  
 }

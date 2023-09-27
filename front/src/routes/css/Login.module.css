@@ -1,6 +1,7 @@
 .container {
     width: 600px;
     margin: 0 auto;
+    margin-top: 10rem;
 }
 
 .logoContainer {
@@ -43,14 +44,16 @@
     height: 70px;
     line-height: 70px;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: xx-large;
     border-radius: 3px;
     background-color: rgb(137, 168, 255);
     cursor: pointer;
+    border:none
 }
 
 .loginButton:hover {
-    font-weight: bold;
+    font-weight: bolder;
+    color: white;
 }
 
 .others {

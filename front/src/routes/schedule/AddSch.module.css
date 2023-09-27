@@ -6,7 +6,7 @@
   /*나중에 100% 로 변경*/
   margin: auto;
   /* background-color: rgba(109, 103, 34, 0.566); */
-  color: white;
+  color: black;
 }
 .gathering::-webkit-scrollbar {
   width: 8px;

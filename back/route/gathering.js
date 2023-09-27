@@ -20,8 +20,9 @@ router.use(bodyParser.json({ limit: "50mb" }));
 
 // 해당 user의 모임(일정) 모두 불러오기
 router.get("/select", function (req, res) {
+  console.log(req.query.user)
   connection.query(
-    `SELECT name, admin FROM gathering WHERE user='${req.query.user}'`,
+    `SELECT id, name, admin FROM gathering WHERE user='${req.query.user}'`,
     function (error, results, fields) {
       if (error) {
         console.log(error);

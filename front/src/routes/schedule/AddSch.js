@@ -18,7 +18,25 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
   const [value, onChange] = useState("10:00");
   const [value2, onChange2] = useState("10:00");
   const [sight, setSight] = useState("");
-
+  const [user,setUser] = useState();
+  useEffect(() => {
+    if(isOpen){
+    axios
+        .get("http://localhost:3001/user/getProfile", { withCredentials: true })
+        .then(function (response) {
+            const session = response.data;
+            console.log("이거 보자",response.data.logined);
+            setUser(session.user);
+            if(response.data.logined){
+              console.log("logined")
+            }
+            else{
+              alert("로그인 후에 이용해주세요");
+              navigate("../login")
+            }
+            })
+          }
+}, [isOpen]);
   function select(index) {
     setSelected(index);
   }
@@ -34,7 +52,7 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
     axios
       .get("http://localhost:3001/gathering/select", {
         params: {
-          user: testId,
+          user: user,
         },
       })
       .then(function (response) {
@@ -47,8 +65,7 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
       axios
         .get("http://localhost:3001/schedule/checkDate", {
           params: {
-            name: data[selected].name,
-            admin: data[selected].admin,
+            id : data[selected].id
           },
         })
         .then(function (response) {
@@ -83,7 +100,7 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
   }
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [user]);
   useEffect(() => {
     fetchGathering();
   }, [data, selected]);
@@ -145,14 +162,14 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
                 onClick={() => select2(index)}
                 className={styles.gatheringEles}
               >
-                {index}일차
+                {index+1}일차
               </button>
             ) : (
               <button
                 onClick={() => select2(index)}
                 className={styles.gatheringEle}
               >
-                {index}일차
+                {index+1}일차
               </button>
             )
           )}
