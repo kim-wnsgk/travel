@@ -4,7 +4,6 @@ import { useState } from "react";
 import styles from "./MapSch.module.css";
 import axios from "axios";
 import useDidMountEffect from '../useDidMountEffect';
-import {MapInfoWindow} from 'react-kakao-maps-sdk'
 
 const { kakao } = window;
 function Map() {
