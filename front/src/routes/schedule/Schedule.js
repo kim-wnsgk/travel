@@ -4,39 +4,20 @@ import styles from './Schedule.module.css';
 import { useEffect, useState } from 'react';
 import Pagination from "react-js-pagination";
 
+import { useNavigate } from 'react-router-dom';
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import * as dayjs from "dayjs";
 import axios from "axios";
 
 function Schedule() {
+    const navigate = useNavigate();
     const [page, setPage] = useState(1);
     const [items] = useState(5);
     const handlePageChange = (page) => {
         setPage(page);
     };
-    const scheduleList = [
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        { title: '제주도 여행', date: '23.09.21 ~ 23.09.25', dday: 'D-21' },
-        // 다른 일정 항목들 추가
-    ];
 
     const [showModal, setShowModal] = useState(false); // 모달 열림/닫힘 상태를 관리하는 상태 추가
     const toggleModal = () => {
@@ -57,7 +38,7 @@ function Schedule() {
     }, []);
     useEffect(() => {
         axios
-            .get("http://localhost:3001/gathering/select/gathering-scheculeinfo", {
+            .get("http://localhost:3001/gathering/select/gathering-scheduleinfo", {
                 params: {
                     user
                 },
@@ -105,17 +86,20 @@ function Schedule() {
                 <div className={styles.lists}>
                     {schedule &&
                         schedule.slice(items * (page - 1), items * (page - 1) + items).map((item, index) => {
-                            const dday = Math.round(Math.abs((dayjs(item.start) - dayjs(new Date())) / (24 * 60 * 60 * 1000)));
+                            const startDate = dayjs(item.start);
+                            const currentDate = dayjs();
+                            const dday = Math.round(Math.abs(startDate.diff(currentDate, 'day')));
                             const ddayString = dday === 0 ? 'D-Day' : dday < 0 ? `D+${Math.abs(dday)}` : `D-${dday}`;
+
                             const ddayColor = dday === 0 ? 'red' : dday < 0 ? 'blue' : 'black'; // 색상 조건에 따라 변경
                             const ddayStyle = {
                                 color: ddayColor,
-                                fontWeight: 'bold',
                             };
 
                             return (
                                 <div className={styles.list} key={index}>
-                                    <div className={styles.title}>
+                                    <div className={styles.title}
+                                        onClick={() => navigate(`/schedule/info/${item.id}`)}>
                                         {item.name}
                                     </div>
                                     <div className={styles.date}>
@@ -133,7 +117,7 @@ function Schedule() {
                             className={styles.Pagination}
                             activePage={page}
                             itemsCountPerPage={items}
-                            totalItemsCount={scheduleList.length - 1}
+                            totalItemsCount={schedule.length}
                             pageRangeDisplayed={5}
                             onChange={handlePageChange}
                             prevPageText={"<"}

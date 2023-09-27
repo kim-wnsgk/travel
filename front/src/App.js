@@ -31,6 +31,7 @@ import Gather_modi from "./routes/gathering/Gather_modi.js";
 import Gather_new from "./routes/gathering/Gather_new.js";
 
 import Schedule from "./routes/schedule/Schedule.js";
+import ScheduleInfo from "./routes/schedule/ScheduleInfo.js";
 import Floating from "./routes/schedule/Floating.js"
 import AddSch from "./routes/schedule/AddSch.js";
 
@@ -76,6 +77,7 @@ function App() {
         <Route path="/gather_new" element={<Gather_new />} />
 
         <Route path="/schedule" element={<Schedule />} />
+        <Route path="/schedule/info/:id" element={<ScheduleInfo />} />
         <Route path="/addSch" element={<AddSch />} />
         <Route path="/floating" element={<Floating />} />
         <Route path="/map" element={<Map />} />

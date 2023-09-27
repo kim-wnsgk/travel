@@ -32,7 +32,7 @@ router.get("/select", function (req, res) {
   );
 });
 
-// 
+// 이거 사용하나요? 사용안하면 제거?
 router.get("/selMem", function (req, res) {
   connection.query(
     `SELECT user,admin FROM gathering WHERE admin='${req.query.user}' AND name='${req.query.name}'`,
@@ -69,12 +69,22 @@ router.get("/insert", function (req, res) {
           }
         }
       );
+      connection.query(
+        `insert into gathering_members(group_id,member_id) values ('${id}','${req.query.user}');`,
+        function (error, results, fileds) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(results);
+          }
+        }
+      );
     }
   );
 });
 
-//gathering, schedule_info Join 테이블 중 해당 user만 응답
-router.get("/select/gathering-scheculeinfo", function (req, res) {
+//gathering, schedule_info Join 테이블 중 해당 "user"만 응답
+router.get("/select/gathering-scheduleinfo", function (req, res) {
   connection.query(
     `SELECT * FROM gathering JOIN schedule_info ON gathering.id = schedule_info.id WHERE user='${req.query.user}'`,
     function (error, results, fields) {
@@ -83,6 +93,35 @@ router.get("/select/gathering-scheculeinfo", function (req, res) {
       } else {
         console.log(results);
         res.send(results);
+      }
+    }
+  );
+});
+//gathering, schedule_info Join 테이블 중 해당 "id"만 응답
+router.get("/select/gathering-scheduleinfo-id", function (req, res) {
+  console.log("asdsad", req.query.id)
+  connection.query(
+    `SELECT * FROM gathering JOIN schedule_info ON gathering.id = schedule_info.id WHERE gathering.id=${req.query.id}`,
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(results);
+        res.send(results);
+      }
+    }
+  );
+});
+
+// 그룹id에 따른 멤버 리스트 응답
+router.get("/select/members", function (req, res) {
+  connection.query(
+    `SELECT member_id FROM gathering_members WHERE group_id='${req.query.id}'`,
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      } else {
+        res.json(results);
       }
     }
   );

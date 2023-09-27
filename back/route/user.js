@@ -40,24 +40,24 @@ router.use(bodyParser.json({ limit: "50mb" }));
 
 // 가입 라우트
 router.post("/signup", (req, res) => {
-    const username = req.body.userId;
+    const id = req.body.userId;
     const password = req.body.userPassword;
     const password2 = req.body.userPassword2;
 
     const sendData = { isSuccess: "" };
 
-    if (username && password && password2) {
+    if (id && password && password2) {
         connection.query(
-            "SELECT * FROM usertable WHERE username = ?",
-            [username],
+            "SELECT * FROM usertable WHERE id = ?",
+            [id],
             function (error, results, fields) {
                 if (error) throw error;
                 if (results.length <= 0 && password === password2) {
                     const hashedPassword = bcrypt.hashSync(password, 10);
 
                     connection.query(
-                        "INSERT INTO usertable (username, userchn) VALUES (?, ?)",
-                        [username, hashedPassword],
+                        "INSERT INTO usertable (id, userchn) VALUES (?, ?)",
+                        [id, hashedPassword],
                         function (error, data) {
                             if (error) throw error;
                             req.session.save(function () {
@@ -83,14 +83,14 @@ router.post("/signup", (req, res) => {
 
 //로그인
 router.post("/login", (req, res) => {
-    const username = req.body.userId;
+    const id = req.body.userId;
     const password = req.body.userPassword;
     const sendData = { isLogin: "" };
 
-    if (username && password) {
+    if (id && password) {
         connection.query(
-            "SELECT * FROM usertable WHERE username = ?",
-            [username],
+            "SELECT * FROM usertable WHERE id = ?",
+            [id],
             function (error, results, fields) {
                 if (error) throw error;
                 if (results.length > 0) {
@@ -99,7 +99,7 @@ router.post("/login", (req, res) => {
                     bcrypt.compare(password, user.userchn, (err, result) => {
                         if (result === true) {
                             req.session.logined = true;
-                            req.session.user = username;
+                            req.session.user = id;
 
                             sendData.isLogin = "True";
                             console.log(req.session);
