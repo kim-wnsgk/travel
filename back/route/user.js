@@ -89,8 +89,8 @@ router.post("/login", (req, res) => {
 
     if (id && password) {
         connection.query(
-            "SELECT * FROM usertable WHERE username = ?",
-            [username],
+            "SELECT * FROM usertable WHERE id = ?",
+            [id],
             function (error, results, fields) {
                 if (error) throw error;
                 if (results.length > 0) {
