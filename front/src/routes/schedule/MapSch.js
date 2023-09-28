@@ -9,9 +9,11 @@ const { kakao } = window;
 function Map() {
   const location = useLocation().state;
   const [date,setDate] = useState();
-  const [schs,setSchs] = useState();
+  const [schs,setSchs] = useState([]);
   const [selected,setSelected] = useState(location.offset);
   const [addr, setAddr] = useState([]);
+  const [curVal, setCulVal] = useState();
+  const [isHovered, setIsHovered] = useState(false);
   function select(index) {
     setSelected(index);
   }
@@ -29,6 +31,7 @@ function Map() {
         });
     }
   }
+  console.log(schs)
   async function convertAddr() {
       await axios
         .get("http://localhost:3001/schedule/convertAddr", {
@@ -101,13 +104,18 @@ var infowindow = new kakao.maps.InfoWindow({
           ).then((points) => {
             var bounds = new kakao.maps.LatLngBounds();
         
-            points.forEach((point) => {
+            points.forEach((point,index) => {
               if (point) {
                 var marker = new kakao.maps.Marker({ position: point });
                 marker.setMap(map);
                 bounds.extend(point);
+                var infowindow = new kakao.maps.InfoWindow({
+                  content: `<div style="margin:auto">시간:${schs[index].start}~${schs[index].end}<br/> 장소:${schs[index].sight_id}</div>`
+              })
+              kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow,index));
+              kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
               }
-            
+              console.log(marker)
             });
             map.setBounds(bounds);
 
@@ -124,11 +132,25 @@ var infowindow = new kakao.maps.InfoWindow({
       }
            
         }, [addr])
-
+        function makeOverListener(map, marker, infowindow,index) {
+          return function() {
+              infowindow.open(map, marker);
+              setCulVal(index)
+          };
+      }
+      
+      // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+      function makeOutListener(infowindow) {
+          return function() {
+              infowindow.close();
+              setCulVal(-1)
+          };
+      }
     return (
-        <div>
-          <div>{location.name}</div>
-          <div> 
+        <div className={styles.container}>
+          <div className={styles.headEles}>
+          <h1>{location.name} 모임</h1>
+          <div className={styles.dates}> 
          {Array.from({ length: location.date }, (_, index) =>(
           index===selected?(
           <button className={styles.selButtons} onClick={()=>select(index)}>{index+1}일차</button>
@@ -136,12 +158,33 @@ var infowindow = new kakao.maps.InfoWindow({
             <button className={styles.selButton}onClick={()=>select(index)}>{index+1}일차</button>
           )
          ))}
-         
          </div>
-            <div id="map" style={{
-                width: '1500px',
-                height: '1000px'
-            }} />
+         </div>
+         <div className={styles.mainEles}>
+            <div className={styles.map} id="map"/>
+            <div className={styles.list}>
+            {schs.length === 0 ? (
+          <p>아직 일정이 없습니다. 추가해주세요.</p>
+        ) : (
+          schs.map((item, index) => (index===curVal?(
+            <div className={styles.eles}>{index+1}.
+              <div className={styles.schduleSite}>장소 : {item.sight_id}</div>
+              <div className={styles.schduleTime}>
+                일정 시간 : {item.start} ~ {item.end}
+              </div>
+            </div>):(
+              <div className={styles.ele}>{index+1}.
+              <div className={styles.schduleSite}>장소 : {item.sight_id}</div>
+              <div className={styles.schduleTime}>
+                일정 시간 : {item.start} ~ {item.end}
+              </div>
+            </div>
+            )
+          ))
+        )}
+        
+            </div>
+          </div>
             
         </div>
     )
