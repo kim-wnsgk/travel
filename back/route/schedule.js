@@ -106,12 +106,11 @@ router.get("/delSch", function (req, res) {
 
 router.get("/convertAddr", function (req, res) {
   connection.query(
-    `select addr from sight where contentId in (select sight_id from schedule where id=${req.query.id} and offset = ${req.query.offset})`,
+    `select * from sight where contentId in (select sight_id from schedule where id=${req.query.id} and offset = ${req.query.offset})`,
     function (error, results, fields) {
       if (error) {
         console.log(error);
       } else {
-        console.log(results)
         res.json(results);
       }
     }

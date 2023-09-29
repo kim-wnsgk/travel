@@ -54,6 +54,7 @@
   opacity: 0.7;
   box-shadow: 3px 3px 5px black;
   transition: all 0.3s ease-in-out;
+  padding-left: 2%;
 }
 
 .search:focus {
@@ -61,7 +62,9 @@
   width:60%;
   height:70px;
   outline: none;
+  font-size: xx-large;
   box-shadow: 3px 3px 5px black(192, 192, 192);
+  padding-left: 3%;
 
 }
 

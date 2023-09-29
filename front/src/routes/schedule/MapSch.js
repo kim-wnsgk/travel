@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "./MapSch.module.css";
 import axios from "axios";
 import useDidMountEffect from '../useDidMountEffect';
+import MapDetail from "./MapDetail";
 
 const { kakao } = window;
 function Map() {
@@ -12,8 +13,10 @@ function Map() {
   const [schs,setSchs] = useState([]);
   const [selected,setSelected] = useState(location.offset);
   const [addr, setAddr] = useState([]);
-  const [curVal, setCulVal] = useState();
+  const [curVal, setCurVal] = useState();
   const [isHovered, setIsHovered] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const [curAddr, setCurAddr] = useState();
   function select(index) {
     setSelected(index);
   }
@@ -31,7 +34,6 @@ function Map() {
         });
     }
   }
-  console.log(schs)
   async function convertAddr() {
       await axios
         .get("http://localhost:3001/schedule/convertAddr", {
@@ -42,7 +44,6 @@ function Map() {
         })
         .then(function (response) {
           setAddr(response.data);
-          console.log("너 왜 안뜨니",response.data)
         });
     
   }
@@ -60,16 +61,17 @@ function Map() {
     useDidMountEffect(() => {
         const container = document.getElementById('map');
         const options = {
-            center: new kakao.maps.LatLng(33.450701, 126.570667),//지도의중심좌표
-            level: 2
+            center: new kakao.maps.LatLng(37.3226546, 127.1260339),//지도의중심좌표
+            level: 2,
+            zIndex:1
         };
         var map = new kakao.maps.Map(container, options);
         var Addr = [];
       console.log(Object.keys(addr).length === 0)
       if(Object.keys(addr).length === 0){
         console.log("none")
-        var iwContent = '<div style="margin:auto;margin-top:20px;text-align:center;height:150px;width:450px;font-size:45px;color:red;padding:5px;"> 아직 일정이 없습니다. <br/>일정을 추가해주세요!</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-    iwPosition = new kakao.maps.LatLng(33.450701, 126.570667), //인포윈도우 표시 위치입니다
+        var iwContent = '<div style="margin:auto;margin-top:20px;text-align:center;height:150px;width:450px;font-size:45px;color:red;padding:5px;"> 아직 일정이 없습니다. <br/>일정을 추가해주세요!</div>',
+    iwPosition = new kakao.maps.LatLng(37.3226546, 127.1260339), //인포윈도우 표시 위치입니다
     iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
 // 인포윈도우를 생성하고 지도에 표시합니다
@@ -106,16 +108,16 @@ var infowindow = new kakao.maps.InfoWindow({
         
             points.forEach((point,index) => {
               if (point) {
-                var marker = new kakao.maps.Marker({ position: point });
+                var marker = new kakao.maps.Marker({ position: point,clickable: true });
                 marker.setMap(map);
                 bounds.extend(point);
                 var infowindow = new kakao.maps.InfoWindow({
-                  content: `<div style="margin:auto">시간:${schs[index].start}~${schs[index].end}<br/> 장소:${schs[index].sight_id}</div>`
+                  content: `<div style="margin:auto;overflow: hidden;">시간:${schs[index].start}~${schs[index].end}<br/> 장소:${schs[index].sight_id}</div>`
               })
               kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow,index));
               kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+              kakao.maps.event.addListener(marker, 'click', markerClicked(index));
               }
-              console.log(marker)
             });
             map.setBounds(bounds);
 
@@ -132,22 +134,32 @@ var infowindow = new kakao.maps.InfoWindow({
       }
            
         }, [addr])
+        //마우스 오버시
         function makeOverListener(map, marker, infowindow,index) {
           return function() {
               infowindow.open(map, marker);
-              setCulVal(index)
+              setCurVal(index)
           };
       }
-      
-      // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+      //마우스가 마커를 벗어나면
       function makeOutListener(infowindow) {
           return function() {
               infowindow.close();
-              setCulVal(-1)
+              setCurVal(-1)
           };
+        }
+      //마커 클릭하면
+      function markerClicked(index){
+        return function(){
+          setCurAddr(index)
+          console.log(schs[index])
+          setIsOpen(true)
+        }
       }
+      
     return (
         <div className={styles.container}>
+          {isOpen && <MapDetail setModalOpen={setIsOpen} title={addr[curAddr]?.title} image={addr[curAddr]?.image} contentId={addr[curAddr]?.contentId}/>}
           <div className={styles.headEles}>
           <h1>{location.name} 모임</h1>
           <div className={styles.dates}> 
@@ -185,7 +197,7 @@ var infowindow = new kakao.maps.InfoWindow({
         
             </div>
           </div>
-            
+          
         </div>
     )
 }

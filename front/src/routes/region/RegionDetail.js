@@ -6,7 +6,6 @@ import axios from "axios";
 import dayjs from "dayjs";
 
 function RegionDetail() {
-  const str = 'hi';
   const API_KEY = process.env.REACT_APP_API_KEY;
   const location = useLocation();
   const [data, setData] = useState(location.state.data);

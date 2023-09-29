@@ -1,0 +1,37 @@
+.modalContainer{
+    width: 600px;
+    height: 600px;
+    z-index: 999;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.7rem;
+    border: 1px solid black;
+    text-align: center;
+    align-items: center;
+  }
+  .modalBackground{
+    position: fixed;
+    z-index: 101;
+    top:0; left: 0; bottom: 0; right: 0;
+    background: rgba(0, 0, 0, 0.8);
+  }
+  .header{
+    font-size: xx-large;
+    margin-top: 3%;
+
+  }
+  .image{
+    margin-top: 3%;
+    width: 416px;
+    height:260px;
+  }
+  .intro{
+    position: relative;
+    margin:5%;
+    height:202px;
+    overflow-x: scroll;
+    font-size: larger;
+  }
