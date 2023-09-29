@@ -6,6 +6,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 
 function RegionDetail() {
+  const str = 'hi';
   const API_KEY = process.env.REACT_APP_API_KEY;
   const location = useLocation();
   const [data, setData] = useState(location.state.data);
@@ -17,11 +18,15 @@ function RegionDetail() {
       const response = await axios.get(
         `https://apis.data.go.kr/B551011/KorService1/detailCommon1?serviceKey=${API_KEY}&MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${data.contentId}&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=1&pageNo=1`
       );
+      console.log(response.data)
       const resData = response.data.response.body.items.item;
       setIntro(resData[0]);
     };
     fetchData();
   }, [location.state]);
+  function createMarkup() {
+    return {__html: intro.overview};
+  }
 
   console.log(intro);
   return (
@@ -43,7 +48,7 @@ function RegionDetail() {
               className={styles.image}
             />
           </div>
-          <div>{intro.overview}</div>
+          <div dangerouslySetInnerHTML={createMarkup()} />
         </div>
       </div>
       {/** */}
