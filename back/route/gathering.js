@@ -20,17 +20,23 @@ router.use(bodyParser.json({ limit: "50mb" }));
 
 // 해당 user의 모임(일정) 모두 불러오기
 router.get("/select", function (req, res) {
-  console.log(req.query.user)
-  connection.query(
-    `SELECT id, name, admin FROM gathering WHERE user='${req.query.user}'`,
-    function (error, results, fields) {
-      if (error) {
-        console.log(error);
-      } else {
-        res.send(results);
-      }
+  const user = req.query.user;
+
+  // gathering_members 테이블을 사용하여 gathering 테이블과 조인
+  const query = `
+    SELECT g.id, g.name, g.admin
+    FROM gathering_members gm
+    JOIN gathering g ON gm.group_id = g.id
+    WHERE gm.member_id = '${user}'
+  `;
+
+  connection.query(query, function (error, results, fields) {
+    if (error) {
+      console.log(error);
+    } else {
+      res.send(results);
     }
-  );
+  });
 });
 
 // 이거 사용하나요? 사용안하면 제거?

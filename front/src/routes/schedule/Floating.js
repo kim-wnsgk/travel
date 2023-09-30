@@ -20,25 +20,25 @@ function Floating() {
   }
   useEffect(() => {
     axios
-        .get("http://localhost:3001/user/getProfile", { withCredentials: true })
-        .then(function (response) {
-            const session = response.data;
-            console.log(session);
-            setUser(session.user);
-            
-        });
-}, []);
-console.log(user)
+      .get("http://localhost:3001/user/getProfile", { withCredentials: true })
+      .then(function (response) {
+        const session = response.data;
+        console.log(session);
+        setUser(session.user);
+
+      });
+  }, []);
+  console.log(user)
   async function fetchData() {
     await axios
-      .get("http://localhost:3001/gathering/select", {
+      .get("http://localhost:3001/gathering/select", {  // gathering_members 테이블에서 자신의 group_id만 해당하는 gathering 테이블 받아오기
         params: {
           user: user
         },
       })
       .then(function (response) {
         setData(response.data);
-        console.log("이거",response)
+        console.log("이거", response)
       });
   }
   async function fetchGathering() {
@@ -46,7 +46,7 @@ console.log(user)
       await axios
         .get("http://localhost:3001/schedule/checkDate", {
           params: {
-            id : data[selected].id
+            id: data[selected].id
             // name: data[selected].name,
             // admin: data[selected].admin,
           },
@@ -71,12 +71,12 @@ console.log(user)
         });
     }
   }
-  async function delSch(aid){
-    await axios.get("http://localhost:3001/schedule/delSch",{
-      params:{
-        aid : aid
+  async function delSch(aid) {
+    await axios.get("http://localhost:3001/schedule/delSch", {
+      params: {
+        aid: aid
       },
-    }).then(function(response){
+    }).then(function (response) {
       alert("삭제되었습니다.")
       window.location.reload()
     })
@@ -91,7 +91,7 @@ console.log(user)
 
   useEffect(() => {
     fetchSch();
-  }, [selected2,date]);
+  }, [selected2, date]);
   console.log(sch, selected2)
   return (
     <div className={styles.container}>
@@ -132,14 +132,14 @@ console.log(user)
               onClick={() => select2(index)}
               className={styles.selButton2s}
             >
-              {index+1}일차
+              {index + 1}일차
             </button>
           ) : (
             <button
               onClick={() => select2(index)}
               className={styles.selButton2}
             >
-              {index+1}일차
+              {index + 1}일차
             </button>
           )
         )}
@@ -154,12 +154,12 @@ console.log(user)
               <div className={styles.schduleTime}>
                 일정 시간 : {item.start} ~ {item.end}
               </div>
-              <div className={styles.schDel} onClick={()=>delSch(item.aid)} style={{ textAlign: "right" }}>X</div>
+              <div className={styles.schDel} onClick={() => delSch(item.aid)} style={{ textAlign: "right" }}>X</div>
             </div>
           ))
         )}
       </div>
-      <div className={styles.GoMap} onClick={()=>navigate('./map',{state:{name:data[selected].name,id:data[selected].id,offset:selected2,date:date[0]?.date}})}>지도로 보기</div>
+      <div className={styles.GoMap} onClick={() => navigate('./map', { state: { name: data[selected].name, id: data[selected].id, offset: selected2, date: date[0]?.date } })}>지도로 보기</div>
     </div>
   );
 }
