@@ -38,7 +38,7 @@ function Schedule() {
     }, []);
     useEffect(() => {
         axios
-            .get("http://localhost:3001/gathering/select/gathering-scheduleinfo", {
+            .get("http://localhost:3001/gathering/select/gathering-userlist", {
                 params: {
                     user
                 },
@@ -86,9 +86,10 @@ function Schedule() {
                 <div className={styles.lists}>
                     {schedule &&
                         schedule.slice(items * (page - 1), items * (page - 1) + items).map((item, index) => {
+                            console.log(item)
                             const startDate = dayjs(item.start);
                             const currentDate = dayjs();
-                            const dday = Math.round(Math.abs(startDate.diff(currentDate, 'day')));
+                            const dday = Math.round(startDate.diff(currentDate, 'day'));
                             const ddayString = dday === 0 ? 'D-Day' : dday < 0 ? `D+${Math.abs(dday)}` : `D-${dday}`;
 
                             const ddayColor = dday === 0 ? 'red' : dday < 0 ? 'blue' : 'black'; // 색상 조건에 따라 변경
