@@ -36,7 +36,7 @@ function ScheduleInfo() {
                 </div>
                 <div className={styles.map}>
                     지도 여기에 넣기
-                    <Map style={{ width: '100 %' }} />
+                    {/* <Map style={{ width: '100 %' }} /> */}
                 </div>
             </div>
         </div>
