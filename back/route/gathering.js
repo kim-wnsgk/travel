@@ -20,17 +20,23 @@ router.use(bodyParser.json({ limit: "50mb" }));
 
 // 해당 user의 모임(일정) 모두 불러오기
 router.get("/select", function (req, res) {
-  console.log(req.query.user)
-  connection.query(
-    `SELECT id, name, admin FROM gathering WHERE user='${req.query.user}'`,
-    function (error, results, fields) {
-      if (error) {
-        console.log(error);
-      } else {
-        res.send(results);
-      }
+  const user = req.query.user;
+
+  // gathering_members 테이블을 사용하여 gathering 테이블과 조인
+  const query = `
+    SELECT g.id, g.name, g.admin
+    FROM gathering_members gm
+    JOIN gathering g ON gm.group_id = g.id
+    WHERE gm.member_id = '${user}'
+  `;
+
+  connection.query(query, function (error, results, fields) {
+    if (error) {
+      console.log(error);
+    } else {
+      res.send(results);
     }
-  );
+  });
 });
 
 // 이거 사용하나요? 사용안하면 제거?
@@ -51,7 +57,7 @@ router.get("/selMem", function (req, res) {
 router.get("/insert", function (req, res) {
   var id = "";
   connection.query(
-    `INSERT INTO gathering (name, user, admin) VALUES ('${req.query.name}', '${req.query.user}', '${req.query.user}');`,
+    `INSERT INTO gathering (name, admin) VALUES ('${req.query.name}', '${req.query.user}');`,
     function (error, results, fields) {
       if (error) {
         console.log(error);
@@ -85,9 +91,9 @@ router.get("/insert", function (req, res) {
 });
 
 //gathering, schedule_info Join 테이블 중 해당 "user"만 응답
-router.get("/select/gathering-scheduleinfo", function (req, res) {
+router.get("/select/gathering-userlist", function (req, res) {
   connection.query(
-    `SELECT * FROM gathering JOIN schedule_info ON gathering.id = schedule_info.id WHERE user='${req.query.user}'`,
+    `SELECT * FROM gathering JOIN gathering_members ON gathering.id = gathering_members.group_id JOIN schedule_info ON gathering.id = schedule_info.id WHERE member_id='${req.query.user}'`,
     function (error, results, fields) {
       if (error) {
         console.log(error);
