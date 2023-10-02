@@ -8,6 +8,8 @@ import MapDetail from "./MapDetail";
 
 const { kakao } = window;
 function Map() {
+  const NAVER = process.env.REACT_APP_NAVER_MAP;
+  const NAVER_ID = process.env.REACT_APP_NAVER_MAP_ID;
   const location = useLocation().state;
   const [date,setDate] = useState();
   const [schs,setSchs] = useState([]);
@@ -17,6 +19,9 @@ function Map() {
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false)
   const [curAddr, setCurAddr] = useState();
+  //두 마커 사이의 거리 구하기
+  const dist =[]
+
   function select(index) {
     setSelected(index);
   }
@@ -34,6 +39,22 @@ function Map() {
         });
     }
   }
+
+  async function getDirection(origin, destination) {
+    try {
+      const response = await axios.get("http://localhost:3001/schedule/getDirection", {
+        params: {
+          origin: origin,
+          destination: destination
+        }
+      });
+      return [response.data.distance, response.data.duration];
+    } catch (error) {
+      console.error(error);
+      return [null, null];
+    }
+  }
+
   async function convertAddr() {
       await axios
         .get("http://localhost:3001/schedule/convertAddr", {
@@ -59,6 +80,7 @@ function Map() {
     fetchSch()
   },[selected])
     useDidMountEffect(() => {
+      async function map(){
         const container = document.getElementById('map');
         const options = {
             center: new kakao.maps.LatLng(37.3226546, 127.1260339),//지도의중심좌표
@@ -106,9 +128,13 @@ var infowindow = new kakao.maps.InfoWindow({
           ).then((points) => {
             var bounds = new kakao.maps.LatLngBounds();
         
-            points.forEach((point,index) => {
+              points.forEach((point,index) => {
               if (point) {
+                if(index!=0){
+                  dist.push(getDirection(`${points[index-1].La},${points[index-1].Ma}`,`${points[index].La},${points[index].Ma}`))
+                }
                 var marker = new kakao.maps.Marker({ position: point,clickable: true });
+                
                 marker.setMap(map);
                 bounds.extend(point);
                 var infowindow = new kakao.maps.InfoWindow({
@@ -128,10 +154,26 @@ var infowindow = new kakao.maps.InfoWindow({
                 strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                 strokeStyle: 'solid' // 선의 스타일입니다
             });
+            Promise.all(dist).then((results)=>{
+              console.log(results)
             // 지도에 선을 표시합니다 
             polyline.setMap(map); 
+            points.forEach((point,index) => {
+              if(point){
+              if(index!=0){
+                var customOvAd = new kakao.maps.LatLng((points[index].Ma+points[index-1].Ma)/2,(points[index].La+points[index-1].La)/2)
+                var customOv = `<div style="margin:auto;background-color:white;border:1px solid black"><span class="left"></span><span class="center">시간 : ${Math.ceil(results[index-1][0]/1000)}km<br>이동거리 : ${Math.ceil(results[index-1][1]/360000)/10}시간</span><span class="right"></span></div>`
+                var customOverlay = new kakao.maps.CustomOverlay({
+                  position: customOvAd,
+                  content: customOv   
+              })
+              customOverlay.setMap(map);
+              }
+            }})
+          })
         });
-      }
+      }}
+      map()
            
         }, [addr])
         //마우스 오버시
@@ -156,7 +198,6 @@ var infowindow = new kakao.maps.InfoWindow({
           setIsOpen(true)
         }
       }
-      
     return (
         <div className={styles.container}>
           {isOpen && <MapDetail setModalOpen={setIsOpen} title={addr[curAddr]?.title} image={addr[curAddr]?.image} contentId={addr[curAddr]?.contentId}/>}
@@ -190,6 +231,7 @@ var infowindow = new kakao.maps.InfoWindow({
               <div className={styles.schduleTime}>
                 일정 시간 : {item.start} ~ {item.end}
               </div>
+              <button onClick={()=>getDirection()}>테스트용 콘솔 확인</button>
             </div>
             )
           ))

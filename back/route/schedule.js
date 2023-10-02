@@ -1,7 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const router = express.Router();
+var request = require("request");
 const cors = require("cors");
+require('dotenv').config()
 router.use(cors());
 const connection = require("../db");
 connection.connect((error) => {
@@ -117,6 +119,20 @@ router.get("/convertAddr", function (req, res) {
   );
 });
 
+router.get("/getDirection",function(req,res){
+    request({
+      method:'GET',
+      url : `https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=${req.query.origin}&goal=${req.query.destination}&option=trafast`,
+      headers :{
+        'X-NCP-APIGW-API-KEY-ID': process.env.REACT_APP_NAVER_MAP_ID,
+        'X-NCP-APIGW-API-KEY':  process.env.REACT_APP_NAVER_MAP,
+      },
+      json:true
+    },function(err, response, body){
+      res.json(body.route.trafast[0].summary)
+    })
+  }
+)
 router.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 router.use(bodyParser.json({ limit: "50mb" }));
 
