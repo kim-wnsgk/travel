@@ -1,13 +1,28 @@
 .container {
-  width: 940px;
+  width: 1240px;
   margin: 0 auto;
 }
 
 .content {
   margin-top: 50px;
 }
+.titleModal{
+  margin-top: 5%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.modal{
+  width: 34px;
+  height: 34px;
+  border-radius: 3px;
+  background-color: white;
+  cursor: pointer;
+  font-size: x-large;
 
+}
 .title {
+  flex:1;
   color: #222222;
 }
 
