@@ -16,6 +16,7 @@ connection.connect((error) => {
   );
 });
 
+// 일정의 시작일, 일수 응답
 router.get("/checkDate", function (req, res) {
   connection.query(
     `SELECT * FROM schedule_info where id = ${req.query.id};`,
@@ -119,19 +120,19 @@ router.get("/convertAddr", function (req, res) {
   );
 });
 
-router.get("/getDirection",function(req,res){
-    request({
-      method:'GET',
-      url : `https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=${req.query.origin}&goal=${req.query.destination}&option=trafast`,
-      headers :{
-        'X-NCP-APIGW-API-KEY-ID': process.env.REACT_APP_NAVER_MAP_ID,
-        'X-NCP-APIGW-API-KEY':  process.env.REACT_APP_NAVER_MAP,
-      },
-      json:true
-    },function(err, response, body){
-      res.json(body.route.trafast[0].summary)
-    })
-  }
+router.get("/getDirection", function (req, res) {
+  request({
+    method: 'GET',
+    url: `https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=${req.query.origin}&goal=${req.query.destination}&option=trafast`,
+    headers: {
+      'X-NCP-APIGW-API-KEY-ID': process.env.REACT_APP_NAVER_MAP_ID,
+      'X-NCP-APIGW-API-KEY': process.env.REACT_APP_NAVER_MAP,
+    },
+    json: true
+  }, function (err, response, body) {
+    res.json(body.route.trafast[0].summary)
+  })
+}
 )
 router.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 router.use(bodyParser.json({ limit: "50mb" }));

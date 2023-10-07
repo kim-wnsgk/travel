@@ -19,6 +19,7 @@ function Admin() {
         responseData.push(...resData);
       }
 
+      console.log(responseData);
       setData(responseData);
       await axios.post("http://localhost:3001/data/insert", {
         data,

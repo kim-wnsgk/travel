@@ -91,7 +91,7 @@ router.get("/insert", function (req, res) {
 });
 
 //gathering, schedule_info Join 테이블 중 해당 "user"만 응답
-router.get("/select/gathering-userlist", function (req, res) {
+router.post("/select/gathering-userlist", function (req, res) {
   connection.query(
     `SELECT * FROM gathering JOIN gathering_members ON gathering.id = gathering_members.group_id JOIN schedule_info ON gathering.id = schedule_info.id WHERE member_id='${req.query.user}'`,
     function (error, results, fields) {
@@ -134,10 +134,25 @@ router.get("/select/members", function (req, res) {
   );
 });
 
+// 그룹id에 따른 멤버 리스트 응답
+router.get("/add/member", function (req, res) {
+  connection.query(
+    `INSERT INTO gathering_members (group_id, member_id) VALUES ('${req.query.id}', '${req.query.member}')`,
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
+// 해당 id의 일정 삭제
 router.get("/delete", function (req, res) {
   console.log(req.query);
   connection.query(
-    `DELETE FROM gathering WHERE name = '${req.query.name}' AND admin = '${req.query.admin}' AND user = '${req.query.user}';`,
+    `DELETE FROM gathering WHERE id = '${req.query.id}';`,
     function (error, results, fields) {
       if (error) {
         console.log(error);
@@ -148,6 +163,20 @@ router.get("/delete", function (req, res) {
     }
   );
 });
+// router.get("/delete", function (req, res) {
+//   console.log(req.query);
+//   connection.query(
+//     `DELETE FROM gathering WHERE name = '${req.query.name}' AND admin = '${req.query.admin}' AND user = '${req.query.user}';`,
+//     function (error, results, fields) {
+//       if (error) {
+//         console.log(error);
+//       } else {
+//         console.log(results);
+//         res.json(results);
+//       }
+//     }
+//   );
+// });
 
 router.get("/drop", function (req, res) {
   connection.query(

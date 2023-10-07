@@ -34,6 +34,9 @@ function Schedule() {
                 const session = response.data;
                 console.log(session);
                 setUser(session.user);
+            })
+            .catch(function (error) {
+                navigate('/');
             });
     }, []);
     useEffect(() => {
@@ -98,9 +101,9 @@ function Schedule() {
                             };
 
                             return (
-                                <div className={styles.list} key={index}>
-                                    <div className={styles.title}
-                                        onClick={() => navigate(`/schedule/info/${item.id}`)}>
+                                <div className={styles.list} key={index}
+                                    onClick={() => navigate(`/schedule/info/${item.id}`)}>
+                                    <div className={styles.title}>
                                         {item.name}
                                     </div>
                                     <div className={styles.date}>

@@ -26,7 +26,7 @@ function Header() {
     <div className={styles.header}>
       <div className={styles.logo}>
         <Link to="/">
-          <img src="./logo44.png" />
+          <img src={process.env.PUBLIC_URL + '/logo.png'} />
         </Link>
       </div>
       <div className={styles.menuContainer}>

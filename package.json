@@ -3,6 +3,8 @@
     "concurrently": "^8.2.1"
   },
   "scripts": {
-    "start": "concurrently \"npm --prefix front start\" \"npm --prefix back start\""
+    "start": "concurrently \"npm --prefix front start\" \"npm --prefix back start\"",
+    "front": "npm --prefix front start",
+    "back": "npm --prefix back start"
   }
 }

@@ -31,7 +31,7 @@ function Login() {
           const res = response.data;
           if (res.isLogin === 'True') {
             alert('로그인에 성공했습니다.');
-            navigate('/');
+            navigate(-1);
           } else {
             alert(res.isLogin);
           }
@@ -39,8 +39,9 @@ function Login() {
         .catch((error) => {
           console.error('로그인 요청 중 오류 발생:', error);
         });
-    }}
-  
+    }
+  }
+
   const handleOnKeyPress = e => {
     if (e.key === 'Enter') {
       handleOnClick(); // Enter 입력이 되면 클릭 이벤트 실행
@@ -72,16 +73,16 @@ function Login() {
               onChange={onPwChange}
               placeholder="비밀번호를 입력해주세요."
               className={styles.input}
-              onKeyPress={handleOnKeyPress} 
+              onKeyPress={handleOnKeyPress}
             />
           </div>
-              <input
-                className={styles.loginButton}
-                type="submit"
-                value="로그인"
-                onClick={handleOnClick}
-              />
-          
+          <input
+            className={styles.loginButton}
+            type="submit"
+            value="로그인"
+            onClick={handleOnClick}
+          />
+
           <div className={styles.others}>
             <div className={styles.other}>아이디 찾기</div>
             <div className={styles.other}>비밀번호 찾기</div>
