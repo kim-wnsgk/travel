@@ -1,5 +1,6 @@
 * {
     text-decoration-line: none;
+    font-weight: none;
 }
 .container {
     width: 600px;
@@ -71,9 +72,11 @@
     cursor: pointer;
     color: grey;
     text-decoration-line: none;
+    font-weight: bold;
 }
 
 .other:hover {
-    font-weight: bold;
+    font-weight: bolder;
     color: black;
+    
 }

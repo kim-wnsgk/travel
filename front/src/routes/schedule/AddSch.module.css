@@ -1,5 +1,5 @@
 .container {
-  width: 400px;
+  width: 250px;
   /* height: 250px; */
   display: flex;
   flex-direction: column;
@@ -8,66 +8,117 @@
   /* background-color: rgba(109, 103, 34, 0.566); */
   color: black;
 }
-.gathering::-webkit-scrollbar {
-  width: 8px;
-}
-
-.gathering::-webkit-scrollbar-thumb {
-  height: 30%;
-  background: #8af421;
-  border-radius: 10px;
-}
-
-.gathering::-webkit-scrollbar-track {
-  background: rgba(80, 232, 90, 0.1);
+.cName{
+  text-align: center;
+  font-size: xx-large;
+  margin-top: 5%;
 }
 .gathering {
+  margin-top: 3%;
   display: flex;
+  width:100%;
   flex: 1;
   flex-direction: row;
-  overflow-x: scroll;
   height: 120px;
   align-items: center;
 }
+.gatheringName{
+  flex:1;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.gatheringElements{
+  flex:5
+}
 .gatheringEle {
   flex: 1;
-  font-size: 0.8rem;
-  /* border: 1px solid black; */
-  background-color: #b2f76c;
+  font-size: larger;
+  border: 2px solid #7690f1;
+  background-color: white;
   cursor: pointer;
   margin: auto;
   margin: 5%;
   min-width: 100px;
-  height: 20px;
-  border: none;
-  border-radius: 5px;
-  max-width: 150px;
-  color: white;
-}
-.gatheringEle:hover {
-  /* background-color: black;
-  color: white; */
-  height: 23px;
-  /* font-size: large; */
-  font-size: 1rem;
+  height: 50px;
+  border-radius: 8.5px;
+  max-width: 100px;
+  color: #7690f1;
 }
 .gatheringEles {
   flex: 1;
   /* border: 1px solid black; */
   border: none;
-  background-color: #22832d;
+  font-size: larger;
+  background-color: #7690f1;
   cursor: pointer;
   margin: auto;
   margin: 5%;
   min-width: 100px;
-  height: 20px;
+  height: 50px;
   border-radius: 5px;
   max-width: 150px;
   color: white;
 }
-.gatheringEles:hover {
-  /* background-color: black; */
-  /* color: white; */
-  height: 23px;
-  font-size: 1rem;
+.offset {
+  margin-top: 3%;
+  display: flex;
+  width:100%;
+  flex: 1;
+  flex-direction: row;
+  height: 120px;
+  align-items: center;
+}
+.offsetName{
+  flex:1;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.offsetElements{
+  flex:5;
+  display: flex;
+  flex-direction: row;
+  overflow: scroll;
+  height:100%;
+
+}
+.time{
+  margin:3%;
+  margin-left: 7%;
+  
+}
+.buttons{
+  display: flex;
+  justify-content: end;
+  margin-right: 3%;
+  margin-bottom: 2%;
+  margin-top: -4%;
+
+}
+.addButton{
+  border: none;
+  cursor: pointer;
+  font-size: large;
+  background-color: white;
+  color: #7690f1;
+  width:100px;
+  height:50px;
+  border-radius: 5px;
+  margin:2%;
+  margin-top: none;
+  margin-right: none;
+}
+.closeButton{
+  font-size: large;
+  border:none;
+  background-color: #7690f1;
+  cursor: pointer;
+  color:white;
+  width:100px;
+  height:50px;
+  border-radius: 5px;
+  margin:2%;
+  margin-top: none;
+  margin-left: none;
 }

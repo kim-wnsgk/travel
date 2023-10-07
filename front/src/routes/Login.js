@@ -85,7 +85,7 @@ function Login() {
           <div className={styles.others}>
             <div className={styles.other}>아이디 찾기</div>
             <div className={styles.other}>비밀번호 찾기</div>
-            <Link to='/register'><div className={styles.other}>회원가입</div></Link>
+            <div className={styles.other}><Link to='/register'><div className={styles.other}>회원가입</div></Link></div>
           </div>
         </div>
       </div>
