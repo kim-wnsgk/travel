@@ -91,14 +91,13 @@ router.get("/insert", function (req, res) {
 });
 
 //gathering, schedule_info Join 테이블 중 해당 "user"만 응답
-router.post("/select/gathering-userlist", function (req, res) {
+router.get("/select/gathering-userlist", function (req, res) {
   connection.query(
     `SELECT * FROM gathering JOIN gathering_members ON gathering.id = gathering_members.group_id JOIN schedule_info ON gathering.id = schedule_info.id WHERE member_id='${req.query.user}'`,
     function (error, results, fields) {
       if (error) {
         console.log(error);
       } else {
-        console.log(results);
         res.send(results);
       }
     }
@@ -106,14 +105,12 @@ router.post("/select/gathering-userlist", function (req, res) {
 });
 //gathering, schedule_info Join 테이블 중 해당 "id"만 응답
 router.get("/select/gathering-scheduleinfo-id", function (req, res) {
-  console.log("asdsad", req.query.id)
   connection.query(
     `SELECT * FROM gathering JOIN schedule_info ON gathering.id = schedule_info.id WHERE gathering.id=${req.query.id}`,
     function (error, results, fields) {
       if (error) {
         console.log(error);
       } else {
-        console.log(results);
         res.send(results);
       }
     }
@@ -134,13 +131,28 @@ router.get("/select/members", function (req, res) {
   );
 });
 
-// 그룹id에 따른 멤버 리스트 응답
+// 그룹id에 멤버 추가
 router.get("/add/member", function (req, res) {
   connection.query(
     `INSERT INTO gathering_members (group_id, member_id) VALUES ('${req.query.id}', '${req.query.member}')`,
     function (error, results, fields) {
       if (error) {
-        console.log(error);
+        res.json(error);
+      } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
+// 그룹id의 해당 멤버 삭제
+router.get("/delete/member", function (req, res) {
+  console.log(req.query);
+  connection.query(
+    `DELETE FROM gathering_members WHERE group_id = '${req.query.id}' and member_id =  '${req.query.member}'`,
+    function (error, results, fields) {
+      if (error) {
+        res.json(error);
       } else {
         res.json(results);
       }
@@ -157,7 +169,6 @@ router.get("/delete", function (req, res) {
       if (error) {
         console.log(error);
       } else {
-        console.log(results);
         res.json(results);
       }
     }
@@ -185,7 +196,6 @@ router.get("/drop", function (req, res) {
       if (error) {
         console.log(error);
       } else {
-        console.log(results);
         res.json(results);
       }
     }
@@ -199,7 +209,6 @@ router.get("/addMem", function (req, res) {
       if (error) {
         console.log(error);
       } else {
-        console.log(results);
         res.json(results);
       }
     }
