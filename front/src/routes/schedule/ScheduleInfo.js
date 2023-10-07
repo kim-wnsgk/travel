@@ -12,8 +12,10 @@ function ScheduleInfo() {
 
     const [schedule, setSchedule] = useState({}); // 초기 상태를 빈 객체로 설정
     const [user, setUser] = useState('');
-    const [member, setMember] = useState({});
-    const [memberId, setMemberId] = useState('');
+
+    const [members, setMembers] = useState({});
+    const [memberIdText, setMemberIdText] = useState('');
+
 
     useEffect(() => {
         axios
@@ -33,6 +35,15 @@ function ScheduleInfo() {
                 setUser(data.user); // 데이터를 상태에 설정
             });
     }, [user]);
+
+
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const toggleModal = () => {
+        setModalOpen(!isModalOpen);
+    };
+
+    // 멤버 리스트 가져오기
     useEffect(() => {
         axios
             .get(`http://localhost:3001/gathering/select/members`, {
@@ -42,24 +53,43 @@ function ScheduleInfo() {
             }) // URL에 id 추가
             .then(function (response) {
                 const { data } = response;
-                console.log(data[0]);
-                setMember(data[0]); // 데이터를 상태에 설정
+                console.log(data);
+                setMembers(data); // 데이터를 상태에 설정
             });
     }, [id]);
-    const onIdChange = (e) => {
-        setMemberId(e.target.value);
-    };
+
+    // 멤버 추가
     const addMember = () => {
         axios
-            .post(`http://localhost:3001/gathering/add/member`, {
+            .get(`http://localhost:3001/gathering/add/member`, {
                 params: {
                     id,
-                    member: memberId
+                    member: memberIdText
                 }
             }) // URL에 id 추가
             .then(function (response) {
                 console.log(response);
+                setMemberIdText("");
             });
+    }
+
+    // 멤버 삭제
+    const deleteMember = (member) => {
+        if (member !== user) {  // 자신은 삭제 불가
+            axios
+                .get(`http://localhost:3001/gathering/delete/member`, {
+                    params: {
+                        id,
+                        member
+                    }
+                })
+                .then(function (response) {
+                    alert(`${member} 멤버가 삭제되었습니다.`);
+                    // console.log(response);
+                    toggleModal();
+                });
+        }
+
     }
 
     return (
@@ -88,20 +118,48 @@ function ScheduleInfo() {
                                 });
 
                         }}>삭제</div> : null}
-                    <input
+                    <button onClick={toggleModal}>Show Members</button>
+                    {/* <input
                         type="text"
                         value={memberId}
                         onChange={onIdChange}
                         placeholder="추가할 멤버 id"
                         className={styles.add}
                     />
-                    <button onClick={() => addMember()}>추가</button>
+                    <button onClick={() => addMember()}>추가</button> */}
                 </div>
                 <div className={styles.map}>
                     지도 여기에 넣기
                     {/* <Map style={{ width: '100 %' }} /> */}
                 </div>
+
+
             </div>
+            {isModalOpen ? (
+                <div className={styles.modal}>
+                    <div className={styles.modalContent}>
+                        <h2>Members</h2>
+                        <ul>
+                            {members.map((member) => (
+                                <>
+                                    <li key={member.member_id}>{member.member_id}</li>
+                                    {user === schedule.admin ?
+                                        <div onClick={() => deleteMember(member.member_id)}>삭제</div>
+                                        : null}
+                                </>
+                            ))}
+                        </ul>
+                        <input
+                            type="text"
+                            value={memberIdText}
+                            onChange={(e) => setMemberIdText(e.target.value)}
+                            placeholder="Enter member ID"
+                        />
+                        <button onClick={addMember}>Add Member</button>
+                        <button onClick={toggleModal}>Close</button>
+                    </div>
+                </div>
+            ) : null}
         </div>
     );
 }
