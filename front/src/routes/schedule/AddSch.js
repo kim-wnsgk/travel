@@ -8,7 +8,7 @@ import "react-clock/dist/Clock.css";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
-function AddSch({isOpen, contentName, contentId, closeModal}) {
+function AddSch({ isOpen, contentName, contentId, closeModal }) {
   const [testId, setTestId] = useState("sls9905");
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -18,25 +18,25 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
   const [value, onChange] = useState("10:00");
   const [value2, onChange2] = useState("10:00");
   const [sight, setSight] = useState("");
-  const [user,setUser] = useState();
+  const [user, setUser] = useState();
   useEffect(() => {
-    if(isOpen){
-    axios
+    if (isOpen) {
+      axios
         .get("http://localhost:3001/user/getProfile", { withCredentials: true })
         .then(function (response) {
-            const session = response.data;
-            console.log("이거 보자",response.data.logined);
-            setUser(session.user);
-            if(response.data.logined){
-              console.log("logined")
-            }
-            else{
-              alert("로그인 후에 이용해주세요");
-              navigate("../login")
-            }
-            })
+          const session = response.data;
+          console.log("이거 보자", response.data.logined);
+          setUser(session.user);
+          if (response.data.logined) {
+            console.log("logined")
           }
-}, [isOpen]);
+          else {
+            alert("로그인 후에 이용해주세요");
+            navigate("../login")
+          }
+        })
+    }
+  }, [isOpen]);
   function select(index) {
     setSelected(index);
   }
@@ -65,7 +65,7 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
       axios
         .get("http://localhost:3001/schedule/checkDate", {
           params: {
-            id : data[selected].id
+            id: data[selected].id
           },
         })
         .then(function (response) {
@@ -76,10 +76,10 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
 
   function addSchedule() {
     let datasight = "";
-    if(contentId){
+    if (contentId) {
       datasight = contentId
     }
-    else{
+    else {
       datasight = sight
     }
 
@@ -94,7 +94,7 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
           offset: selected2,
         },
       })
-      .then(function (response) {});
+      .then(function (response) { });
     alert("일정이 추가되었습니다.");
     navigate(-1);
   }
@@ -108,16 +108,16 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
   return (
     <div style={{ display: isOpen ? "block" : "none" }} className={styles.container}>
       <div style={{
-          width: 400,
-          height:400,
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          height: "100vh",
-          backgroundColor: "rgba(0, 0, 0, 0.35)",
-        }}></div>
-           <div
+        width: 400,
+        height: 400,
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "rgba(0, 0, 0, 0.35)",
+      }}></div>
+      <div
         style={{
           position: "absolute",
           top: "50%",
@@ -128,68 +128,70 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
           maxHeight: "90%",
           overflowY: "auto",
           backgroundColor: "white",
+          borderRadius: 15,
         }}
       >
-      <div>
-        모임 :
+        <div className={styles.cName}>{contentName}</div>
         <div className={styles.gathering}>
-          {data.length === 0 ? (
-            <p>참가한 모임이 없습니다.</p>
-          ) : (
-            data.map((item, index) =>
-              index === selected ? (
+          <div className={styles.gatheringName}>모임</div>
+          <div className={styles.gatheringElements}>
+            {data.length === 0 ? (
+              <p>참가한 모임이 없습니다.</p>
+            ) : (
+              data.map((item, index) =>
+                index === selected ? (
+                  <button
+                    onClick={() => select(index)}
+                    className={styles.gatheringEles}
+                  >
+                    {item.name}
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => select(index)}
+                    className={styles.gatheringEle}
+                  >
+                    {item.name}
+                  </button>
+                )
+              )
+            )}
+          </div>
+        </div>
+        <div className={styles.offset}>
+          <div className={styles.offsetName}>일자</div>
+          <div className={styles.offsetElements}>
+            {Array.from({ length: date[0]?.date }, (_, index) =>
+              index === selected2 ? (
                 <button
-                  onClick={() => select(index)}
+                  onClick={() => select2(index)}
                   className={styles.gatheringEles}
                 >
-                  {item.name}
+                  {index + 1}일차
                 </button>
               ) : (
                 <button
-                  onClick={() => select(index)}
+                  onClick={() => select2(index)}
                   className={styles.gatheringEle}
                 >
-                  {item.name}
+                  {index + 1}일차
                 </button>
               )
-            )
-          )}
-        </div>
-        <div className={styles.gathering}>
-          {Array.from({ length: date[0]?.date }, (_, index) =>
-            index === selected2 ? (
-              <button
-                onClick={() => select2(index)}
-                className={styles.gatheringEles}
-              >
-                {index+1}일차
-              </button>
-            ) : (
-              <button
-                onClick={() => select2(index)}
-                className={styles.gatheringEle}
-              >
-                {index+1}일차
-              </button>
-            )
-          )}
+            )}
+          </div>
           <br />
         </div>
-      </div>
-      <div>
-        시작시간 : <TimePicker onChange={onChange} value={value} />
-      </div>
-      <div>
-        종료시간 : <TimePicker onChange={onChange2} value={value2} />
-      </div>
-        {contentId ? 
-        <div>장소 : {contentName}</div> :
-          <div>장소 : <input onChange={handleChange} value={sight}></input></div>
-        }
-        <br/>
-      <button onClick={addSchedule}>추가하기</button>
-      <button onClick={closeModal}>Close</button>
-      
+        <div className={styles.time}>
+          시작시간 : <TimePicker onChange={onChange} value={value} />
+        </div>
+        <div className={styles.time}>
+          종료시간 : <TimePicker onChange={onChange2} value={value2} />
+        </div>
+        <br />
+        <div className={styles.buttons}>
+          <button className={styles.addButton} onClick={addSchedule}>추가</button>
+          <button className={styles.closeButton} onClick={closeModal}>닫기</button>
+        </div>
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ function Gather_new({ setModalOpen, contentId, title, image }) {
       function createMarkup() {
         return {__html: intro?.overview};
       }
+      
     return (
         <div className={styles.modalBackground} onClick={()=>setModalOpen(false)}>
             <div className={styles.modalContainer}>
