@@ -145,8 +145,8 @@ function Floating() {
         )}
       </div>
       <div className={styles.schedule}>
-        {data.length === 0 ? (
-          <p>아직 일정이 없습니다. 추가해주세요.</p>
+        {sch.length === 0 ? (
+          <div className={styles.ele}>아직 일정이 없습니다. 추가해주세요.</div>
         ) : (
           sch.map((item, index) => (
             <div className={styles.ele}>
@@ -157,9 +157,12 @@ function Floating() {
               <div className={styles.schDel} onClick={() => delSch(item.aid)} style={{ textAlign: "right" }}>X</div>
             </div>
           ))
-        )}
+        )
+        }
       </div>
+      {sch.length === 0 ? (<></>):(
       <div className={styles.GoMap} onClick={() => navigate('./map', { state: { name: data[selected].name, id: data[selected].id, offset: selected2, date: date[0]?.date } })}>지도로 보기</div>
+      )}
     </div>
   );
 }

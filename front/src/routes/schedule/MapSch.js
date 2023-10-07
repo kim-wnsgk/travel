@@ -193,8 +193,11 @@ var infowindow = new kakao.maps.InfoWindow({
       //마커 클릭하면
       function markerClicked(index){
         return function(){
-          setCurAddr(index)
-          console.log(schs[index])
+          for (var j = 0; j < addr.length; j++) {
+            if(schs[index].sight_id == addr[j].title){
+              setCurAddr(j)
+            }
+        }
           setIsOpen(true)
         }
       }
@@ -231,7 +234,6 @@ var infowindow = new kakao.maps.InfoWindow({
               <div className={styles.schduleTime}>
                 일정 시간 : {item.start} ~ {item.end}
               </div>
-              <button onClick={()=>getDirection()}>테스트용 콘솔 확인</button>
             </div>
             )
           ))
