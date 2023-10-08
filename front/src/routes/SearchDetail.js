@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import styles from './css/SearchDetail.module.css'
+import styles from './SearchDetail.module.css'
 
 function SearchDetail() {
     const location = useLocation();
@@ -69,7 +69,7 @@ function SearchDetail() {
                                         },
                                     })}>
                                 <div className={styles.imageContainer}>
-                                    <img src={item.firstimage?item.firstimage:'defaultImage.png'} width="200px" className={styles.image} />
+                                    <img src={item.firstimage ? item.firstimage : 'defaultImage.png'} width="200px" className={styles.image} />
                                 </div>
                                 <div className={styles.info}>
                                     <div>{item.title}</div>

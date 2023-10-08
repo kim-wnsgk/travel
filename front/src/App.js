@@ -1,12 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainTest from "./routes/MainTest.js";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Main from "./routes/Main.js";
-import Mypage from "./routes/Mypage.js";
-import Class from "./routes/Class.js";
-import Login from "./routes/Login.js";
-import Register from "./routes/Register.js";
+
+import Mypage from "./routes/user/Mypage.js";
+import Login from "./routes/user/Login.js";
+import Register from "./routes/user/Register.js";
 import Map from "./routes/schedule/MapSch.js"
 import Admin from "./routes/Admin.js";
 
@@ -49,11 +48,8 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Main />} />
-        {/* 개발 초기 테스트용 페이지 전환할때 사용 */}
-        <Route path="/main" element={<MainTest />} />
-        {/* 추후에 path="/" 으로 변경 */}
+
         <Route path="/mypage" element={<Mypage />} />
-        <Route path="/class" element={<Class />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<Admin />} />

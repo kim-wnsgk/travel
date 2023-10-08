@@ -1,21 +1,21 @@
-import Header from '../components/Header';
+import Header from '../../components/Header';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import styles from "./css/Mypage.module.css";
+import styles from "./Mypage.module.css";
 import { Link } from 'react-router-dom';
-import Gather_new from './gathering/Gather_new';
+import Gather_new from '../gathering/Gather_new';
 
 function Mypage() {
     const [user, setUser] = useState();
     async function getProfile() {
         try {
-          const response = await axios.get("http://localhost:3001/getProfile", { withCredentials: true });
-          setUser(response.data.nickname);
+            const response = await axios.get("http://localhost:3001/getProfile", { withCredentials: true });
+            setUser(response.data.nickname);
         } catch (error) {
-          console.error("Error fetching profile:", error);
+            console.error("Error fetching profile:", error);
         }
-      }
+    }
     const [data, setData] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const showModal = () => {
@@ -38,7 +38,7 @@ function Mypage() {
     }
     function fetchData() {
         axios
-            .get("http://localhost:3001/gathering/select",{
+            .get("http://localhost:3001/gathering/select", {
                 params: {
                     user: user,
                 }
@@ -46,7 +46,7 @@ function Mypage() {
             .then(function (response) {
                 console.log(response.data)
                 setData(response.data);
-                
+
             });
     }
     useEffect(() => {
@@ -74,7 +74,7 @@ function Mypage() {
                 </div>
                 <div>
                     <button onClick={showModal}>모임 만들기</button>
-                    {modalOpen && <Gather_new setModalOpen={setModalOpen} user={user}/>}
+                    {modalOpen && <Gather_new setModalOpen={setModalOpen} user={user} />}
                 </div>
                 <div className={styles.meeting}>
                     <div className={styles.meetingTitle}>참여중인 모임</div>
@@ -87,10 +87,10 @@ function Mypage() {
                             ) : (
                                 data?.map((item, index) => (
                                     <li className={styles.meetingList}>
-                                         <Link to='/gathering'
+                                        <Link to='/gathering'
                                             state={{
-                                                name:item.name,
-                                                admin:item.admin
+                                                name: item.name,
+                                                admin: item.admin
                                             }}
                                         >{item.name} {item.admin}</Link>
                                         <Link to={'/gather_modi'} state={{ name: item.name }}>수정</Link>

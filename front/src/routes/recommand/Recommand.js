@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
-import styles from "./css/Recommand.module.css";
+import styles from "./Recommand.module.css";
 import axios from "axios";
 import { FaMonument } from "react-icons/fa"
 import { AiFillShopping } from "react-icons/ai"
@@ -92,7 +92,7 @@ function Recommand() {
             }
             }>아니오</div>
           </div>
-          
+
           <div className={styles.regionContainer}>
             {isRegion && (
               <div className={styles.regionContainer}>
@@ -131,25 +131,25 @@ function Recommand() {
                       ))}
                   </div>
                 )}
-                
+
               </div>
             )}
           </div>
         </div>
         <div className={styles.topcat}>
           {Object.keys(categoryData).map((topCategory) => (
-            <div 
+            <div
               key={topCategory}
               className={`${styles.selectTopcat} ${selectedTopCategory === topCategory ? styles.selected : ""}`}
               onClick={() => handleTopCategorySelect(topCategory)}>
               <div className={styles.title}>
                 {categoryData[topCategory].title}
               </div>
-              {topCategory == 12 && <FaMonument size={'50px'}/>}
-              {topCategory == 28 && <BiRun size={'50px'}/>}
-              {topCategory == 38 && <AiFillShopping size={'50px'}/>}
-              {topCategory == 39 && <MdFastfood size={'50px'}/>}
-           </div>
+              {topCategory == 12 && <FaMonument size={'50px'} />}
+              {topCategory == 28 && <BiRun size={'50px'} />}
+              {topCategory == 38 && <AiFillShopping size={'50px'} />}
+              {topCategory == 39 && <MdFastfood size={'50px'} />}
+            </div>
           ))}
         </div>
         <div className={styles.midcat}>

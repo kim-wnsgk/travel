@@ -118,7 +118,7 @@ function ScheduleInfo() {
                                 });
 
                         }}>삭제</div> : null}
-                    <button onClick={toggleModal}>Show Members</button>
+                    <button className={styles.modalButton} onClick={toggleModal}>Show Members</button>
                     {/* <input
                         type="text"
                         value={memberId}
