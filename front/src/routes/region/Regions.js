@@ -1,4 +1,4 @@
-import styles from "./css/Regions.module.css";
+import styles from "./Regions.module.css";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import categoryData, { region } from "../datas";
@@ -12,8 +12,8 @@ import Pagination from "react-js-pagination";
 import Header from "../../components/Header";
 
 function Regions() {
-    const navigate = useNavigate();
-    const [selectedDo, setSelectedDo] = useState("");
+  const navigate = useNavigate();
+  const [selectedDo, setSelectedDo] = useState("");
   const [selectedSi, setSelectedSi] = useState("");
   const [selectedCat, setSelectedCat] = useState("");
   const [data, setData] = useState(null);
@@ -65,8 +65,8 @@ function Regions() {
       <Header />
       <div className={styles.contents}>
         <div className={styles.select}>
-            <h2 className={styles.h2}>지역별 관광지 보기</h2>
-            <div className={styles.regionSelect}>
+          <h2 className={styles.h2}>지역별 관광지 보기</h2>
+          <div className={styles.regionSelect}>
             <div className={styles.do}>
               <div
                 className={`${styles.doName} ${selectedDo === '' ? styles.selected : ""}`}
@@ -140,41 +140,41 @@ function Regions() {
             {data &&
               data.slice(items * (page - 1), items * (page - 1) + items).map((item, index) => (
                 <div key={index} className={styles.list}>
-                  
-                  <div className={styles.imgBox}onClick={() => {
+
+                  <div className={styles.imgBox} onClick={() => {
                     navigate('/regiondetail', {
-                        state: { data:item }
-                      });
-                }}>
-                    <img src={item.image?item.image:'defaultImage.png'} className={styles.img} />
+                      state: { data: item }
+                    });
+                  }}>
+                    <img src={item.image ? item.image : 'defaultImage.png'} className={styles.img} />
                   </div>
                   <div className={styles.cont}>
-                    <h3 className={styles.title}onClick={() => {
-                    navigate('/regiondetail', {
-                        state: { data:item }
+                    <h3 className={styles.title} onClick={() => {
+                      navigate('/regiondetail', {
+                        state: { data: item }
                       });
-                }}>{item.title}</h3>
-                    <div className={styles.title}onClick={() => {
-                    navigate('/regiondetail', {
-                        state: { data:item }
+                    }}>{item.title}</h3>
+                    <div className={styles.title} onClick={() => {
+                      navigate('/regiondetail', {
+                        state: { data: item }
                       });
-                }}>{item.addr}</div>
-                    <div className={styles.cat}onClick={() => {
-                    navigate('/regiondetail', {
-                        state: { data:item }
+                    }}>{item.addr}</div>
+                    <div className={styles.cat} onClick={() => {
+                      navigate('/regiondetail', {
+                        state: { data: item }
                       });
-                }}>
-                    {categoryData[item.contentTypeId]?.title}{" "}
-                    {categoryData[item.contentTypeId]?.[item.cat]?.title}
+                    }}>
+                      {categoryData[item.contentTypeId]?.title}{" "}
+                      {categoryData[item.contentTypeId]?.[item.cat]?.title}
                     </div>
-                    <AiOutlinePlusSquare 
-                    className={styles.icon} 
-                    size={'30px'}
-                    onClick={()=>{
-                      setIsModalOpen(true);
-                      setSightId(item.contentId);
-                      setContentName(item.title)
-                    }}
+                    <AiOutlinePlusSquare
+                      className={styles.icon}
+                      size={'30px'}
+                      onClick={() => {
+                        setIsModalOpen(true);
+                        setSightId(item.contentId);
+                        setContentName(item.title)
+                      }}
                     />
                   </div>
                 </div>

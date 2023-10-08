@@ -29,7 +29,7 @@ function Schedule() {
     const [schedule, setSchedule] = useState([]);
     useEffect(() => {
         axios
-            .get("http://localhost:3001/user/getProfile", { withCredentials: true })
+            .get("http://localhost:3001/user/getUser", { withCredentials: true })
             .then(function (response) {
                 const session = response.data;
                 console.log(session);

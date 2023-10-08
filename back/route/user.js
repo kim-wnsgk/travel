@@ -59,7 +59,7 @@ router.post("/signup", (req, res) => {
 
                     connection.query(
                         "INSERT INTO usertable (id, userchn,username, gender,year ) VALUES (?, ?,?,?,?)",
-                        [id, hashedPassword, name,gender,birth],
+                        [id, hashedPassword, name, gender, birth],
                         function (error, data) {
                             if (error) throw error;
                             req.session.save(function () {
@@ -148,12 +148,27 @@ router.get("/authcheck", (req, res, next) => {
     }
 });
 
-router.get("/getProfile", (req, res, next) => {
+// 유저 아이디 세션 가져오기
+router.get("/getUser", (req, res, next) => {
     if (req.session.logined) {
         res.send(req.session)
     } else {
         res.send({ isLogin: "False" });
     }
+})
+
+// 유저 정보 가져오기
+router.get("/getProfile", (req, res, next) => {
+    connection.query(
+        `SELECT * FROM userTable WHERE id = '${req.query.id}'`,
+        function (error, results, fields) {
+            if (error) {
+                res.json(error);
+            } else {
+                res.json(results);
+            }
+        }
+    );
 })
 
 module.exports = router;

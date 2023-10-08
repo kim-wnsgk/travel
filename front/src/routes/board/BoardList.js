@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styles from "./css/BoardList.module.css";
+import styles from "./BoardList.module.css";
 import { useState } from "react";
 import Pagination from "react-js-pagination";
 import Header from "../../components/Header";

@@ -20,7 +20,7 @@ function Floating() {
   }
   useEffect(() => {
     axios
-      .get("http://localhost:3001/user/getProfile", { withCredentials: true })
+      .get("http://localhost:3001/user/getUser", { withCredentials: true })
       .then(function (response) {
         const session = response.data;
         console.log(session);
@@ -160,8 +160,8 @@ function Floating() {
         )
         }
       </div>
-      {sch.length === 0 ? (<></>):(
-      <div className={styles.GoMap} onClick={() => navigate('./map', { state: { name: data[selected].name, id: data[selected].id, offset: selected2, date: date[0]?.date } })}>지도로 보기</div>
+      {sch.length === 0 ? (<></>) : (
+        <div className={styles.GoMap} onClick={() => navigate('./map', { state: { name: data[selected].name, id: data[selected].id, offset: selected2, date: date[0]?.date } })}>지도로 보기</div>
       )}
     </div>
   );

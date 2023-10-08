@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./css/BoardView.module.css";
+import styles from "./BoardView.module.css";
 import Header from "../../components/Header";
 import axios from "axios";
 import { useLocation } from "react-router-dom";

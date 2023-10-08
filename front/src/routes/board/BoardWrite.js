@@ -1,5 +1,5 @@
 //import logo from "./logo.svg";
-import styles from "./css/BoardWrite.module.css";
+import styles from "./BoardWrite.module.css";
 import UploadFiles from "./fileupload/UploadFiles";
 import React from "react";
 import EditorComponent from "./quill/EditorComponent";

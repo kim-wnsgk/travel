@@ -1,4 +1,4 @@
-import styles from "./css/RegionDetail.module.css";
+import styles from "./RegionDetail.module.css";
 import { useLocation } from "react-router-dom";
 import Header from "../../components/Header";
 import { useState, useEffect } from "react";
@@ -29,7 +29,7 @@ function RegionDetail() {
     fetchData();
   }, [location.state]);
   function createMarkup() {
-    return {__html: intro.overview};
+    return { __html: intro.overview };
   }
   console.log(intro);
   console.log(data)

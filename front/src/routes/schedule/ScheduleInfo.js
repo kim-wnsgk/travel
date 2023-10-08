@@ -28,7 +28,7 @@ function ScheduleInfo() {
     }, [id]);
     useEffect(() => {
         axios
-            .get(`http://localhost:3001/user/getProfile`, { withCredentials: true }) // URL에 id 추가
+            .get(`http://localhost:3001/user/getUser`, { withCredentials: true }) // URL에 id 추가
             .then(function (response) {
                 const { data } = response;
                 // console.log(data);
