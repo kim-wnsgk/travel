@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import Header from "../components/Header";
-import styles from "./css/Main.module.css";
+import styles from "./Main.module.css";
 import axios from "axios";
 import dayjs from "dayjs";
 import Pagination from "react-js-pagination";

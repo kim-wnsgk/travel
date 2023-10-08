@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./css/Header.module.css";
+import styles from "./Header.module.css";
 import { CgProfile } from "react-icons/cg";
 
 import axios from "axios";
@@ -40,11 +40,6 @@ function Header() {
             <Link to="/regions" className={styles.link}>
               관광지 보기
             </Link>
-            <ul className={styles.subMenu}>
-              <li>
-                <Link to="/submenu1">시, 도 지역별</Link>
-              </li>
-            </ul>
           </div>
           <div className={styles.menu}>
             <Link to="/boardList" className={styles.link}>
@@ -63,14 +58,6 @@ function Header() {
             <Link to="/schedule" className={styles.link}>
               일정
             </Link>
-            <ul className={styles.subMenu}>
-              <li>
-                <Link to="/addSchedule">일정 추가</Link>
-              </li>
-              <li>
-                <Link to="/boardList_party">함께가요 게시판</Link>
-              </li>
-            </ul>
           </div>
         </div>
       </div>

@@ -59,27 +59,27 @@
     text-align: center;
 }
 
-h2 {
+.modal h2 {
     margin-bottom: 10px;
     color: #333;
 }
 
-ul {
+.modal ul {
     list-style: none;
     padding: 0;
 }
 
-li {
+.modal li {
     margin: 5px 0;
 }
 
-input {
+.modal input {
     width: 100%;
     padding: 5px;
     margin: 10px 0;
 }
 
-button {
+.modalButton {
     padding: 5px 10px;
     margin: 5px;
     background: #007BFF;
@@ -89,6 +89,6 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.modal button:hover {
     background: #0056b3;
 }

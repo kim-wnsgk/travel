@@ -1,0 +1,162 @@
+.header {
+  width: 1200px;
+  margin: 20px auto;
+  z-index: 2;
+  top: 70px;
+  left: 50%;
+  border-radius: 10px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  height: 60px;
+}
+
+.logo img {
+  width: 148px;
+  height: 60px;
+}
+
+.profile {
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+
+.profileSelector {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: -10px;
+  background-color: white;
+  border: 2px solid grey;
+  border-radius: 10px;
+  line-height: 30px;
+  animation-duration: 1s;
+  cursor: pointer;
+  width: 120px;
+  transform: translateX(25%);
+}
+
+.profile:hover .profileSelector {
+  display: block;
+}
+
+.profileSelector:hover {
+  background-color: #f1f1f1;
+}
+
+.profileSelect {
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.profileSelect button,
+.profileSelect a {
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: rgb(155, 155, 155);
+  display: block;
+  width: 100%;
+}
+
+.profileSelect button:hover,
+.profileSelect a:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+.prof {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: medium;
+  color: rgb(155, 155, 155)
+}
+
+.prof:hover {
+  text-decoration-line: underline;
+  color: black
+}
+
+.menuContainer {
+  width: 800px;
+  display: flex;
+  align-items: center;
+}
+
+.menus {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.menu:hover .subMenu {
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.menu {
+  margin-right: 20px;
+  position: relative;
+}
+
+/* 하위 메뉴 스타일 */
+.subMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  background-color: white;
+  border-radius: 10px;
+  z-index: 1;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+
+}
+
+.subMenu li {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.subMenu li:last-child {
+  border-bottom: none;
+}
+
+/* 메뉴 항목 스타일 */
+.menu a {
+  text-decoration: none;
+  color: black;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  display: inline-block;
+  padding: 0 10px;
+}
+
+.menu:hover a {
+  color: #007bff;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
