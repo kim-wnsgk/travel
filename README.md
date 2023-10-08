@@ -1,5 +1,5 @@
 # 여행정보제공사이트  - `여기저기`
-![img](./front/public/logo44.png)
+![img](./front/public/logo.png)
 - 컴퓨터공학과 김용원, 신규철, 김준하
 
 ## 배경
