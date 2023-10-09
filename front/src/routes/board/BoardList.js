@@ -19,6 +19,9 @@ const BoardList = () => {
     setPage(page);
   };
 
+  //session에서 유저 정보 받아오기
+  const [user, setUser] = useState();
+  const [isLogin, setIsLogin] = useState();
   useEffect(() => {
     async function fetchData() {
       try {
@@ -28,8 +31,27 @@ const BoardList = () => {
         console.log(e);
       }
     }
+    async function getUser() {
+      try {
+        const testData = axios
+          .get("http://localhost:3001/user/getUser", {
+            withCredentials: true,
+          })
+          .then(function (response) {
+            const session = response.data;
+            console.log("1");
+            console.log(session.isLogin);
+            console.log("1");
+            setUser(session.user);
+            setIsLogin(session.isLogin);
+          });
+      } catch (error) {
+        console.log("Error fetching profile:", error);
+      }
+    }
+    getUser();
     fetchData();
-  }, []);
+  }, [user]);
 
   return (
     <div className={styles.mainPageContainer}>
@@ -78,9 +100,13 @@ const BoardList = () => {
             ></Pagination>
           </div>
           <div>
-            <Link to="/BoardWrite">
-              <div>글작성</div>
-            </Link>
+            {!isLogin ? (
+              <Link to="/BoardWrite">
+                <div>글작성</div>
+              </Link>
+            ) : (
+              <div>로그인 후 글을 작성해보세요.</div>
+            )}
           </div>
         </div>
       </div>

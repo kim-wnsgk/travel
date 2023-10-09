@@ -3,17 +3,40 @@ import styles from "./BoardWrite.module.css";
 import UploadFiles from "./fileupload/UploadFiles";
 import React from "react";
 import EditorComponent from "./quill/EditorComponent";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import { useNavigate } from "react-router-dom";
 import BoardView_party from "../board_party/BoardView_party";
+import axios from "axios";
 
 function BoardWrite() {
   const navigate = useNavigate();
   const uploadReferenece = React.createRef();
 
-  const writer = "sls9905"; // 테스트용 아이디
   const date = "22-05-05"; //테스트용 데이트
+
+  //session에서 유저 정보 받아오기
+  const [user, setUser] = useState();
+  const [isLogin, setIsLogin] = useState();
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const testData = axios
+          .get("http://localhost:3001/user/getUser", {
+            withCredentials: true,
+          })
+          .then(function (response) {
+            const session = response.data;
+            console.log(session.isLogin);
+            setUser(session.user);
+            setIsLogin(session.isLogin);
+          });
+      } catch (error) {
+        console.log("Error fetching profile:", error);
+      }
+    }
+    getUser();
+  }, [user]);
 
   async function onClickSearch() {
     await uploadReferenece.current
@@ -22,7 +45,7 @@ function BoardWrite() {
         const files = result;
         alert("저장 완료");
       })
-      .catch(function (err) { });
+      .catch(function (err) {});
   }
 
   const [boaderTitleText, setBoaderTitleText] = useState("");
@@ -73,39 +96,43 @@ function BoardWrite() {
           </div>
         </div>
         <div className="text-center pd12">
-          <button
-            className="lf-button primary"
-            onClick={() => {
-              const boardData = {
-                writer: writer,
-                title: title,
-                content: desc,
-                regdate: date,
-                updatedate: null,
-                viewcount: null,
-                image: null,
-              };
-              fetch("http://localhost:3001/board/BoardWrite", {
-                method: "post",
-                headers: {
-                  "content-type": "application/json",
-                },
-                body: JSON.stringify(boardData),
-              })
-                .then((res) => res.json())
-                .then((json) => {
-                  console.log(json.isSuccess)
-                  if (json.isSuccess === "True") {
-                    alert("게시물 작성 성공");
-                    navigate(-1)
-                  } else {
-                    alert(json.isSuccess);
-                  }
-                });
-            }}
-          >
-            저장
-          </button>
+          {!isLogin ? (
+            <button
+              className="lf-button primary"
+              onClick={() => {
+                const boardData = {
+                  writer: user,
+                  title: title,
+                  content: desc,
+                  regdate: date,
+                  updatedate: null,
+                  viewcount: null,
+                  image: null,
+                };
+                fetch("http://localhost:3001/board/BoardWrite", {
+                  method: "post",
+                  headers: {
+                    "content-type": "application/json",
+                  },
+                  body: JSON.stringify(boardData),
+                })
+                  .then((res) => res.json())
+                  .then((json) => {
+                    console.log(json.isSuccess);
+                    if (json.isSuccess === "True") {
+                      alert("게시물 작성 성공");
+                      navigate(-1);
+                    } else {
+                      alert(json.isSuccess);
+                    }
+                  });
+              }}
+            >
+              저장
+            </button>
+          ) : (
+            <div>로그인 후 글을 작성해보세요.</div>
+          )}
         </div>
       </div>
     </div>
