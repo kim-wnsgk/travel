@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../../components/Header";
 import styles from "./ScheduleInfo.module.css";
-import Map from "./MapSch";
+import Map from "./MapSchCom";
 
 function ScheduleInfo() {
     const navigate = useNavigate();
@@ -129,8 +129,7 @@ function ScheduleInfo() {
                     <button onClick={() => addMember()}>추가</button> */}
                 </div>
                 <div className={styles.map}>
-                    지도 여기에 넣기
-                    {/* <Map style={{ width: '100 %' }} /> */}
+                    <Map id={schedule?.id} offset={0} date = {schedule?.date} name = {schedule?.name} style={{width:'50%'}}/>
                 </div>
 
 

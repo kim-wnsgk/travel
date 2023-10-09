@@ -16,6 +16,16 @@
       "src": "logo.png",
       "type": "image/png",
       "sizes": "16x16"
+    },
+    {
+      "src": "marker.png",
+      "type":"image/png",
+      "sizes":"16x16"
+    },
+    {
+      "src": "selMarker.png",
+      "type":"image/png",
+      "sizes":"16x16"
     }
   ],
   "start_url": ".",
