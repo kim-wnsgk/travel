@@ -11,7 +11,9 @@
 .lists {
     list-style: none;
 }
-
+.icon{
+    cursor: pointer;
+  }
 .list {
     display: flex;
     align-items: center;
