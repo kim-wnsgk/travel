@@ -3,13 +3,22 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '../../components/Header';
 import styles from './RecommandDetail.module.css'
+import AddSch from '../schedule/AddSch';
+import { AiOutlinePlusSquare } from "react-icons/ai";
 
 function RecommandDetail() {
     const location = useLocation();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [contentName, setContentName] = useState('');
+    const [sightId, setSightId] = useState(0);
 
     const seed = new Date().getTime();
 
     const [datas, setDatas] = useState(null);
+
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
     useEffect(() => {
         setDatas(location.state?.datas);
@@ -39,6 +48,15 @@ function RecommandDetail() {
                                         <div>{item.addr}</div>
                                         <div>contentId: {item.contentId}</div>
                                         <div>관광타입: {item.contentTypeId}</div>
+                                        <AiOutlinePlusSquare
+                                            className={styles.icon}
+                                            size={'30px'}
+                                            onClick={() => {
+                                                setIsModalOpen(true);
+                                                setSightId(item.contentId);
+                                                setContentName(item.title)
+                                        }}
+                                        />
                                     </div>
                                 </li>
                             ))}
@@ -47,6 +65,7 @@ function RecommandDetail() {
                     <p>Loading...</p>
                 )}
             </div>
+            <AddSch isOpen={isModalOpen} contentId={sightId} contentName={contentName} closeModal={closeModal} />
         </div>
     );
 }

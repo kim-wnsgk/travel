@@ -12,6 +12,9 @@
 
 .schedule {
     flex: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .title {
@@ -32,7 +35,7 @@
 }
 
 .map {
-    flex: 1;
+    flex: 5;
 }
 
 
