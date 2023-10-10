@@ -1,204 +1,201 @@
 .container {
-    margin-top: 100px;
-    width: 80%;
-    display: flex;
-    height: 800px;
-    margin: auto;
-    flex-direction: column;
+  margin-top: 100px;
+  width: 80%;
+  display: flex;
+  height: 800px;
+  margin: auto;
+  flex-direction: column;
 }
 
-
 .content {
-    width: 100%;
-    max-width: 1200px;
-    height: 100vh;
-    max-height: 100%;
-    background-color: #fff;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px auto;
+  width: 100%;
+  max-width: 1200px;
+  height: 100vh;
+  max-height: 100%;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px auto;
 }
 
 .mainTitle {
-    font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .lists {
-    display: flex;
-    flex-direction: column;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .list {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 0;
-    border-bottom: 1px solid #ccc;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
 }
 
 .title {
-    font-size: 24px;
-    font-weight: bold;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .date {
-    font-size: 18px;
-    color: #888;
+  font-size: 18px;
+  color: #888;
 }
 
 .dday {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .addSchedule {
-    position: absolute;
-    bottom: -20px;
-    right: 10px;
-    background-color: #007bff;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+  position: absolute;
+  bottom: -20px;
+  right: 10px;
+  background-color: #007bff;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 
-    &:hover {
-        background-color: #0056b3;
-    }
+  &:hover {
+    background-color: #0056b3;
+  }
 }
 
-
-
 .PaginationBox {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
 }
 
 .PaginationBox ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .PaginationBox li {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    /*border: 1px solid #e2e2e2;*/
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  /*border: 1px solid #e2e2e2;*/
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
 }
 
 .PaginationBox li:first-child {
-    border-radius: 5px 0 0 5px;
+  border-radius: 5px 0 0 5px;
 }
 
 .PaginationBox li:last-child {
-    border-radius: 0 5px 5px 0;
+  border-radius: 0 5px 5px 0;
 }
 
 .PaginationBox li a {
-    text-decoration: none;
-    color: #18415c;
-    font-size: 1rem;
+  text-decoration: none;
+  color: #18415c;
+  font-size: 1rem;
 }
 
 .PaginationBox li.active a {
-    color: white;
+  color: white;
 }
 
 .PaginationBox li.active {
-    background-color: #18415c;
+  background-color: #18415c;
 }
 
 .PaginationBox li a:hover,
 .PaginationBox li a.active {
-    color: black;
+  color: black;
 }
 
 /* 모달 관련 */
 .modalBackdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
 .modal {
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    width: 400px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  width: 400px;
 }
 
 .modalHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .modalTitle {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .closeButton {
-    font-size: 24px;
-    cursor: pointer;
-    color: white;
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
 }
 
 .closeButton:hover {
-    color: #f5f5f5;
+  color: #f5f5f5;
 }
 
 .modalContent {
-    padding: 20px;
+  padding: 20px;
 }
 
 .name input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
 }
 
 .modalFooter {
-    text-align: right;
-    padding: 10px 20px;
-    background-color: #f5f5f5;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+  text-align: right;
+  padding: 10px 20px;
+  background-color: #f5f5f5;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .addButton {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .addButton:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }

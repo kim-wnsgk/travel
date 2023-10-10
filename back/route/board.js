@@ -141,4 +141,42 @@ router.get("/BoardList_party", (req, res) => {
   );
 });
 
+router.post("/BoardShareWrite", (req, res) => {
+  const writer = req.body.writer;
+  const title = req.body.title;
+  const content = req.body.content;
+  const regdate = req.body.regdate;
+  const updatedate = req.body.updatedate;
+  const viewcount = req.body.viewcount;
+  const image = req.body.image;
+  const pid = req.body.pid;
+  const sendData = { isSuccess: "" };
+
+  if (writer && title && content && regdate) {
+    console.log("글작성중");
+    connection.query(
+      "INSERT INTO board_share (writer, title, content, pid, regdate) VALUES(?,?,?,?,CURRENT_TIMESTAMP)",
+      [writer, title, content, pid, 0]
+    );
+  } else {
+    sendData.isSuccess = "제목, 본문을 작성해주세요.";
+  }
+});
+
+router.post("/BoardShareWrite2", (req, res) => {
+  const board_id = req.body.board_id;
+  const sight_id = req.body.sight_id;
+  const start = req.body.start;
+  const end = req.body.start; // 이거 값 왜없음 ?
+  const sendData = { isSuccess: "" };
+  if (board_id && sight_id && start && end) {
+    connection.query(
+      "INSERT INTO board_share_schedule (board_id, sight_id, start, end) VALUES(?,?,?,?)",
+      [board_id, sight_id, start, end]
+    );
+  } else {
+    sendData.isSuccess = "오류발생.";
+  }
+});
+
 module.exports = router;

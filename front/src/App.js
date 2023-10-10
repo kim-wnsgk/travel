@@ -6,7 +6,7 @@ import Main from "./routes/Main.js";
 import Mypage from "./routes/user/Mypage.js";
 import Login from "./routes/user/Login.js";
 import Register from "./routes/user/Register.js";
-import Map from "./routes/schedule/MapSch.js"
+import Map from "./routes/schedule/MapSch.js";
 import Admin from "./routes/Admin.js";
 
 import SearchDetail from "./routes/SearchDetail.js";
@@ -21,6 +21,7 @@ import BoardWrite from "./routes/board/BoardWrite.js";
 import BoardList_party from "./routes/board_party/BoardList_party.js";
 import BoardView_party from "./routes/board_party/BoardView_party.js";
 import BoardWrite_party from "./routes/board_party/BoardWrite_party.js";
+import BoardShareWrite from "./routes/board_share/BoardShareWrite.js";
 
 import Recommand from "./routes/recommand/Recommand.js";
 import RecommandDetail from "./routes/recommand/RecommandDetail.js";
@@ -30,7 +31,7 @@ import Gather_new from "./routes/gathering/Gather_new.js";
 
 import Schedule from "./routes/schedule/Schedule.js";
 import ScheduleInfo from "./routes/schedule/ScheduleInfo.js";
-import Floating from "./routes/schedule/Floating.js"
+import Floating from "./routes/schedule/Floating.js";
 import AddSch from "./routes/schedule/AddSch.js";
 
 function ScrollToTop() {
@@ -63,6 +64,7 @@ function App() {
         <Route path="/BoardList_party" element={<BoardList_party />} />
         <Route path="/BoardView_party" element={<BoardView_party />} />
         <Route path="/BoardWrite_party" element={<BoardWrite_party />} />
+        <Route path="/BoardShareWrite" element={<BoardShareWrite />} />
 
         <Route path="/recommand" element={<Recommand />} />
         <Route path="/recommanddetail" element={<RecommandDetail />} />
