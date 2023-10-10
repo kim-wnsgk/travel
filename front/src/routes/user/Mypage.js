@@ -4,56 +4,40 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from "./Mypage.module.css";
 import { Link } from 'react-router-dom';
-import Gather_new from '../gathering/Gather_new';
+import * as dayjs from 'dayjs';
 
 function Mypage() {
-    const [user, setUser] = useState();
-    async function getProfile() {
-        try {
-            const response = await axios.get("http://localhost:3001/getProfile", { withCredentials: true });
-            setUser(response.data.nickname);
-        } catch (error) {
-            console.error("Error fetching profile:", error);
-        }
-    }
-    const [data, setData] = useState([]);
-    const [modalOpen, setModalOpen] = useState(false);
-    const showModal = () => {
-        setModalOpen(true);
-    };
-    function drop(item) {
-        if (window.confirm("정말 삭제합니까?")) {
-            axios
-                .get("http://localhost:3001/gathering/drop", {
-                    params: {
-                        name: item,
-                        user: user,
-                    }
-                })
-                .then(function (response) {
-                    setData(response.data);
-                });
-            alert("삭제되었습니다.")
-        }
-    }
-    function fetchData() {
+    const [user, setUser] = useState('');
+    const [profile, setProfile] = useState();
+    const [schedules, setSchedules] = useState();
+
+    useEffect(() => {
         axios
-            .get("http://localhost:3001/gathering/select", {
+            .get(`http://localhost:3001/user/getUser`, { withCredentials: true })
+            .then(function (response) {
+                const { data } = response;
+                setUser(data.user); // 데이터를 상태에 설정
+            });
+    }, [user]);
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:3001/user/getProfile`, {
                 params: {
-                    user: user,
+                    id: user
                 }
             })
             .then(function (response) {
-                console.log(response.data)
-                setData(response.data);
-
+                const { data } = response;
+                setProfile(data[0]); // 데이터를 상태에 설정
             });
-    }
-    useEffect(() => {
-        getProfile()
-        fetchData()
     }, [user]);
 
+    if (!profile)
+        return <>
+            <Header />
+            로그인하세요
+        </>
     return (
         <div className={styles.container}>
             <Header />
@@ -63,9 +47,10 @@ function Mypage() {
                 <div className={styles.profile}>
                     <div className={styles.image}></div>
                     <div className={styles.detail}>
-                        <div className={styles.name}>아이디 : {user}</div>
-                        <div className={styles.gender}>성별 : {'남'}</div>
-                        <div className={styles.birth}>생년월일 : {'1999.01.01'}</div>
+                        <div className={styles.id}>아이디 : {user}</div>
+                        <div className={styles.name}>이름 : {profile?.name}</div>
+                        <div className={styles.gender}>성별 : {profile?.gender === 1 ? "남자" : '여자'}</div>
+                        <div className={styles.birth}>생년월일 : {dayjs(profile?.year).format("YYYY")}</div>
                         <div className={styles.buttons}>
                             <div className={styles.edit}>정보 수정</div>
                             <div className={styles.delete}>회원 탈퇴</div>
@@ -73,8 +58,7 @@ function Mypage() {
                     </div>
                 </div>
                 <div>
-                    <button onClick={showModal}>모임 만들기</button>
-                    {modalOpen && <Gather_new setModalOpen={setModalOpen} user={user} />}
+                    <button>모임 만들기</button>
                 </div>
                 <div className={styles.meeting}>
                     <div className={styles.meetingTitle}>참여중인 모임</div>
@@ -82,10 +66,10 @@ function Mypage() {
                         <li className={styles.meetingList}>강릉 여행</li>
                         <li className={styles.meetingList}>제주 여행</li>
                         <div>
-                            {data.length === 0 ? (
+                            {schedules & schedules?.length === 0 ? (
                                 <p>모임을 생성하거나 모임에 가입하세요!</p>
                             ) : (
-                                data?.map((item, index) => (
+                                schedules?.map((item, index) => (
                                     <li className={styles.meetingList}>
                                         <Link to='/gathering'
                                             state={{
@@ -94,7 +78,6 @@ function Mypage() {
                                             }}
                                         >{item.name} {item.admin}</Link>
                                         <Link to={'/gather_modi'} state={{ name: item.name }}>수정</Link>
-                                        <button onClick={() => drop(item.name)}>삭제</button>
                                     </li>
                                 ))
                             )}
