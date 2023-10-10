@@ -129,7 +129,7 @@ function ScheduleInfo() {
                     <button onClick={() => addMember()}>추가</button> */}
                 </div>
                 <div className={styles.map}>
-                    <Map id={schedule?.id} offset={0} date = {schedule?.date} name = {schedule?.name} style={{width:'50%'}}/>
+                    <Map id={schedule?.id} offset={-1} date = {schedule?.date} name = {schedule?.name} style={{width:'50%'}}/>
                 </div>
 
 

@@ -5,9 +5,10 @@ import styles from "./MapSchCom.module.css";
 import axios from "axios";
 import useDidMountEffect from '../useDidMountEffect';
 import MapDetail from "./MapDetail";
-
+const markers = []
 const { kakao } = window;
 function Map({name, id, offset, date}) {
+  const map={}
   const NAVER = process.env.REACT_APP_NAVER_MAP;
   const NAVER_ID = process.env.REACT_APP_NAVER_MAP_ID;
   const [schs,setSchs] = useState([]);
@@ -19,7 +20,15 @@ function Map({name, id, offset, date}) {
   const [curAddr, setCurAddr] = useState();
   //두 마커 사이의 거리 구하기
   const dist =[]
-
+  var selImageSrc = process.env.PUBLIC_URL + '/selMarker.png';
+  var selImageSize = new kakao.maps.Size(64, 69);
+  var selImageOption = { offset: new kakao.maps.Point(34, 69) };
+  var selMarkerImage = new kakao.maps.MarkerImage(selImageSrc, selImageSize, selImageOption);
+  var imageSrc = process.env.PUBLIC_URL + '/marker.png';
+  var imageSize = new kakao.maps.Size(40, 42);
+  var imageOption = { offset: new kakao.maps.Point(22, 42) };
+  var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+  //두 마커 사이의 거리 구하기
   function select(index) {
     setSelected(index);
   }
@@ -87,7 +96,6 @@ function Map({name, id, offset, date}) {
         };
         var map = new kakao.maps.Map(container, options);
         var Addr = [];
-      console.log(Object.keys(addr).length === 0)
       if(Object.keys(addr).length === 0){
         console.log("none")
         var iwContent = '<div style="margin:auto;margin-top:20px;text-align:center;height:150px;width:450px;font-size:45px;color:red;padding:5px;"> 아직 일정이 없습니다. <br/>일정을 추가해주세요!</div>',
@@ -103,7 +111,7 @@ var infowindow = new kakao.maps.InfoWindow({
 })
       }
         else{
-          for (var i = 0; i < addr.length; i++) {
+          for (var i = 0; i < addr?.length; i++) {
             Addr[i] = addr[i].addr
             console.log(addr[i].addr);
         }
@@ -139,9 +147,10 @@ var infowindow = new kakao.maps.InfoWindow({
                   content: `<div style="margin:auto;overflow: hidden;">시간:${schs[index].start}~${schs[index].end}<br/> 장소:${schs[index].sight_id}</div>`
               })
               kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow,index));
-              kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+              kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow,index));
               kakao.maps.event.addListener(marker, 'click', markerClicked(index));
-              }
+              markers.push(marker)
+            }
             });
             map.setBounds(bounds);
 
@@ -173,18 +182,20 @@ var infowindow = new kakao.maps.InfoWindow({
       }}
       map()
            
-        }, [addr])
-        //마우스 오버시
+        }, [addr, schs])
+        //마커 마우스 오버시
         function makeOverListener(map, marker, infowindow,index) {
           return function() {
               infowindow.open(map, marker);
+              markers[index].setImage(selMarkerImage)
               setCurVal(index)
           };
       }
       //마우스가 마커를 벗어나면
-      function makeOutListener(infowindow) {
+      function makeOutListener(infowindow,index) {
           return function() {
               infowindow.close();
+              markers[index].setImage(markerImage)
               setCurVal(-1)
           };
         }
@@ -198,6 +209,17 @@ var infowindow = new kakao.maps.InfoWindow({
         }
           setIsOpen(true)
         }
+      }
+      function handleMouseOver(index){
+        if(selMarkerImage){
+          markers[index].setImage(selMarkerImage)
+        }
+      }
+      function handleMouseOut(index){
+        if(markerImage){
+          markers[index].setImage(markerImage)
+        }
+        
       }
     return (
         <div className={styles.container}>
@@ -226,7 +248,10 @@ var infowindow = new kakao.maps.InfoWindow({
                 일정 시간 : {item.start} ~ {item.end}
               </div>
             </div>):(
-              <div className={styles.ele}>{index+1}.
+              <div className={styles.ele}
+              onMouseEnter={()=>{handleMouseOver(index)}}
+              onMouseLeave={()=>handleMouseOut(index)} 
+              >{index+1}.
               <div className={styles.schduleSite}>장소 : {item.sight_id}</div>
               <div className={styles.schduleTime}>
                 일정 시간 : {item.start} ~ {item.end}

@@ -8,7 +8,7 @@ import Login from "./routes/user/Login.js";
 import Register from "./routes/user/Register.js";
 import Map from "./routes/schedule/MapSch.js"
 import Admin from "./routes/Admin.js";
-
+import ScheduleModiOffset from "./routes/schedule/ScheduleModiOffset.js";
 import SearchDetail from "./routes/SearchDetail.js";
 
 import Regions from "./routes/region/Regions";
@@ -47,7 +47,7 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Main />} />
-
+        <Route path="/mypage" element={<Mypage />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -56,7 +56,7 @@ function App() {
         <Route path="/regions" element={<Regions />} />
         <Route path="/regiondetail" element={<RegionDetail />} />
         <Route path="/regionattraction" element={<RegionAttraction />} />
-
+        <Route path="/ScheduleModiOffset" element={<ScheduleModiOffset />} />
         <Route path="/BoardList" element={<BoardList />} />
         <Route path="/BoardView" element={<BoardView />} />
         <Route path="/BoardWrite" element={<BoardWrite />} />

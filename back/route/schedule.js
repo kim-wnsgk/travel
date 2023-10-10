@@ -6,6 +6,7 @@ const cors = require("cors");
 require('dotenv').config()
 router.use(cors());
 const connection = require("../db");
+const { seq } = require("async");
 connection.connect((error) => {
   if (error) {
     console.error("Error connecting to MySQL server(schedule): " + error.stack);
@@ -134,6 +135,31 @@ router.get("/getDirection", function (req, res) {
   })
 }
 )
+router.get("/delOneDay",function(req,res){
+  var sql1 = `DELETE FROM schedule WHERE id = ${req.query.id} AND offset = ${req.query.offset};`
+  var sql2 = `UPDATE schedule SET offset = offset -1 WHERE offset > ${req.query.offset} and id=${req.query.id};`
+  var sql3 = `UPDATE schedule_info SET date = date-1 where id = ${req.query.id};`
+  connection.query(sql1+sql2+sql3, function(err,results,fields){
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(results);
+    }
+  }
+  )
+})
+router.get("/addOneDay",function(req,res){
+  var sql1 = `UPDATE schedule SET offset = offset +1 WHERE offset >= ${req.query.offset} and id=${req.query.id};`
+  var sql2 = `UPDATE schedule_info SET date = date+1 where id = ${req.query.id};`
+  connection.query(sql1+sql2, function(err,results,fields){
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(results);
+    }
+  }
+  )
+})
 router.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 router.use(bodyParser.json({ limit: "50mb" }));
 
