@@ -8,7 +8,6 @@ import MapDetail from "./MapDetail";
 const markers = []
 const { kakao } = window;
 function Map() {
-  
   const infowindows = []
   const map={}
   const NAVER = process.env.REACT_APP_NAVER_MAP;
@@ -217,14 +216,14 @@ var infowindow = new kakao.maps.InfoWindow({
     function handleMouseOver(index){
       if(selMarkerImage){
         console.log(markers)
-        markers[index].setImage(selMarkerImage)
+         markers[index].setImage(selMarkerImage)
+        
       }
     }
     function handleMouseOut(index){
       if(markerImage){
         markers[index].setImage(markerImage)
       }
-      
     }
     return (
         <div className={styles.container}>

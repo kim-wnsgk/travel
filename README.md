@@ -78,9 +78,3 @@ npm start
 - [한국관광공사](https://knto.or.kr/index)
 - [공공데이터포털](https://www.data.go.kr/)
 
-## DOCS
-
-- [프로젝트 제안서](./docs/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%A0%9C%EC%95%88%EC%84%9C.pdf)
-- [테스트 계획서](./docs/%ED%85%8C%EC%8A%A4%ED%8A%B8%20%EA%B3%84%ED%9A%8D%EC%84%9C.pdf)
-- [중간 보고서](./docs/%EC%97%AC%ED%96%89%EC%A0%95%EB%B3%B4%EC%82%AC%EC%9D%B4%ED%8A%B8_%EC%A4%91%EA%B0%84%EB%B3%B4%EA%B3%A0%EC%84%9C_%EA%B9%80%EC%A4%80%ED%95%98_%EA%B9%80%EC%9A%A9%EC%9B%90_%EC%8B%A0%EA%B7%9C%EC%B2%A0.pdf)
-- [최종 보고서](./docs/%EC%B5%9C%EC%A2%85%20%EB%B3%B4%EA%B3%A0%EC%84%9C.pdf/)
