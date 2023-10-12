@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Main from "./routes/Main.js";
 
 import Mypage from "./routes/user/Mypage.js";
+import EditUser from "./routes/user/EditUser.js";
 import Login from "./routes/user/Login.js";
 import Register from "./routes/user/Register.js";
 import Map from "./routes/schedule/MapSch.js";
@@ -50,6 +51,7 @@ function App() {
         <Route path="/" element={<Main />} />
 
         <Route path="/mypage" element={<Mypage />} />
+        <Route path="/edituser" element={<EditUser />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<Admin />} />

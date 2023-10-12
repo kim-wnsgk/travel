@@ -3,10 +3,11 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from "./Mypage.module.css";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as dayjs from 'dayjs';
 
 function Mypage() {
+    const navigate = useNavigate();
     const [user, setUser] = useState('');
     const [profile, setProfile] = useState();
     const [schedules, setSchedules] = useState();
@@ -52,7 +53,8 @@ function Mypage() {
                         <div className={styles.gender}>성별 : {profile?.gender === 1 ? "남자" : '여자'}</div>
                         <div className={styles.birth}>생년월일 : {dayjs(profile?.year).format("YYYY")}</div>
                         <div className={styles.buttons}>
-                            <div className={styles.edit}>정보 수정</div>
+                            <div className={styles.edit}
+                                onClick={() => navigate('/edituser')}>정보 수정</div>
                             <div className={styles.delete}>회원 탈퇴</div>
                         </div>
                     </div>
