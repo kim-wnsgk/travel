@@ -103,6 +103,7 @@ function ScheduleInfo() {
                         <p>어드민: {schedule.admin}</p>
                         <p>시작일: {new Date(schedule.start).toLocaleDateString()}</p>
                         <p>일정 기간: {schedule.date} 일</p>
+                        <p>여행 스타일: {schedule.style}</p>
                     </div>
                     {user === schedule.admin ? <div
                         onClick={() => {
@@ -129,7 +130,7 @@ function ScheduleInfo() {
                     <button onClick={() => addMember()}>추가</button> */}
                 </div>
                 <div className={styles.map}>
-                    <Map id={schedule?.id} offset={-1} date = {schedule?.date} name = {schedule?.name} style={{width:'50%'}}/>
+                    <Map id={schedule?.id} offset={-1} date={schedule?.date} name={schedule?.name} style={{ width: '50%' }} />
                 </div>
 
 

@@ -56,8 +56,9 @@ router.get("/selMem", function (req, res) {
 // 일정 추가 - gathering, schdule_info DB에 추가
 router.get("/insert", function (req, res) {
   var id = "";
+  var style = req.query.style || "기본 여행";  // 입력값이 비어 있을 때 "기본 여행"을 사용
   connection.query(
-    `INSERT INTO gathering (name, admin) VALUES ('${req.query.name}', '${req.query.user}');`,
+    `INSERT INTO gathering (name, admin, style) VALUES ('${req.query.name}', '${req.query.user}', '${style}');`,
     function (error, results, fields) {
       if (error) {
         console.log(error);

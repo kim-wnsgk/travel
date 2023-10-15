@@ -34,6 +34,20 @@ function Mypage() {
             });
     }, [user]);
 
+    useEffect(() => {
+        axios
+            .get(`http://localhost:3001/gathering/select/gathering-userlist`, {
+                params: {
+                    user
+                }
+            })
+            .then(function (response) {
+                const { data } = response;
+                console.log(data);
+                setSchedules(data); // 데이터를 상태에 설정
+            });
+    }, [user]);
+
     if (!profile)
         return <>
             <Header />
@@ -59,30 +73,18 @@ function Mypage() {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <button>모임 만들기</button>
-                </div>
-                <div className={styles.meeting}>
-                    <div className={styles.meetingTitle}>참여중인 모임</div>
+                <div className={styles.gathering}>
+                    <div className={styles.gatheringTitle}>참여중인 모임</div>
                     <ol>
-                        <li className={styles.meetingList}>강릉 여행</li>
-                        <li className={styles.meetingList}>제주 여행</li>
                         <div>
-                            {schedules & schedules?.length === 0 ? (
-                                <p>모임을 생성하거나 모임에 가입하세요!</p>
-                            ) : (
-                                schedules?.map((item, index) => (
-                                    <li className={styles.meetingList}>
-                                        <Link to='/gathering'
-                                            state={{
-                                                name: item.name,
-                                                admin: item.admin
-                                            }}
-                                        >{item.name} {item.admin}</Link>
-                                        <Link to={'/gather_modi'} state={{ name: item.name }}>수정</Link>
+                            {!schedules ?
+                                <p>모임을 생성하거나 모임에 가입하세요!</p> :
+                                schedules.map((item) => (
+                                    <li className={styles.gatheringList} onClick={() => navigate(`/schedule/info/${item.id}`)}>
+                                        {item.name}
                                     </li>
                                 ))
-                            )}
+                            }
                         </div>
                     </ol>
                 </div>

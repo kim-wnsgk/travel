@@ -45,7 +45,6 @@ function BoardWrite_party() {
   const [title, setTitle] = useState("");
   const handelTitle = (e) => {
     const titleText = e.target.value;
-    console.log(titleText);
     setTitle(titleText);
   };
   const handelName = (e) => {
@@ -55,11 +54,16 @@ function BoardWrite_party() {
   const [desc, setDesc] = useState("");
   function onEditorChange(value) {
     setDesc(value);
-    console.log(desc);
   }
+
+  const handelStyle = (e) => {
+    const style = e.target.value;
+    setStyle(style);
+  };
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [style, setStyle] = useState('');
 
   function insert() {
     const oneDay = 24 * 60 * 60 * 1000; // 1일의 밀리초 수
@@ -71,6 +75,7 @@ function BoardWrite_party() {
           user: writer,
           startDate: dayjs(startDate).format("YYYY-MM-DD"),
           date_long: diffDays,
+          style
         },
       })
       .then(function (response) {
@@ -81,8 +86,6 @@ function BoardWrite_party() {
 
   const onChangeHandler = (e) => {
     setNum(e.currentTarget.value);
-    console.log(e.currentTarget.value);
-    console.log(num);
   };
 
   const Options = [
@@ -187,6 +190,14 @@ function BoardWrite_party() {
               </select>
             </div>
           </div>
+        </div>
+        <div className={styles.style}>
+          <input
+            className={styles.styleInput}
+            placeholder="여행 스타일을 입력하세요 (ex. 액티비티)"
+            value={style}
+            onChange={handelStyle}
+          />
         </div>
 
         <div className={styles.boardContent}>

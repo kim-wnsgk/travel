@@ -14,7 +14,6 @@ import SearchDetail from "./routes/SearchDetail.js";
 
 import Regions from "./routes/region/Regions";
 import RegionDetail from "./routes/region/RegionDetail";
-import RegionAttraction from "./routes/region/RegionAttraction";
 
 import BoardList from "./routes/board/BoardList.js";
 import BoardView from "./routes/board/BoardView.js";
@@ -56,9 +55,10 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/searchDetail" element={<SearchDetail />} />
+
         <Route path="/regions" element={<Regions />} />
         <Route path="/regiondetail" element={<RegionDetail />} />
-        <Route path="/regionattraction" element={<RegionAttraction />} />
+
         <Route path="/ScheduleModiOffset" element={<ScheduleModiOffset />} />
         <Route path="/BoardList" element={<BoardList />} />
         <Route path="/BoardView" element={<BoardView />} />

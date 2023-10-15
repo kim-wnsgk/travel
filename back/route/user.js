@@ -171,4 +171,21 @@ router.get("/getProfile", (req, res, next) => {
     );
 })
 
+router.post('/changeProfile', (req, res, next) => {
+    const newProfileData = req.body;
+    console.log(newProfileData)
+    // Build the UPDATE query
+    const query = `UPDATE userTable SET name = ?, gender = ?, year = ? WHERE id = ?`;
+
+    const values = [newProfileData.name, newProfileData.gender, newProfileData.year, newProfileData.id];
+
+    connection.query(query, values, (error, results, fields) => {
+        if (error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            res.json({ message: "Profile updated successfully" });
+        }
+    });
+});
+
 module.exports = router;

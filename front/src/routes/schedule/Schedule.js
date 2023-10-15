@@ -55,12 +55,14 @@ function Schedule() {
 
   const [name, setName] = useState("");
   const handelName = (e) => {
-    const name = e.target.value;
-    setName(name);
+    setName(e.target.value);
   };
-
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [style, setStyle] = useState("");
+  const handelStyle = (e) => {
+    setStyle(e.target.value);
+  };
 
   function insert() {
     const oneDay = 24 * 60 * 60 * 1000; // 1일의 밀리초 수
@@ -70,6 +72,7 @@ function Schedule() {
         params: {
           name,
           user,
+          style,
           startDate: dayjs(startDate).format("YYYY-MM-DD"),
           date_long: diffDays,
         },
@@ -97,8 +100,8 @@ function Schedule() {
                   dday === 0
                     ? "D-Day"
                     : dday < 0
-                    ? `D+${Math.abs(dday)}`
-                    : `D-${dday}`;
+                      ? `D+${Math.abs(dday)}`
+                      : `D-${dday}`;
 
                 const ddayColor =
                   dday === 0 ? "red" : dday < 0 ? "blue" : "black"; // 색상 조건에 따라 변경
@@ -197,6 +200,15 @@ function Schedule() {
                         dateFormat={"yyyy년 MM월 dd일"}
                         minDate={new Date()}
                       ></DatePicker>
+                    </div>
+                    <div className={styles.name}>
+                      여행 스타일
+                      <input
+                        className={styles.boardTitleTextArea}
+                        placeholder="여행의 스타일을 입력해주세요.(ex. 액티비티)"
+                        onChange={handelStyle}
+                        value={style}
+                      />
                     </div>
                   </div>
                 </div>
