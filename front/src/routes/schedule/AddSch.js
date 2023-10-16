@@ -8,7 +8,7 @@ import "react-clock/dist/Clock.css";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
-function AddSch({isOpen, contentName, contentId, closeModal}) {
+function AddSch({ isOpen, contentName, contentId, closeModal }) {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState(0);
@@ -18,11 +18,11 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
   const [value2, onChange2] = useState("10:00");
   const [sight, setSight] = useState("");
   const [user, setUser] = useState();
-  
+
   useEffect(() => {
     if (isOpen) {
       axios
-        .get("http://localhost:3001/user/getProfile", { withCredentials: true })
+        .get("http://localhost:3001/user/getUser", { withCredentials: true })
         .then(function (response) {
           const session = response.data;
           console.log("이거 보자", response.data.logined);
