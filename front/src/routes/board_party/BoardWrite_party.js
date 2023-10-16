@@ -3,7 +3,7 @@ import styles from "./css/BoardWrite_party.module.css";
 import UploadFiles from "./fileupload/UploadFiles";
 import React from "react";
 import EditorComponent from "./quill/EditorComponent";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,7 +16,7 @@ function BoardWrite_party() {
   const navigate = useNavigate();
   const uploadReferenece = React.createRef();
   const [checked, setChecked] = useState(false);
-  const writer = "sls9905"; // 테스트용 아이디
+  const [user, setUser] = useState("")
   const date = "22-05-05"; //테스트용 데이트
   const [name, setName] = useState("");
   const [dateDifference, setDateDifference] = useState(0);
@@ -25,6 +25,18 @@ function BoardWrite_party() {
     setChecked(event.target.checked);
   };
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/user/getUser", { withCredentials: true })
+      .then(function (response) {
+        const session = response.data;
+        console.log(session);
+        setUser(session.user);
+      })
+      .catch(function (error) {
+        // navigate("/");  로그인 안될시 알림띄우거나 하는식으로 수정
+      });
+  }, []);
   async function onClickSearch() {
     await uploadReferenece.current
       .upload()
@@ -71,11 +83,11 @@ function BoardWrite_party() {
     axios
       .get("http://localhost:3001/gathering/insert", {
         params: {
-          name: name,
-          user: writer,
+          name,
+          user,
+          style,
           startDate: dayjs(startDate).format("YYYY-MM-DD"),
           date_long: diffDays,
-          style
         },
       })
       .then(function (response) {
@@ -216,7 +228,7 @@ function BoardWrite_party() {
                 insert();
               }
               const boardData = {
-                writer: writer,
+                writer: user,
                 title: title,
                 content: desc,
                 regdate: date,
