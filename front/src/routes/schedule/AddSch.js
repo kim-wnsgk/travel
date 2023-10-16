@@ -8,7 +8,7 @@ import "react-clock/dist/Clock.css";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
-function AddSch({isOpen, contentName, contentId, closeModal}) {
+function AddSch({ isOpen, contentName, contentId, closeModal }) {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState(0);
@@ -18,23 +18,22 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
   const [value2, onChange2] = useState("10:00");
   const [sight, setSight] = useState("");
   const [user, setUser] = useState();
-  
+
   useEffect(() => {
     if (isOpen) {
       axios
-        .get("http://localhost:3001/user/getProfile", { withCredentials: true })
+        .get("http://localhost:3001/user/getUser", { withCredentials: true })
         .then(function (response) {
           const session = response.data;
           console.log("이거 보자", response.data.logined);
           setUser(session.user);
           if (response.data.logined) {
-            console.log("logined")
-          }
-          else {
+            console.log("logined");
+          } else {
             alert("로그인 후에 이용해주세요");
-            navigate("../login")
+            navigate("../login");
           }
-        })
+        });
     }
   }, [isOpen]);
   function select(index) {
@@ -65,7 +64,7 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
       axios
         .get("http://localhost:3001/schedule/checkDate", {
           params: {
-            id: data[selected].id
+            id: data[selected].id,
           },
         })
         .then(function (response) {
@@ -77,10 +76,9 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
   function addSchedule() {
     let datasight = "";
     if (contentId) {
-      datasight = contentId
-    }
-    else {
-      datasight = sight
+      datasight = contentId;
+    } else {
+      datasight = sight;
     }
 
     axios
@@ -94,7 +92,7 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
           offset: selected2,
         },
       })
-      .then(function (response) { });
+      .then(function (response) {});
     alert("일정이 추가되었습니다.");
     navigate(-1);
   }
@@ -106,17 +104,22 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
   }, [data, selected]);
 
   return (
-    <div style={{ display: isOpen ? "block" : "none" }} className={styles.container}>
-      <div style={{
-        width: 400,
-        height: 400,
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "rgba(0, 0, 0, 0.35)",
-      }}></div>
+    <div
+      style={{ display: isOpen ? "block" : "none" }}
+      className={styles.container}
+    >
+      <div
+        style={{
+          width: 400,
+          height: 400,
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "rgba(0, 0, 0, 0.35)",
+        }}
+      ></div>
       <div
         style={{
           position: "absolute",
@@ -189,8 +192,12 @@ function AddSch({isOpen, contentName, contentId, closeModal}) {
         </div>
         <br />
         <div className={styles.buttons}>
-          <button className={styles.addButton} onClick={addSchedule}>추가</button>
-          <button className={styles.closeButton} onClick={closeModal}>닫기</button>
+          <button className={styles.addButton} onClick={addSchedule}>
+            추가
+          </button>
+          <button className={styles.closeButton} onClick={closeModal}>
+            닫기
+          </button>
         </div>
       </div>
     </div>
