@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "./MapSch.module.css";
 import axios from "axios";
 import useDidMountEffect from '../useDidMountEffect';
+import { Link } from "react-router-dom";
 import MapDetail from "./MapDetail";
 let markers = []
 const { kakao } = window;
@@ -13,7 +14,6 @@ function Map() {
   const NAVER = process.env.REACT_APP_NAVER_MAP;
   const NAVER_ID = process.env.REACT_APP_NAVER_MAP_ID;
   const location = useLocation().state;
-  const [date,setDate] = useState();
   const [schs,setSchs] = useState([]);
   const [selected,setSelected] = useState(location.offset);
   const [addr, setAddr] = useState([]);
@@ -250,7 +250,10 @@ var infowindow = new kakao.maps.InfoWindow({
             <div className={styles.map} id="map"/>
             <div className={styles.list}>
             {schs.length === 0 ? (
+              <div>
           <p>아직 일정이 없습니다. 추가해주세요.</p>
+          <Link to="../recommand">여행지 추가하러 가기</Link>
+          </div>
         ) : (
           schs.map((item, index) => (index===curVal?(
             <div 

@@ -16,7 +16,7 @@ function ScheduleInfo() {
     const [members, setMembers] = useState({});
     const [memberIdText, setMemberIdText] = useState('');
 
-
+    
     useEffect(() => {
         axios
             .get(`http://localhost:3001/gathering/select/gathering-scheduleinfo-id?id=${id}`) // URL에 id 추가
@@ -130,7 +130,7 @@ function ScheduleInfo() {
                     <button onClick={() => addMember()}>추가</button> */}
                 </div>
                 <div className={styles.map}>
-                    <Map id={schedule?.id} offset={-1} date={schedule?.date} name={schedule?.name} style={{ width: '50%' }} />
+                    <Map id={id} offset={0} date={schedule?.date} name={schedule?.name} style={{ width: '50%' }} />
                 </div>
 
 
