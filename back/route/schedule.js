@@ -135,31 +135,75 @@ router.get("/getDirection", function (req, res) {
   })
 }
 )
-router.get("/delOneDay",function(req,res){
-  var sql1 = `DELETE FROM schedule WHERE id = ${req.query.id} AND offset = ${req.query.offset};`
-  var sql2 = `UPDATE schedule SET offset = offset -1 WHERE offset > ${req.query.offset} and id=${req.query.id};`
-  var sql3 = `UPDATE schedule_info SET date = date-1 where id = ${req.query.id};`
-  connection.query(sql1+sql2+sql3, function(err,results,fields){
+
+router.get("/delOneDay", function (req, res) {
+  const id = req.query.id;
+  const offset = Number(req.query.offset);
+  console.log(offset + 'offfset')
+
+  // 첫 번째 쿼리: schedule에서 해당 id와 offset에 맞는 레코드 삭제
+  const sql1 = `DELETE FROM schedule WHERE id = ${id} AND offset = ${offset};`;
+
+  connection.query(sql1, function (err, results, fields) {
     if (err) {
       console.log(err);
-    } else {
-      res.json(results);
+      return res.status(500).json({ error: "Failed to delete schedule." });
     }
-  }
-  )
-})
-router.get("/addOneDay",function(req,res){
-  var sql1 = `UPDATE schedule SET offset = offset +1 WHERE offset >= ${req.query.offset} and id=${req.query.id};`
-  var sql2 = `UPDATE schedule_info SET date = date+1 where id = ${req.query.id};`
-  connection.query(sql1+sql2, function(err,results,fields){
+
+    // 두 번째 쿼리: schedule에서 offset을 조건으로 offset 값 수정
+    const sql2 = `UPDATE schedule SET offset = offset - 1 WHERE offset > ${offset} AND id = ${id};`;
+
+    connection.query(sql2, function (err, results, fields) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ error: "Failed to update schedule offset." });
+      }
+
+      // 세 번째 쿼리: schedule_info에서 해당 id에 맞는 레코드의 date 값을 수정
+      const sql3 = `UPDATE schedule_info SET date = date - 1 WHERE id = ${id};`;
+
+      connection.query(sql3, function (err, results, fields) {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({ error: "Failed to update schedule_info date." });
+        }
+
+        return res.json({ message: "Data updated successfully." });
+      });
+    });
+  });
+});
+
+
+router.get("/addOneDay", function (req, res) {
+  const id = req.query.id;
+  const offset = Number(req.query.offset);
+  console.log(offset + 'offfset')
+
+  // 첫 번째 쿼리: schedule에서 offset을 조건으로 offset 값 수정
+  const sql1 = `UPDATE schedule SET offset = offset + 1 WHERE offset >= ${offset} AND id = ${id};`;
+
+  connection.query(sql1, function (err, results, fields) {
     if (err) {
       console.log(err);
-    } else {
-      res.json(results);
+      return res.status(500).json({ error: "Failed to update schedule offset." });
     }
-  }
-  )
-})
+
+    // 두 번째 쿼리: schedule_info에서 해당 id에 맞는 레코드의 date 값을 수정
+    const sql2 = `UPDATE schedule_info SET date = date + 1 WHERE id = ${id};`;
+
+    connection.query(sql2, function (err, results, fields) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ error: "Failed to update schedule_info date." });
+      }
+
+      return res.json({ message: "Data updated successfully." });
+    });
+  });
+});
+
+
 router.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 router.use(bodyParser.json({ limit: "50mb" }));
 
