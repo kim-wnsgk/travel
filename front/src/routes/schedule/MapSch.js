@@ -221,13 +221,14 @@ var infowindow = new kakao.maps.InfoWindow({
         }
       }
     function handleMouseOver(index){
-        console.log(markers)
-         markers[index].setImage(selMarkerImage)
+      if(selMarkerImage){
+         markers[index]?.setImage(selMarkerImage)
+        }
         
     }
     function handleMouseOut(index){
       if(markerImage){
-        markers[index].setImage(markerImage)
+        markers[index]?.setImage(markerImage)
       }
     }
     return (
