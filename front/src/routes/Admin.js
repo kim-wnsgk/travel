@@ -78,6 +78,13 @@ function Admin() {
     });
   };
 
+  const addCoordinate = () =>{
+    axios.get("http://localhost:3001/data/addCoordinate").then(function (response) {
+      console.log(JSON.parse(response.data).documents[0]);
+      console.log(Object.keys(response.data))
+    });
+  }
+
   return (
     <div>
       <Header />
@@ -85,11 +92,13 @@ function Admin() {
         <button onClick={() => insertData()}>data 삽입</button>
         <button onClick={() => showData()}>data 출력</button>
         <button onClick={() => initData()}>data 초기화</button>
+        <button onClick={() => addCoordinate()}>좌표 추가</button>
       </div>
       <div>
         <button onClick={() => insertFestival()}>festival 삽입</button>
         <button onClick={() => showFestival()}>festival 출력</button>
         <button onClick={() => initFestival()}>festival 초기화</button>
+        
       </div>
       <div>
         <button

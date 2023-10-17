@@ -23,6 +23,7 @@ function Gather_new({ setModalOpen, contentId, title, image }) {
       
     return (
         <div className={styles.modalBackground} onClick={()=>setModalOpen(false)}>
+
             <div className={styles.modalContainer}>
             <div className={styles.header}>{title}</div>
             <img
@@ -31,7 +32,7 @@ function Gather_new({ setModalOpen, contentId, title, image }) {
             />
             <div className={styles.intro}dangerouslySetInnerHTML={createMarkup()} />
             </div>
-            
+            <div className={styles.modalContainer2}>list</div>
         </div>
     )
 }

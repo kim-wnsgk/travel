@@ -5,7 +5,7 @@ import styles from "./MapSchCom.module.css";
 import axios from "axios";
 import useDidMountEffect from '../useDidMountEffect';
 import MapDetail from "./MapDetail";
-const markers = []
+let markers = []
 const { kakao } = window;
 function Map({name, id, offset, date}) {
   const map={}
@@ -87,6 +87,7 @@ function Map({name, id, offset, date}) {
     fetchSch()
   },[selected])
     useDidMountEffect(() => {
+      markers=[]
       async function map(){
         const container = document.getElementById('map');
         const options = {
