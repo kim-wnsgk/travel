@@ -16,7 +16,9 @@ function ScheduleInfo() {
     const [members, setMembers] = useState({});
     const [memberIdText, setMemberIdText] = useState('');
 
-    
+    const [dateText, setDateText] = useState('');
+
+
     useEffect(() => {
         axios
             .get(`http://localhost:3001/gathering/select/gathering-scheduleinfo-id?id=${id}`) // URL에 id 추가
@@ -37,12 +39,56 @@ function ScheduleInfo() {
     }, [user]);
 
 
-    const [isModalOpen, setModalOpen] = useState(false);
+    const [isModalOpen1, setModalOpen1] = useState(false);
+    const [isModalOpen2, setModalOpen2] = useState(false);
 
-    const toggleModal = () => {
-        setModalOpen(!isModalOpen);
+    const toggleModal1 = () => {
+        setModalOpen1(!isModalOpen1);
+    };
+    const toggleModal2 = () => {
+        setModalOpen2(!isModalOpen2);
     };
 
+    const delOneDay = () => {
+        axios
+            .get("http://localhost:3001/schedule/delOneDay", {
+                params: {
+                    offset: Number(dateText) - 1,
+                    id
+                },
+            })
+            .then(function (response) {
+                alert(`${Number(dateText)}일차가 삭제되었습니다.`);
+                window.location.reload();
+            });
+    }
+
+    const addOneDay = () => {
+        axios
+            .get("http://localhost:3001/schedule/addOneDay", {
+                params: {
+                    offset: Number(dateText) - 1,
+                    id
+                },
+            })
+            .then(function (response) {
+                alert(`${Number(dateText)}일차가 추가되었습니다.`);
+                window.location.reload();
+            });
+    }
+
+    const deleteSchedule = () => {
+        axios
+            .get("http://localhost:3001/gathering/delete", {
+                params: {
+                    id: schedule.id
+                },
+            })
+            .then(function (response) {
+                alert(`${schedule.name} 일정이 삭제되었습니다.`);
+                navigate('/schedule');
+            });
+    }
     // 멤버 리스트 가져오기
     useEffect(() => {
         axios
@@ -70,6 +116,7 @@ function ScheduleInfo() {
             .then(function (response) {
                 console.log(response);
                 setMemberIdText("");
+                window.location.reload();
             });
     }
 
@@ -86,7 +133,8 @@ function ScheduleInfo() {
                 .then(function (response) {
                     alert(`${member} 멤버가 삭제되었습니다.`);
                     // console.log(response);
-                    toggleModal();
+                    toggleModal2();
+                    window.location.reload();
                 });
         }
 
@@ -99,35 +147,15 @@ function ScheduleInfo() {
                 <div className={styles.schedule}>
                     <h1 className={styles.title}>{schedule.name}</h1>
                     <div className={styles.info}>
-                        <p>일정 ID: {schedule.id}</p>
-                        <p>어드민: {schedule.admin}</p>
                         <p>시작일: {new Date(schedule.start).toLocaleDateString()}</p>
+                        <p>종료일: {new Date(new Date(schedule.start).setDate(new Date(schedule.start).getDate() + 3)).toLocaleDateString()}</p>
                         <p>일정 기간: {schedule.date} 일</p>
                         <p>여행 스타일: {schedule.style}</p>
                     </div>
-                    {user === schedule.admin ? <div
-                        onClick={() => {
-                            axios
-                                .get("http://localhost:3001/gathering/delete", {
-                                    params: {
-                                        id: schedule.id
-                                    },
-                                })
-                                .then(function (response) {
-                                    alert(`${schedule.name} 일정이 삭제되었습니다.`);
-                                    navigate('/schedule');
-                                });
+                    {user === schedule.admin ? <button
+                        onClick={toggleModal1}>일정 관리</button> : null}
+                    <button className={styles.modalButton} onClick={toggleModal2}>여행 멤버</button>
 
-                        }}>삭제</div> : null}
-                    <button className={styles.modalButton} onClick={toggleModal}>Show Members</button>
-                    {/* <input
-                        type="text"
-                        value={memberId}
-                        onChange={onIdChange}
-                        placeholder="추가할 멤버 id"
-                        className={styles.add}
-                    />
-                    <button onClick={() => addMember()}>추가</button> */}
                 </div>
                 <div className={styles.map}>
                     <Map id={id} offset={0} date={schedule?.date} name={schedule?.name} style={{ width: '50%' }} />
@@ -135,15 +163,32 @@ function ScheduleInfo() {
 
 
             </div>
-            {isModalOpen ? (
+            {isModalOpen1 ? (
+                <div className={styles.modal}>
+                    <div className={styles.modalContent}>
+                        <h2>일정 수정</h2>
+                        <input
+                            type="text"
+                            value={dateText}
+                            onChange={(e) => setDateText(e.target.value)}
+                            placeholder={`일자를 입력하세요 1 ~ ${schedule.date}`}
+                        />
+                        <button onClick={addOneDay}>일차 추가</button>
+                        <button onClick={delOneDay}>일차 삭제</button>
+                        <button onClick={deleteSchedule}>(주의) 일정 전체 삭제</button>
+                        <button onClick={toggleModal1}>Close</button>
+                    </div>
+                </div>
+            ) : null}
+            {isModalOpen2 ? (
                 <div className={styles.modal}>
                     <div className={styles.modalContent}>
                         <h2>Members</h2>
                         <ul>
                             {members.map((member) => (
                                 <>
-                                    <li key={member.member_id}>{member.member_id}</li>
-                                    {user === schedule.admin ?
+                                    <li key={member.member_id}>{member.member_id} {schedule.admin === member.member_id ? 'admin' : null}</li>
+                                    {user === schedule.admin && schedule.admin !== member.member_id ?
                                         <div onClick={() => deleteMember(member.member_id)}>삭제</div>
                                         : null}
                                 </>
@@ -156,7 +201,7 @@ function ScheduleInfo() {
                             placeholder="Enter member ID"
                         />
                         <button onClick={addMember}>Add Member</button>
-                        <button onClick={toggleModal}>Close</button>
+                        <button onClick={toggleModal2}>Close</button>
                     </div>
                 </div>
             ) : null}
