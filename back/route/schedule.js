@@ -202,7 +202,31 @@ router.get("/addOneDay", function (req, res) {
     });
   });
 });
-
+//근처 갈만한 곳 찾기
+router.get("/nearPlace",function(req,res){
+  id = req.query.id
+  //경도 변환
+  dis_lon = req.query.distance *  0.0115 
+  //위도 변환
+  dis_lat = req.query.distance * 0.007
+  console.log(id,req.query.distance, req.query.tag)
+  connection.query(`select title, addr, lat, lon, image from sight where contentId=${req.query.id}`,function(err,result,fields){
+    if(err){
+      console.log(err)
+    }
+    else{
+      connection.query(`select contentId,title,addr,lat,lon,image from sight where lat between ${result[0].lat-dis_lat} and ${result[0].lat+dis_lat} and lon between ${result[0].lon-dis_lon} and ${result[0].lon+dis_lon} AND contentId!=${id};`,
+      function(err1,res1,fields1){
+        if(err){
+          console.log(err)
+        }
+        else{
+          res.json(result.concat(res1))
+        }
+      })
+    }
+    })
+  })
 
 router.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 router.use(bodyParser.json({ limit: "50mb" }));

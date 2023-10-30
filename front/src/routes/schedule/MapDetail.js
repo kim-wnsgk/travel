@@ -20,7 +20,7 @@ function Gather_new({ setModalOpen, contentId, title, image }) {
       function createMarkup() {
         return {__html: intro?.overview};
       }
-      
+    
     return (
         <div className={styles.modalBackground} onClick={()=>setModalOpen(false)}>
 
@@ -32,7 +32,10 @@ function Gather_new({ setModalOpen, contentId, title, image }) {
             />
             <div className={styles.intro}dangerouslySetInnerHTML={createMarkup()} />
             </div>
-            <div className={styles.modalContainer2}>list</div>
+            <div className={styles.modalContainer2}>
+              주변 관광지
+
+            </div>
         </div>
     )
 }
