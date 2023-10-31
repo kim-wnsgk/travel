@@ -6,12 +6,18 @@ import useDidMountEffect from '../useDidMountEffect';
 // import useKakaoLoader from "./useKakaoLoader"
 
 function NearPlace() {
+  var selImageSrc = process.env.PUBLIC_URL + '/selMarker.png';
+  var imageSrc = process.env.PUBLIC_URL + 'Marker.png';
+  const selImageSize ={ width: 60, height: 60 } 
+  const imageSize = { width: 40, height: 40 }
+  const spriteSize = { width: 36, height: 40 }
   const maxData = 100;//마커 최대 개수
   const [distance, setDistance] = useState(1);
   const [tag,setTag] = useState(1);
   const [datas,setDatas] = useState([]);
   const [state, setState] = useState({center: { lat: 33.450701, lng: 126.570667 }})
   const [level,setLevel] = useState(4)
+  const [mPos,setMPos] = useState();
 
 //   useKakaoLoader()
     var id = 126480 //임시 데이터 나중에 받아오는걸로 수정해야댐
@@ -97,10 +103,30 @@ function NearPlace() {
         level={level} // 지도의 확대 레벨 distance에 따라 다르게 설정해줘야함 
         >
           {datas?.map((data, index) => (
-        <MapMarker
+            index===0 || index==mPos?
+            <MapMarker
           key = {data.id}
           position={{lat:data.lat,lng:data.lon}} // 마커를 표시할 위치
           title={data.title} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+          image={{src:selImageSrc,
+            size: selImageSize,
+            options: {
+              spriteSize: selImageSize,
+            }
+          }}
+          onMouseOut={()=>setMPos()}
+        />:
+        <MapMarker
+          key = {data.id}
+          position={{lat:data.lat,lng:data.lon}} // 마커를 표시할 위치
+          title={data.title}
+          image={{src:imageSrc,
+            size: imageSize,
+            options: {
+              spriteSize: spriteSize,
+            }
+          }} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+          onMouseOver={()=>setMPos(index)}
         />
       ))}
         {/* {data.map((value) => (
@@ -124,7 +150,8 @@ function NearPlace() {
           {datas.map((data) => (
             <div className={styles.element} key={data?.id}>
               <img style={{ width: '150px', height: '80px' }} src={data?.image}/>
-              {data.title}
+              이름 : {data.title}
+              거리 : {((((state.center.lat-data.lat)*142.85).toFixed(3)**2 + ((state.center.lng-data.lon)*86.95).toFixed(3)**2)**1/2).toFixed(3)*1000}m
             </div>
           ))}
         </div>
