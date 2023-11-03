@@ -1,12 +1,14 @@
 import styles from "./RegionDetail.module.css";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
 import AddSch from "../schedule/AddSch";
 
+
 function RegionDetail() {
+  const navigate = useNavigate();
   const API_KEY = process.env.REACT_APP_API_KEY;
   const location = useLocation();
   const [data, setData] = useState(location.state.data);
@@ -41,6 +43,7 @@ function RegionDetail() {
       <div className={styles.contentContainer}>
         <div className={styles.titleModal}>
           <div className={styles.title}>{data.title}</div>
+          <button className={styles.button} onClick={()=>navigate("/nearPlace",{state:{id:data.contentId}})}>주변보기</button>
           <button className={styles.modal} onClick={openModal}>+</button>
         </div>
         <div className={styles.date}></div>
