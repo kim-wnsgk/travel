@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const router = express.Router();
 var request = require("request");
 const cors = require("cors");
-require('dotenv').config()
+require("dotenv").config();
 router.use(cors());
 const connection = require("../db");
 const { seq } = require("async");
@@ -49,6 +49,30 @@ router.get("/addSch", function (req, res) {
       }
     }
   );
+});
+
+router.get("/addSch2", function (req, res) {
+  //여기 지금 date 없고 id 값 안받아와짐 이거 해결해야함
+  const data = req.query.data;
+  const id = req.query.id;
+  for (const item of data) {
+    connection.query(
+      `INSERT INTO schedule (id, sight_id, start, end, date, offset) VALUES ('${id}', '${
+        item.sight_id
+      }', '${item.start}', '${item.end}', '${new Date(item.date)
+        .toISOString()
+        .slice(0, 19)
+        .replace("T", " ")}','${item.offset}');`,
+      function (error, results, fields) {
+        if (error) {
+          console.log("에러발생 =>" + error);
+        } else {
+          console.log("결과 =>" + results);
+          //res.json(results);
+        }
+      }
+    );
+  }
 });
 
 router.get("/getSchedule", async function (req, res) {
@@ -122,44 +146,44 @@ router.get("/convertAddr", function (req, res) {
 });
 
 router.get("/getDirection", function (req, res) {
-  request({
-    method: 'GET',
-    url: `https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=${req.query.origin}&goal=${req.query.destination}&option=trafast`,
-    headers: {
-      'X-NCP-APIGW-API-KEY-ID': process.env.REACT_APP_NAVER_MAP_ID,
-      'X-NCP-APIGW-API-KEY': process.env.REACT_APP_NAVER_MAP,
+  request(
+    {
+      method: "GET",
+      url: `https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=${req.query.origin}&goal=${req.query.destination}&option=trafast`,
+      headers: {
+        "X-NCP-APIGW-API-KEY-ID": process.env.REACT_APP_NAVER_MAP_ID,
+        "X-NCP-APIGW-API-KEY": process.env.REACT_APP_NAVER_MAP,
+      },
+      json: true,
     },
-    json: true
-  }, function (err, response, body) {
-    res.json(body.route.trafast[0].summary)
-  })
-}
-)
-router.get("/delOneDay",function(req,res){
-  var sql1 = `DELETE FROM schedule WHERE id = ${req.query.id} AND offset = ${req.query.offset};`
-  var sql2 = `UPDATE schedule SET offset = offset -1 WHERE offset > ${req.query.offset} and id=${req.query.id};`
-  var sql3 = `UPDATE schedule_info SET date = date-1 where id = ${req.query.id};`
-  connection.query(sql1+sql2+sql3, function(err,results,fields){
+    function (err, response, body) {
+      res.json(body.route.trafast[0].summary);
+    }
+  );
+});
+router.get("/delOneDay", function (req, res) {
+  var sql1 = `DELETE FROM schedule WHERE id = ${req.query.id} AND offset = ${req.query.offset};`;
+  var sql2 = `UPDATE schedule SET offset = offset -1 WHERE offset > ${req.query.offset} and id=${req.query.id};`;
+  var sql3 = `UPDATE schedule_info SET date = date-1 where id = ${req.query.id};`;
+  connection.query(sql1 + sql2 + sql3, function (err, results, fields) {
     if (err) {
       console.log(err);
     } else {
       res.json(results);
     }
-  }
-  )
-})
-router.get("/addOneDay",function(req,res){
-  var sql1 = `UPDATE schedule SET offset = offset +1 WHERE offset >= ${req.query.offset} and id=${req.query.id};`
-  var sql2 = `UPDATE schedule_info SET date = date+1 where id = ${req.query.id};`
-  connection.query(sql1+sql2, function(err,results,fields){
+  });
+});
+router.get("/addOneDay", function (req, res) {
+  var sql1 = `UPDATE schedule SET offset = offset +1 WHERE offset >= ${req.query.offset} and id=${req.query.id};`;
+  var sql2 = `UPDATE schedule_info SET date = date+1 where id = ${req.query.id};`;
+  connection.query(sql1 + sql2, function (err, results, fields) {
     if (err) {
       console.log(err);
     } else {
       res.json(results);
     }
-  }
-  )
-})
+  });
+});
 router.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 router.use(bodyParser.json({ limit: "50mb" }));
 

@@ -53,25 +53,41 @@ router.get("/selMem", function (req, res) {
   );
 });
 
+//어쩔수 없이 이름으로 가져와야되는듯 ㅠㅠ id가 오토인크리즈라
+// router.get("/selName", function (req, res) {
+//   const name = req.query.name;
+//   connection.query(
+//     `SELECT id FROM gathering WHERE name=${name}`,
+//     function (error, results, fields) {
+//       if (error) {
+//         console.log(error);
+//       } else {
+//         res.send(results);
+//       }
+//     }
+//   );
+// });
+
 // 일정 추가 - gathering, schdule_info DB에 추가
 router.get("/insert", function (req, res) {
   var id = "";
-  var style = req.query.style || "기본 여행";  // 입력값이 비어 있을 때 "기본 여행"을 사용
+  var style = req.query.style || "기본 여행"; // 입력값이 비어 있을 때 "기본 여행"을 사용
   connection.query(
     `INSERT INTO gathering (name, admin, style) VALUES ('${req.query.name}', '${req.query.user}', '${style}');`,
     function (error, results, fields) {
       if (error) {
-        console.log(error);
+        console.log("이곳 에러" + error);
       } else {
-        console.log(results);
+        console.log("result id값" + results.insertId);
         id = results.insertId;
+        res.send(results);
       }
       console.log(id);
       connection.query(
         `insert into schedule_info(id,start,date) values ('${id}', '${req.query.startDate}','${req.query.date_long}');`,
         function (error, results, fileds) {
           if (error) {
-            console.log(error);
+            console.log("두번째 쿼리 에러" + error);
           } else {
             console.log(results);
           }
@@ -81,7 +97,7 @@ router.get("/insert", function (req, res) {
         `insert into gathering_members(group_id,member_id) values ('${id}','${req.query.user}');`,
         function (error, results, fileds) {
           if (error) {
-            console.log(error);
+            console.log("세번째 쿼리 에러" + error);
           } else {
             console.log(results);
           }

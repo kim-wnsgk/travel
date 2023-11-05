@@ -1,0 +1,140 @@
+.mainPageContainer {
+  display: flex;
+  flex-direction: column;
+}
+.headerContainer {
+  background-color: red;
+  width: 940px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.logoHeaderContainer {
+  background-color: blueviolet;
+  height: 90px;
+}
+.menuHedaerContainer {
+  background-color: brown;
+  height: 65px;
+}
+.contentContainer {
+  width: 940px;
+  margin: 0 auto;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.contentBox {
+  padding: 50px 0;
+  border-top: 1px solid #333;
+  margin-bottom: 20px;
+}
+.title {
+  overflow: hidden;
+  font-weight: 800;
+  color: #333;
+  font-size: 36px;
+  letter-spacing: -1px;
+  word-break: keep-all;
+}
+.date {
+  padding-top: 10px;
+  font-size: 16px;
+}
+.viewAndWriter {
+  padding-top: 10px;
+  display: flex;
+  margin-bottom: 10px;
+}
+.comment {
+  border-top: 1px solid #333;
+  padding-top: 50px;
+}
+.commentBox {
+  overflow: hidden;
+  border: 1px solid #b0b3be;
+  border-radius: 4px;
+}
+.profileArea {
+  position: relative;
+  z-index: 1;
+  height: 26px;
+  padding-top: 12px;
+  padding-left: 14px;
+  margin-bottom: 2px;
+}
+.writer {
+  padding-left: 5px;
+}
+.wirteArea {
+  display: block;
+}
+.wirteAreaInner {
+  border-top: 1px solid #f0f0f0;
+  padding: 13px 14px 10px;
+}
+.commentTextArea {
+  border: none;
+  outline: none;
+  resize: none;
+  width: 100%;
+  height: 100%;
+}
+.uploadBox {
+  height: 46px;
+  border-top: 1px solid #f0f0f0;
+  position: relative;
+}
+.uploadButton {
+  position: absolute;
+  left: 870px;
+  display: block;
+  height: 30px;
+  min-width: 44px;
+  margin: 9px;
+  background: #b0b3be;
+  border-radius: 3px;
+  border: none;
+  font-size: 13px;
+  color: #fff;
+  letter-spacing: -0.5px;
+  cursor: pointer;
+}
+.commentList {
+  margin-top: 50px;
+  border-top: 1px solid #333;
+  margin-bottom: 20px;
+}
+.bar {
+  margin-left: 5px;
+  border-left: 1px #b0b3be solid;
+}
+.commentBox {
+  border: #b0b3be 1px solid;
+  border-radius: 5px;
+  margin-bottom: 12px;
+}
+.commentWriter {
+  border-bottom: 1px #f0f0f0 solid;
+  padding-left: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.commentRegdate {
+  border-bottom: 1px #f0f0f0 solid;
+  font-size: 13px;
+  padding-left: 10px;
+}
+.commentContent {
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.name input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
