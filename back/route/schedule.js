@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const router = express.Router();
 var request = require("request");
 const cors = require("cors");
-require('dotenv').config()
+require("dotenv").config();
 router.use(cors());
 const connection = require("../db");
 const { seq } = require("async");
@@ -49,6 +49,30 @@ router.get("/addSch", function (req, res) {
       }
     }
   );
+});
+
+router.get("/addSch2", function (req, res) {
+  //여기 지금 date 없고 id 값 안받아와짐 이거 해결해야함
+  const data = req.query.data;
+  const id = req.query.id;
+  for (const item of data) {
+    connection.query(
+      `INSERT INTO schedule (id, sight_id, start, end, date, offset) VALUES ('${id}', '${
+        item.sight_id
+      }', '${item.start}', '${item.end}', '${new Date(item.date)
+        .toISOString()
+        .slice(0, 19)
+        .replace("T", " ")}','${item.offset}');`,
+      function (error, results, fields) {
+        if (error) {
+          console.log("에러발생 =>" + error);
+        } else {
+          console.log("결과 =>" + results);
+          //res.json(results);
+        }
+      }
+    );
+  }
 });
 
 router.get("/getSchedule", async function (req, res) {
@@ -122,112 +146,43 @@ router.get("/convertAddr", function (req, res) {
 });
 
 router.get("/getDirection", function (req, res) {
-  request({
-    method: 'GET',
-    url: `https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=${req.query.origin}&goal=${req.query.destination}&option=trafast`,
-    headers: {
-      'X-NCP-APIGW-API-KEY-ID': process.env.REACT_APP_NAVER_MAP_ID,
-      'X-NCP-APIGW-API-KEY': process.env.REACT_APP_NAVER_MAP,
+  request(
+    {
+      method: "GET",
+      url: `https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=${req.query.origin}&goal=${req.query.destination}&option=trafast`,
+      headers: {
+        "X-NCP-APIGW-API-KEY-ID": process.env.REACT_APP_NAVER_MAP_ID,
+        "X-NCP-APIGW-API-KEY": process.env.REACT_APP_NAVER_MAP,
+      },
+      json: true,
     },
-    json: true
-  }, function (err, response, body) {
-    res.json(body.route.trafast[0].summary)
-  })
-}
-)
-
+    function (err, response, body) {
+      res.json(body.route.trafast[0].summary);
+    }
+  );
+});
 router.get("/delOneDay", function (req, res) {
-  const id = req.query.id;
-  const offset = Number(req.query.offset);
-  console.log(offset + 'offfset')
-
-  // 첫 번째 쿼리: schedule에서 해당 id와 offset에 맞는 레코드 삭제
-  const sql1 = `DELETE FROM schedule WHERE id = ${id} AND offset = ${offset};`;
-
-  connection.query(sql1, function (err, results, fields) {
+  var sql1 = `DELETE FROM schedule WHERE id = ${req.query.id} AND offset = ${req.query.offset};`;
+  var sql2 = `UPDATE schedule SET offset = offset -1 WHERE offset > ${req.query.offset} and id=${req.query.id};`;
+  var sql3 = `UPDATE schedule_info SET date = date-1 where id = ${req.query.id};`;
+  connection.query(sql1 + sql2 + sql3, function (err, results, fields) {
     if (err) {
       console.log(err);
       return res.status(500).json({ error: "Failed to delete schedule." });
     }
-
-    // 두 번째 쿼리: schedule에서 offset을 조건으로 offset 값 수정
-    const sql2 = `UPDATE schedule SET offset = offset - 1 WHERE offset > ${offset} AND id = ${id};`;
-
-    connection.query(sql2, function (err, results, fields) {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ error: "Failed to update schedule offset." });
-      }
-
-      // 세 번째 쿼리: schedule_info에서 해당 id에 맞는 레코드의 date 값을 수정
-      const sql3 = `UPDATE schedule_info SET date = date - 1 WHERE id = ${id};`;
-
-      connection.query(sql3, function (err, results, fields) {
-        if (err) {
-          console.log(err);
-          return res.status(500).json({ error: "Failed to update schedule_info date." });
-        }
-
-        return res.json({ message: "Data updated successfully." });
-      });
-    });
   });
 });
-
-
 router.get("/addOneDay", function (req, res) {
-  const id = req.query.id;
-  const offset = Number(req.query.offset);
-  console.log(offset + 'offfset')
-
-  // 첫 번째 쿼리: schedule에서 offset을 조건으로 offset 값 수정
-  const sql1 = `UPDATE schedule SET offset = offset + 1 WHERE offset >= ${offset} AND id = ${id};`;
-
-  connection.query(sql1, function (err, results, fields) {
+  var sql1 = `UPDATE schedule SET offset = offset +1 WHERE offset >= ${req.query.offset} and id=${req.query.id};`;
+  var sql2 = `UPDATE schedule_info SET date = date+1 where id = ${req.query.id};`;
+  connection.query(sql1 + sql2, function (err, results, fields) {
     if (err) {
       console.log(err);
-      return res.status(500).json({ error: "Failed to update schedule offset." });
+    } else {
+      res.json(results);
     }
-
-    // 두 번째 쿼리: schedule_info에서 해당 id에 맞는 레코드의 date 값을 수정
-    const sql2 = `UPDATE schedule_info SET date = date + 1 WHERE id = ${id};`;
-
-    connection.query(sql2, function (err, results, fields) {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ error: "Failed to update schedule_info date." });
-      }
-
-      return res.json({ message: "Data updated successfully." });
-    });
   });
 });
-//근처 갈만한 곳 찾기
-router.get("/nearPlace",function(req,res){
-  id = req.query.id
-  //경도 변환
-  dis_lon = req.query.distance *  0.0115 
-  //위도 변환
-  dis_lat = req.query.distance * 0.007
-  console.log(id,req.query.distance, req.query.tag)
-  connection.query(`select title, addr, lat, lon, image from sight where contentId=${req.query.id}`,function(err,result,fields){
-    if(err){
-      console.log(err)
-    }
-    else{
-      connection.query(`select contentId,title,addr,lat,lon,image from sight where lat between ${result[0].lat-dis_lat} and ${result[0].lat+dis_lat} and lon between ${result[0].lon-dis_lon} and ${result[0].lon+dis_lon} AND contentId!=${id};`,
-      function(err1,res1,fields1){
-        if(err){
-          console.log(err)
-        }
-        else{
-          res.json(result.concat(res1))
-        }
-      })
-    }
-    })
-  })
-
 router.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 router.use(bodyParser.json({ limit: "50mb" }));
 
