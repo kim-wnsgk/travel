@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import styles from "./BoardShareView.module.css";
 import Header from "../../components/Header";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as dayjs from "dayjs";
 import DatePicker from "react-datepicker";
 
 const BoardShareView = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const board_id = location.state.boardData.board_id;
   //console.log(board_id);
   // 이거 기반으로 pid 가져와서
@@ -164,6 +166,7 @@ const BoardShareView = () => {
             console.error("에러:", error);
           });
       }); // 이러면 방금 그 id값 받아온것. 받아온 id값으로 세부 일정 넣어주기.
+    navigate("/schedule");
   }
 
   return (

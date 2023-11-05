@@ -164,20 +164,39 @@ router.post("/BoardShareWrite", (req, res) => {
 });
 
 router.post("/BoardShareWrite2", (req, res) => {
-  const board_id = req.body.board_id;
-  const sight_id = req.body.sight_id;
-  const start = req.body.start;
-  const end = req.body.end;
-  const offset = req.body.offset;
-  const date = new Date(req.body.date);
+  // const board_id = req.body.board_id;
+  // const sight_id = req.body.sight_id;
+  // const start = req.body.start;
+  // const end = req.body.end;
+  // const offset = req.body.offset;
+  // const date = new Date(req.body.date);
+  console.log("여기옴");
+  const dataDetail = req.body;
+  console.log("데이터 베이스에 들어갈 배열==>" + dataDetail);
   const sendData = { isSuccess: "" };
-  if (board_id && sight_id && start && end && offset) {
+  // if (board_id && sight_id && start && end && offset) {
+  //   connection.query(
+  //     "INSERT INTO board_share_schedule (board_id, sight_id, start, end, offset, date) VALUES(?,?,?,?,?,?)",
+  //     [board_id, sight_id, start, end, offset, date]
+  //   );
+  // } else {
+  //   sendData.isSuccess = "오류발생.";
+  // }
+  for (const item of dataDetail) {
     connection.query(
       "INSERT INTO board_share_schedule (board_id, sight_id, start, end, offset, date) VALUES(?,?,?,?,?,?)",
-      [board_id, sight_id, start, end, offset, date]
+      [
+        item.board_id,
+        item.sight_id,
+        item.start,
+        item.end,
+        item.offset,
+        new Date(item.date).toISOString().slice(0, 19).replace("T", " "),
+      ],
+      function (error, results, fields) {
+        console.log("에러의 발생 => " + error);
+      }
     );
-  } else {
-    sendData.isSuccess = "오류발생.";
   }
 });
 

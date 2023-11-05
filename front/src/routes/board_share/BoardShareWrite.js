@@ -69,8 +69,9 @@ function BoardSharedWrite() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("받아온 데이터 => " + JSON.stringify(data)); // 결과 처리
+        //console.log("받아온 데이터 => " + JSON.stringify(data)); // 결과 처리
         setDataDetail(data);
+        console.log("받아온 dataDetail=>" + JSON.stringify(dataDetail));
       })
       .catch((error) => console.error("서버 요청 오류:", error));
 
@@ -256,45 +257,49 @@ function BoardSharedWrite() {
                     }
                   });
                 for (var i = 0; i < dataDetail.length; i++) {
-                  console.log("반복중");
-                  //const id = schedule[i].id;
-                  console.log("확인용" + dataDetail);
-                  const sight_id = dataDetail[i].sight_id;
-                  const start = dataDetail[i].start;
-                  const end = dataDetail[i].end;
-                  const offset = dataDetail[i].offset;
-                  const date = dataDetail[i].date;
-                  console.log("offset잘 뜨나 확인 => " + offset);
-                  const boardData = {
-                    board_id: board_id,
-                    sight_id: sight_id,
-                    start: start,
-                    end: end,
-                    offset: offset,
-                    date: date,
-                  };
-
-                  console.log(boardData);
-
-                  fetch("http://localhost:3001/board/BoardShareWrite2", {
-                    method: "post",
-                    headers: {
-                      "content-type": "application/json",
-                    },
-                    body: JSON.stringify(boardData),
-                  })
-                    .then((res) => res.json())
-                    .then((json) => {
-                      console.log(json.isSuccess);
-                      if (json.isSuccess === "True") {
-                        alert("게시물 작성 성공2");
-                        navigate(-1);
-                      } else {
-                        alert(json.isSuccess);
-                      }
-                    });
+                  dataDetail[i].board_id = board_id;
                 }
+                fetch("http://localhost:3001/board/BoardShareWrite2", {
+                  method: "post",
+                  headers: {
+                    "content-type": "application/json",
+                  },
+                  body: JSON.stringify(dataDetail),
+                })
+                  .then((res) => res.json())
+                  .then((json) => {
+                    console.log(json.isSuccess);
+                    if (json.isSuccess === "True") {
+                      alert("게시물 작성 성공2");
+                      navigate(-1);
+                    } else {
+                      alert(json.isSuccess);
+                    }
+                  });
+
+                // for (var i = 0; i < dataDetail.length; i++) {
+                //   console.log("반복중");
+                //   //const id = schedule[i].id;
+                //   console.log("확인용" + dataDetail);
+                //   const sight_id = dataDetail[i].sight_id;
+                //   const start = dataDetail[i].start;
+                //   const end = dataDetail[i].end;
+                //   const offset = dataDetail[i].offset;
+                //   const date = dataDetail[i].date;
+                //   console.log("offset잘 뜨나 확인 => " + offset);
+                //   const boardData = {
+                //     board_id: board_id,
+                //     sight_id: sight_id,
+                //     start: start,
+                //     end: end,
+                //     offset: offset,
+                //     date: date,
+                //   };
+
+                console.log(boardData);
+                navigate(-1);
               }}
+              //}
             >
               저장
             </button>
