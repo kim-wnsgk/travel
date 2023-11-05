@@ -2,8 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const router = express.Router();
 const cors = require("cors");
+var request = require("request");
 router.use(cors());
 const connection = require("../db");
+require('dotenv').config();
 connection.connect((error) => {
   if (error) {
     console.error("Error connecting to MySQL server(data): " + error.stack);
@@ -119,6 +121,68 @@ router.post("/recommand", (req, res, next) => {
       res.json(results);
     });
   });
-  
+
+router.get("/addCoordinate", (req, res, next) => {
+  // connection.query(`select addr from sight`, function (error, results, fields) {
+    // var address = "용인시 수지구 죽전로 152"
+    var address
+    connection.query(`SELECT contentId,addr FROM travel.sight;`,function(err,res,fields){
+      // var address = res.contentId
+      geocodeAddresses(res)
+  }
+  )})
+
+  function sendRequest(address) {
+    return new Promise((resolve, reject) => {
+      request({
+        method: 'GET',
+        url: `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURIComponent(address)}`,
+        headers: {
+          'Authorization': `KakaoAK ${process.env.REACT_APP_KAKAO_MAP}`,
+        },
+      }, function (err, response, body) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(body);
+        }
+      });
+    });
+  }
+  async function geocodeAddresses(res) {
+    for (const re of res) {
+      try {
+        const body = await sendRequest(re.addr);
+        if (JSON.parse(body).documents[0].x !== undefined) {
+          connection.query(`UPDATE sight SET lon = ${JSON.parse(body).documents[0].x}, lat = ${JSON.parse(body).documents[0].y} WHERE contentId = ${re.contentId};`,
+          function(err){
+            if(err){
+              throw(err);
+            }
+          })
+        }
+        else{
+          console.log("err occurred",re.addr)
+        }
+      } catch (err) {
+        console.error("An error occurred:", err);
+      }
+    }
+  }
+
+router.get("/getDirection", function (req, res) {
+  request({
+    method: 'GET',
+    url: `https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=${req.query.origin}&goal=${req.query.destination}&option=trafast`,
+    headers: {
+      'X-NCP-APIGW-API-KEY-ID': process.env.REACT_APP_NAVER_MAP_ID,
+      'X-NCP-APIGW-API-KEY': process.env.REACT_APP_NAVER_MAP,
+    },
+    json: true
+  }, function (err, response, body) {
+    res.json(body.route.trafast[0].summary)
+  })
+}
+)
 
 module.exports = router;

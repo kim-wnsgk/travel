@@ -1,9 +1,23 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Header from "../components/Header";
 
 function Admin() {
+  const [user, setUser] = useState("");
+  const adminList = ["kkll", "123"];
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/user/getUser`, { withCredentials: true })
+      .then(function (response) {
+        const { data } = response;
+        setUser(data.user); // 데이터를 상태에 설정
+      });
+  }, []);
+
+  const navigate = useNavigate();
   const API_KEY = process.env.REACT_APP_API_KEY;
   const [data, setData] = useState([]);
   const insertData = async () => {
@@ -78,18 +92,34 @@ function Admin() {
     });
   };
 
-  return (
+  const addCoordinate = () => {
+    axios.get("http://localhost:3001/data/addCoordinate").then(function (response) {
+      console.log(JSON.parse(response.data).documents[0]);
+      console.log(Object.keys(response.data))
+    });
+  }
+  if (!(adminList.includes(user))) {
+    return (
+      <>
+        <div>접근 거부 {user}</div>
+        <button onClick={() => navigate(-1)}>뒤로가기</button>
+      </>
+    )
+  }
+  else return (
     <div>
       <Header />
       <div>
         <button onClick={() => insertData()}>data 삽입</button>
         <button onClick={() => showData()}>data 출력</button>
         <button onClick={() => initData()}>data 초기화</button>
+        <button onClick={() => addCoordinate()}>좌표 추가</button>
       </div>
       <div>
         <button onClick={() => insertFestival()}>festival 삽입</button>
         <button onClick={() => showFestival()}>festival 출력</button>
         <button onClick={() => initFestival()}>festival 초기화</button>
+
       </div>
       <div>
         <button

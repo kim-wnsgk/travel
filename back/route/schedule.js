@@ -168,8 +168,7 @@ router.get("/delOneDay", function (req, res) {
   connection.query(sql1 + sql2 + sql3, function (err, results, fields) {
     if (err) {
       console.log(err);
-    } else {
-      res.json(results);
+      return res.status(500).json({ error: "Failed to delete schedule." });
     }
   });
 });

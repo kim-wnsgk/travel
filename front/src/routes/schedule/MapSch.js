@@ -4,8 +4,9 @@ import { useState } from "react";
 import styles from "./MapSch.module.css";
 import axios from "axios";
 import useDidMountEffect from '../useDidMountEffect';
+import { Link } from "react-router-dom";
 import MapDetail from "./MapDetail";
-const markers = []
+let markers = []
 const { kakao } = window;
 function Map() {
   const infowindows = []
@@ -13,7 +14,6 @@ function Map() {
   const NAVER = process.env.REACT_APP_NAVER_MAP;
   const NAVER_ID = process.env.REACT_APP_NAVER_MAP_ID;
   const location = useLocation().state;
-  const [date,setDate] = useState();
   const [schs,setSchs] = useState([]);
   const [selected,setSelected] = useState(location.offset);
   const [addr, setAddr] = useState([]);
@@ -35,6 +35,7 @@ function Map() {
 
   function select(index) {
     setSelected(index);
+    markers=[]
   }
   async function fetchSch() {
     if (location.id) {
@@ -91,6 +92,7 @@ function Map() {
     fetchSch()
   },[selected])
     useDidMountEffect(() => {
+      markers=[]
       async function map(){
         const container = document.getElementById('map');
         const options = {
@@ -189,11 +191,16 @@ var infowindow = new kakao.maps.InfoWindow({
         //마우스 오버시
         function makeOverListener(map, marker, infowindow, index) {
           return function() {
-              infowindow.open(map, marker);
-              markers[index].setImage(selMarkerImage)
-              setCurVal(index)
+            infowindow.open(map, marker);
+            try {
+              markers[index].setImage(selMarkerImage);
+              setCurVal(index);
+            } catch (error) {
+              console.error("이미지 아직 로드 안됨");
+            }
           };
-      }
+        }
+        
       //마우스가 마커를 벗어나면
       function makeOutListener(infowindow,index) {
           return function() {
@@ -215,14 +222,13 @@ var infowindow = new kakao.maps.InfoWindow({
       }
     function handleMouseOver(index){
       if(selMarkerImage){
-        console.log(markers)
-         markers[index].setImage(selMarkerImage)
+         markers[index]?.setImage(selMarkerImage)
+        }
         
-      }
     }
     function handleMouseOut(index){
       if(markerImage){
-        markers[index].setImage(markerImage)
+        markers[index]?.setImage(markerImage)
       }
     }
     return (
@@ -244,7 +250,10 @@ var infowindow = new kakao.maps.InfoWindow({
             <div className={styles.map} id="map"/>
             <div className={styles.list}>
             {schs.length === 0 ? (
+              <div>
           <p>아직 일정이 없습니다. 추가해주세요.</p>
+          <Link to="../recommand">여행지 추가하러 가기</Link>
+          </div>
         ) : (
           schs.map((item, index) => (index===curVal?(
             <div 

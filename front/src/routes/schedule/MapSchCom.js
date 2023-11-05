@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import styles from "./MapSchCom.module.css";
 import axios from "axios";
 import useDidMountEffect from '../useDidMountEffect';
 import MapDetail from "./MapDetail";
-const markers = []
+let markers = []
 const { kakao } = window;
 function Map({name, id, offset, date}) {
+  const infowindows = []
   const map={}
   const NAVER = process.env.REACT_APP_NAVER_MAP;
   const NAVER_ID = process.env.REACT_APP_NAVER_MAP_ID;
@@ -18,8 +19,6 @@ function Map({name, id, offset, date}) {
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false)
   const [curAddr, setCurAddr] = useState();
-  //두 마커 사이의 거리 구하기
-  const dist =[]
   var selImageSrc = process.env.PUBLIC_URL + '/selMarker.png';
   var selImageSize = new kakao.maps.Size(64, 69);
   var selImageOption = { offset: new kakao.maps.Point(34, 69) };
@@ -29,8 +28,11 @@ function Map({name, id, offset, date}) {
   var imageOption = { offset: new kakao.maps.Point(22, 42) };
   var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
   //두 마커 사이의 거리 구하기
+  const dist =[]
+
   function select(index) {
     setSelected(index);
+    markers=[]
   }
   async function fetchSch() {
     if (id) {
@@ -87,6 +89,7 @@ function Map({name, id, offset, date}) {
     fetchSch()
   },[selected])
     useDidMountEffect(() => {
+      markers=[]
       async function map(){
         const container = document.getElementById('map');
         const options = {
@@ -94,7 +97,7 @@ function Map({name, id, offset, date}) {
             level: 2,
             zIndex:1
         };
-        var map = new kakao.maps.Map(container, options);
+        map = new kakao.maps.Map(container, options);
         var Addr = [];
       if(Object.keys(addr).length === 0){
         console.log("none")
@@ -102,7 +105,7 @@ function Map({name, id, offset, date}) {
     iwPosition = new kakao.maps.LatLng(37.3226546, 127.1260339), //인포윈도우 표시 위치입니다
     iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
-// 인포윈도우를 생성하고 지도에 표시합니다
+// // 인포윈도우를 생성하고 지도에 표시합니다
 var infowindow = new kakao.maps.InfoWindow({
     map: map, // 인포윈도우가 표시될 지도
     position : iwPosition, 
@@ -111,12 +114,10 @@ var infowindow = new kakao.maps.InfoWindow({
 })
       }
         else{
-          for (var i = 0; i < addr?.length; i++) {
+          for (var i = 0; i < addr.length; i++) {
             Addr[i] = addr[i].addr
-            console.log(addr[i].addr);
         }
             // Addr[i] = addr[i].addr
-      
         var points = [];
         var geocoder = new kakao.maps.services.Geocoder();
         Promise.all(
@@ -139,30 +140,30 @@ var infowindow = new kakao.maps.InfoWindow({
                 if(index!=0){
                   dist.push(getDirection(`${points[index-1].La},${points[index-1].Ma}`,`${points[index].La},${points[index].Ma}`))
                 }
-                var marker = new kakao.maps.Marker({ position: point,clickable: true });
+                var marker = new kakao.maps.Marker({ position: point,clickable: true,image: markerImage});
                 
                 marker.setMap(map);
                 bounds.extend(point);
                 var infowindow = new kakao.maps.InfoWindow({
-                  content: `<div style="margin:auto;overflow: hidden;">시간:${schs[index].start}~${schs[index].end}<br/> 장소:${schs[index].sight_id}</div>`
-              })
-              kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow,index));
+                  content: `<div style="width:200px;height:40px;overflow:hidden;margin:auto;background-color:none;">시간:${schs[index].start}~${schs[index].end}<br/> 장소:${schs[index].sight_id}</div>`
+                })
+              infowindows.push(infowindow)
+              kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow, index));
               kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow,index));
               kakao.maps.event.addListener(marker, 'click', markerClicked(index));
               markers.push(marker)
-            }
+              }
             });
             map.setBounds(bounds);
 
             var polyline = new kakao.maps.Polyline({
                 path: points, // 선을 구성하는 좌표배열 입니다
                 strokeWeight: 5, // 선의 두께 입니다
-                strokeColor: '#ff0000', // 선의 색깔입니다
+                strokeColor: '#ff0000', // 선의 색깔입니다s
                 strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                 strokeStyle: 'solid' // 선의 스타일입니다
             });
             Promise.all(dist).then((results)=>{
-              console.log(results)
             // 지도에 선을 표시합니다 
             polyline.setMap(map); 
             points.forEach((point,index) => {
@@ -180,17 +181,21 @@ var infowindow = new kakao.maps.InfoWindow({
           })
         });
       }}
-      map()
-           
-        }, [addr, schs])
-        //마커 마우스 오버시
-        function makeOverListener(map, marker, infowindow,index) {
+        map();
+    }, [addr])
+        //마우스 오버시
+        function makeOverListener(map, marker, infowindow, index) {
           return function() {
-              infowindow.open(map, marker);
-              markers[index].setImage(selMarkerImage)
-              setCurVal(index)
+            infowindow.open(map, marker);
+            try {
+              markers[index].setImage(selMarkerImage);
+              setCurVal(index);
+            } catch (error) {
+              console.error("이미지 아직 로드 안됨");
+            }
           };
-      }
+        }
+        
       //마우스가 마커를 벗어나면
       function makeOutListener(infowindow,index) {
           return function() {
@@ -210,21 +215,22 @@ var infowindow = new kakao.maps.InfoWindow({
           setIsOpen(true)
         }
       }
-      function handleMouseOver(index){
-        if(selMarkerImage){
-          markers[index].setImage(selMarkerImage)
-        }
-      }
-      function handleMouseOut(index){
-        if(markerImage){
-          markers[index].setImage(markerImage)
+    function handleMouseOver(index){
+      if(selMarkerImage){
+         markers[index]?.setImage(selMarkerImage)
         }
         
+    }
+    function handleMouseOut(index){
+      if(markerImage){
+        markers[index]?.setImage(markerImage)
       }
+    }
     return (
         <div className={styles.container}>
           {isOpen && <MapDetail setModalOpen={setIsOpen} title={addr[curAddr]?.title} image={addr[curAddr]?.image} contentId={addr[curAddr]?.contentId}/>}
           <div className={styles.headEles}>
+          <h1>{name} 모임</h1>
           <div className={styles.dates}> 
          {Array.from({ length: date }, (_, index) =>(
           index===selected?(
@@ -238,11 +244,16 @@ var infowindow = new kakao.maps.InfoWindow({
          <div className={styles.mainEles}>
             <div className={styles.map} id="map"/>
             <div className={styles.list}>
-            {schs.length === 0 ? (
+            {schs?.length === 0 ? (
+              <div>
           <p>아직 일정이 없습니다. 추가해주세요.</p>
+          <Link to="../recommand">여행지 추가하러 가기</Link>
+          </div>
         ) : (
           schs.map((item, index) => (index===curVal?(
-            <div className={styles.eles}>{index+1}.
+            <div 
+            className={styles.eles}
+            >{index+1}.
               <div className={styles.schduleSite}>장소 : {item.sight_id}</div>
               <div className={styles.schduleTime}>
                 일정 시간 : {item.start} ~ {item.end}
@@ -251,7 +262,7 @@ var infowindow = new kakao.maps.InfoWindow({
               <div className={styles.ele}
               onMouseEnter={()=>{handleMouseOver(index)}}
               onMouseLeave={()=>handleMouseOut(index)} 
-              >{index+1}.
+            >{index+1}.
               <div className={styles.schduleSite}>장소 : {item.sight_id}</div>
               <div className={styles.schduleTime}>
                 일정 시간 : {item.start} ~ {item.end}
@@ -260,10 +271,8 @@ var infowindow = new kakao.maps.InfoWindow({
             )
           ))
         )}
-        
             </div>
           </div>
-          
         </div>
     )
 }

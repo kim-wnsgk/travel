@@ -11,6 +11,7 @@ import Map from "./routes/schedule/MapSch.js";
 import Admin from "./routes/Admin.js";
 import ScheduleModiOffset from "./routes/schedule/ScheduleModiOffset.js";
 import SearchDetail from "./routes/SearchDetail.js";
+import NearPlace from "./routes/schedule/NearPlace.js";
 
 import Regions from "./routes/region/Regions";
 import RegionDetail from "./routes/region/RegionDetail";
@@ -83,6 +84,7 @@ function App() {
         <Route path="/addSch" element={<AddSch />} />
         <Route path="/floating" element={<Floating />} />
         <Route path="/map" element={<Map />} />
+        <Route path="/nearPlace" element={<NearPlace />} />
       </Routes>
     </Router>
   );
