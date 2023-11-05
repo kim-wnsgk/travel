@@ -23,6 +23,11 @@ function Regions() {
   const [items] = useState(7);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contentName, setContentName] = useState('');
+  const [searchText, setSearchText] = useState('');
+
+  const onTextChange = (e) => {
+    setSearchText(e.target.value);
+  }
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -58,7 +63,20 @@ function Regions() {
       });
   }, [selectedDo, selectedSi, selectedCat]);
 
-  console.log(data)
+  const searchKeyword = () => {
+    try {
+      navigate("/searchDetail", {
+        state: { searchText },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const enterKeyPress = (e) => {
+    if (e.key === "Enter") {
+      searchKeyword(); // Enter 입력이 되면 클릭 이벤트 실행
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -130,12 +148,24 @@ function Regions() {
         </div>
         <div className={styles.datas}>
           <div className={styles.banner}>
-            총{" "}
-            <span style={{ color: "blue", fontWeight: "bold" }}>
-              {dataLength}
-            </span>
-            개의 데이터가 존재합니다.
+            <div className={styles.count}>
+              총{" "}
+              <span style={{ color: "blue", fontWeight: "bold" }}>
+                {dataLength}
+              </span>
+              개의 데이터가 존재합니다.
+            </div>
+            <div className={styles.search}>
+              <input
+                placeholder="검색어를 입력해주세요"
+                value={searchText}
+                onChange={onTextChange}
+                className={styles.input}
+                onKeyPress={enterKeyPress}
+              />
+            </div>
           </div>
+
           <div className={styles.lists}>
             {data &&
               data.slice(items * (page - 1), items * (page - 1) + items).map((item, index) => (

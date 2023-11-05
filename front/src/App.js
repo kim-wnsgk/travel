@@ -15,6 +15,7 @@ import NearPlace from "./routes/schedule/NearPlace.js";
 
 import Regions from "./routes/region/Regions";
 import RegionDetail from "./routes/region/RegionDetail";
+import AddRegion from "./routes/region/AddRegion.js";
 
 import BoardList from "./routes/board/BoardList.js";
 import BoardView from "./routes/board/BoardView.js";
@@ -59,6 +60,7 @@ function App() {
 
         <Route path="/regions" element={<Regions />} />
         <Route path="/regiondetail" element={<RegionDetail />} />
+        <Route path="/addRegion" element={<AddRegion />} />
 
         <Route path="/ScheduleModiOffset" element={<ScheduleModiOffset />} />
         <Route path="/BoardList" element={<BoardList />} />
