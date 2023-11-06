@@ -1,10 +1,13 @@
-import { Map, useMap, MapMarker } from "react-kakao-maps-sdk"
-import { useState, useEffect } from "react"
+import { Map, useMap, MapMarker,MarkerTrackerStyle,AbstractOverlay } from "react-kakao-maps-sdk"
+import { useState, useEffect,useRef,useMemo,useCallback } from "react"
 import styles from "./NearPlace.module.css";
 import axios from "axios";
+import ReactDOM from 'react-dom';
 import useDidMountEffect from '../useDidMountEffect';
 import { useLocation } from "react-router-dom";
 import NearPlaceDetail from './NearPlaceDetail'
+const { kakao } = window;
+
 // import useKakaoLoader from "./useKakaoLoader"
 
 function NearPlace() {
@@ -23,7 +26,299 @@ function NearPlace() {
   const [mPos, setMPos] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [selId,setSelId] = useState();
+  //tracking
+  const TooltipMarker = ({
+    position,
+    tooltipText,
+    title
+  }) => {
+    const map = useMap()
+    // Marker로 올려질 node 객체를 생성 합니다.
+    const node = useRef(document.createElement("div"))
+    const [visible, setVisible] = useState(false)
+    const [tracerPosition, setTracerPosition] = useState({
+      x: 0,
+      y: 0,
+    })
+    const [tracerAngle, setTracerAngle] = useState(0)
 
+    const positionLatlng = useMemo(() => {
+      return new kakao.maps.LatLng(position.lat, position.lng)
+    }, [position.lat, position.lng])
+
+    function onAdd() {
+      const panel = this.getPanels()
+        .overlayLayer
+      panel.appendChild(node.current)
+    }
+
+    function onRemove() {
+      node.current.parentNode.removeChild(node.current)
+    }
+    function draw() {
+      // 화면 좌표와 지도의 좌표를 매핑시켜주는 projection객체
+      const projection = this.getProjection()
+      // overlayLayer는 지도와 함께 움직이는 layer이므로
+      // 지도 내부의 위치를 반영해주는 pointFromCoords를 사용합니다.
+      const point = projection.pointFromCoords(positionLatlng)
+      // 내부 엘리먼트의 크기를 얻어서
+
+      const width = node.current.offsetWidth
+      const height = node.current.offsetHeight
+
+      // 해당 위치의 정중앙에 위치하도록 top, left를 지정합니다.
+      node.current.style.left = point.x - width / 2 + "px"
+      node.current.style.top = point.y - height / 2 + "px"
+    }
+
+    // 클리핑을 위한 outcode
+    const OUTCODE = {
+      INSIDE: 0, // 0b0000
+      TOP: 8, //0b1000
+      RIGHT: 2, // 0b0010
+      BOTTOM: 4, // 0b0100
+      LEFT: 1, // 0b0001
+    }
+
+    const BOUNDS_BUFFER = 30
+
+    const CLIP_BUFFER = 40
+
+    const Marker = ({ tooltipText }) => {
+      const [isOver, setIsOver] = useState(false)
+      return (
+        <div
+          className={`node`}
+          onMouseOver={() => {
+            setIsOver(true)
+          }}
+          onMouseOut={() => {
+            setIsOver(false)
+          }}
+        >
+          {isOver && <div className={`tooltip`}>{tooltipText}</div>}
+        </div>
+      )
+    }
+
+    const Tracker = ({ position, angle }) => {
+      return (
+        <div
+          className={"tracker"}
+          style={{
+            position: 'absolute',
+            zIndex: '100',
+            width: '100px',
+            height: '100px',
+            left: `${position.x}px`,
+            top: `${position.y}px`,
+            visibility: 'visible', // 추가
+            display: 'block',   // 추가
+          }}
+          onClick={() => {
+            map.setCenter(positionLatlng)
+            setVisible(false)
+          }}
+        >
+          <div
+            className="balloon"
+            style={{
+              transform: `rotate(${angle}deg)`,
+            }}
+          ></div>
+          <img style={{
+            transform: `none`,
+          }}className={styles.trackerMarker} src={process.env.PUBLIC_URL+'./selMarker.png'}></img>
+        </div>
+      )
+    }
+
+    // Cohen–Sutherland clipping algorithm
+    // 자세한 내용은 아래 위키에서...
+    // https://en.wikipedia.org/wiki/Cohen%E2%80%93Sutherland_algorithm
+    const getClipPosition = useCallback(
+      (top, right, bottom, left, inner, outer) => {
+        const calcOutcode = (x, y) => {
+          let outcode = OUTCODE.INSIDE
+
+          if (x < left) {
+            outcode |= OUTCODE.LEFT
+          } else if (x > right) {
+            outcode |= OUTCODE.RIGHT
+          }
+
+          if (y < top) {
+            outcode |= OUTCODE.TOP
+          } else if (y > bottom) {
+            outcode |= OUTCODE.BOTTOM
+          }
+
+          return outcode
+        }
+
+        let ix = inner.x
+        let iy = inner.y
+        let ox = outer.x
+        let oy = outer.y
+
+        let code = calcOutcode(ox, oy)
+
+        while (true) {
+          if (!code) {
+            break
+          }
+
+          if (code & OUTCODE.TOP) {
+            ox = ox + ((ix - ox) / (iy - oy)) * (top - oy)
+            oy = top
+          } else if (code & OUTCODE.RIGHT) {
+            oy = oy + ((iy - oy) / (ix - ox)) * (right - ox)
+            ox = right
+          } else if (code & OUTCODE.BOTTOM) {
+            ox = ox + ((ix - ox) / (iy - oy)) * (bottom - oy)
+            oy = bottom
+          } else if (code & OUTCODE.LEFT) {
+            oy = oy + ((iy - oy) / (ix - ox)) * (left - ox)
+            ox = left
+          }
+
+          code = calcOutcode(ox, oy)
+        }
+
+        return { x: ox, y: oy }
+      },
+      [OUTCODE.BOTTOM, OUTCODE.INSIDE, OUTCODE.LEFT, OUTCODE.RIGHT, OUTCODE.TOP]
+    )
+
+    // 말풍선의 회전각을 구하기 위한 함수
+    // 말풍선의 anchor가 TooltipMarker가 있는 방향을 바라보도록 회전시킬 각을 구합니다.
+    const getAngle = (center, target) => {
+      const dx = target.x - center.x
+      const dy = center.y - target.y
+      const deg = (Math.atan2(dy, dx) * 180) / Math.PI
+
+      return ((-deg + 360) % 360 | 0) + 90
+    }
+
+    // target의 위치를 추적하는 함수
+    const tracking = useCallback(() => {
+      const proj = map.getProjection()
+
+      // 지도의 영역을 구합니다.
+      const bounds = map.getBounds()
+
+      // 지도의 영역을 기준으로 확장된 영역을 구합니다.
+      const extBounds = extendBounds(bounds, proj)
+
+      // target이 확장된 영역에 속하는지 판단하고
+      if (extBounds.contain(positionLatlng)) {
+        // 속하면 tracker를 숨깁니다.
+        setVisible(false)
+      } else {
+        // TooltipMarker의 위치
+        const pos = proj.containerPointFromCoords(positionLatlng)
+
+        const center = proj.containerPointFromCoords(map.getCenter())
+
+        // 현재 보이는 지도의 영역의 남서쪽 화면 좌표
+        const sw = proj.containerPointFromCoords(bounds.getSouthWest())
+
+        // 현재 보이는 지도의 영역의 북동쪽 화면 좌표
+        const ne = proj.containerPointFromCoords(bounds.getNorthEast())
+
+        const top = ne.y + CLIP_BUFFER
+        const right = ne.x - CLIP_BUFFER
+        const bottom = sw.y - CLIP_BUFFER
+        const left = sw.x + CLIP_BUFFER
+
+        const clipPosition = getClipPosition(
+          top,
+          right,
+          bottom,
+          left,
+          center,
+          pos
+        )
+
+        setTracerPosition(clipPosition)
+
+        const angle = getAngle(center, pos)
+        setTracerAngle(angle)
+
+        setVisible(true)
+      }
+    }, [getClipPosition, map, positionLatlng])
+
+    const hideTracker = useCallback(() => {
+      setVisible(false)
+    }, [])
+
+    useEffect(() => {
+      node.current.style.position = "absolute"
+      node.current.style.whiteSpace = "nowrap"
+    }, [])
+    const extendBounds = (bounds, proj) => {
+      const sw = proj.pointFromCoords(bounds.getSouthWest())
+      const ne = proj.pointFromCoords(bounds.getNorthEast())
+
+      sw.x -= BOUNDS_BUFFER
+      sw.y += BOUNDS_BUFFER
+
+      ne.x += BOUNDS_BUFFER
+      ne.y -= BOUNDS_BUFFER
+
+      return new kakao.maps.LatLngBounds(
+        proj.coordsFromPoint(sw),
+        proj.coordsFromPoint(ne)
+      )
+    }
+
+    useEffect(() => {
+      kakao.maps.event.addListener(map, "zoom_start", hideTracker)
+      kakao.maps.event.addListener(map, "zoom_changed", tracking)
+      kakao.maps.event.addListener(map, "center_changed", tracking)
+      tracking()
+
+      return () => {
+        kakao.maps.event.removeListener(map, "zoom_start", hideTracker)
+        kakao.maps.event.removeListener(map, "zoom_changed", tracking)
+        kakao.maps.event.removeListener(map, "center_changed", tracking)
+        setVisible(false)
+      }
+    }, [map, hideTracker, tracking])
+
+    console.log("selId,mPos:",selId,mPos)
+    return (
+      <>
+        <AbstractOverlay onAdd={onAdd} onRemove={onRemove} draw={draw} />
+        {visible
+          ? ReactDOM.createPortal(
+              <Tracker position={tracerPosition} angle={tracerAngle} />,
+              // @ts-ignore
+              map.getNode()
+            )
+          : ReactDOM.createPortal(
+              <MapMarker tooltipText={tooltipText} 
+              position={position}
+              zIndex={2}
+              image={{
+                src: selImageSrc,
+                size: selImageSize,
+                options: {
+                  spriteSize: selImageSize,
+                },
+              }}
+              onClick={()=>{setIsOpen(true)}}
+              onMouseOver={() =>{setSelId(location.id);setMPos(0)}}
+              onMouseOut={() => setMPos()}
+              >
+                <div style={{zIndex:500, padding: "5px", color: "#000", width:"150px",textAlign:'center' }}>{title}</div>
+              </MapMarker>,
+              node.current
+            )}
+      </>
+    )
+  }
   //   useKakaoLoader()
   var id = location.id //임시 데이터 나중에 받아오는걸로 수정해야댐
 
@@ -99,6 +394,7 @@ function NearPlace() {
         </div>
       </div>
       <div className={styles.main}>
+      {/* <MarkerTrackerStyle /> */}
         <Map // 지도를 표시할 Container
           id="map"
           center={state.center}
@@ -113,7 +409,16 @@ function NearPlace() {
           level={level} // 지도의 확대 레벨 distance에 따라 다르게 설정해줘야함 
         >
           {datas?.map((data, index) => (
-            index === 0 || index == mPos ?
+            index === 0?
+              <TooltipMarker
+                position={{ lat: data.lat, lng: data.lon }}
+                key={data.id}
+                title={data.title}
+                tooltipText={data.title}
+                // onClick={()=>{setIsOpen(true)}}
+                // onMouseOver={() =>{setSelId(data.contentId);setMPos(index)}}
+                // onMouseOut={() => setMPos()}
+              ></TooltipMarker> : index == mPos ?
               <MapMarker
                 zIndex={2}
                 key={data.id}
@@ -158,10 +463,10 @@ function NearPlace() {
           <div className={styles.tag}>
             태그
             <button className={tag === 1 ? styles.selectedButton : styles.button} onClick={() => setTag(1)}>전체</button>
-            <button className={tag === 2 ? styles.selectedButton : styles.button} onClick={() => setTag(39)}>음식점</button>
-            <button className={tag === 3 ? styles.selectedButton : styles.button} onClick={() => setTag(38)}>쇼핑</button>
-            <button className={tag === 4 ? styles.selectedButton : styles.button} onClick={() => setTag(28)}>레포츠</button>
-            <button className={tag === 5 ? styles.selectedButton : styles.button} onClick={() => setTag(12)}>문화,관광지</button>
+            <button className={tag === 39 ? styles.selectedButton : styles.button} onClick={() => setTag(39)}>음식점</button>
+            <button className={tag === 38 ? styles.selectedButton : styles.button} onClick={() => setTag(38)}>쇼핑</button>
+            <button className={tag === 28 ? styles.selectedButton : styles.button} onClick={() => setTag(28)}>레포츠</button>
+            <button className={tag === 12 ? styles.selectedButton : styles.button} onClick={() => setTag(12)}>문화,관광지</button>
           </div>
           <div className={styles.elements}>
             {datas.map((data,index) => (

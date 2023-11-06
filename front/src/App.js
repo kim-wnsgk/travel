@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Main from "./routes/Main.js";
+import TestMap from "./routes/schedule/TestMap.js";
 
 import Mypage from "./routes/user/Mypage.js";
 import EditUser from "./routes/user/EditUser.js";
@@ -81,6 +82,7 @@ function App() {
         <Route path="/floating" element={<Floating />} />
         <Route path="/map" element={<Map />} />
         <Route path="/nearPlace" element={<NearPlace />} />
+        <Route path="/testMap" element={<TestMap />} />
       </Routes>
     </Router>
   );

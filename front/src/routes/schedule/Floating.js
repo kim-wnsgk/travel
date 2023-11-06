@@ -72,6 +72,8 @@ function Floating() {
     }
   }
   async function delSch(aid) {
+    if (window.confirm("정말 삭제합니까?")) {
+
     await axios.get("http://localhost:3001/schedule/delSch", {
       params: {
         aid: aid
@@ -80,6 +82,12 @@ function Floating() {
       alert("삭제되었습니다.")
       window.location.reload()
     })
+
+    } else {
+
+      alert("취소합니다.");
+
+    }
   }
   useEffect(() => {
     fetchData();
