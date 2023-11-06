@@ -11,13 +11,14 @@ function Header() {
   const [islogin, setIslogin] = useState(false);
   useEffect(() => {
     // 로그인 확인
-    axios.get("http://localhost:3001/user/authcheck", { withCredentials: true })
-      .then(response => {
+    axios
+      .get("http://localhost:3001/user/authcheck", { withCredentials: true })
+      .then((response) => {
         // 서버로부터 받은 데이터를 사용하여 isLogin 값을 설정
         const { data } = response;
         setIslogin(data.isLogin == "True");
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching authcheck:", error);
       });
   }, []);
@@ -26,7 +27,7 @@ function Header() {
     <div className={styles.header}>
       <div className={styles.logo}>
         <Link to="/">
-          <img src={process.env.PUBLIC_URL + '/logo.png'} />
+          <img src={process.env.PUBLIC_URL + "/logo.png"} />
         </Link>
       </div>
       <div className={styles.menuContainer}>
@@ -52,6 +53,9 @@ function Header() {
               <li>
                 <Link to="/boardList_party">함께가요 게시판</Link>
               </li>
+              <li>
+                <Link to="/BoardShareList">일정공유 게시판</Link>
+              </li>
             </ul>
           </div>
           <div className={styles.menu}>
@@ -65,24 +69,52 @@ function Header() {
         <CgProfile size={"50px"} color="rgb(72, 72, 72)" cursor="pointer" />
         <div className={styles.profileSelector}>
           <div className={styles.profileSelect}>
-            {islogin ?
-              <Link to="/mypage">내정보</Link> :
-              <button className={styles.prof} onClick={() => { alert("먼저 로그인 해주세요"); navigate("/login") }}>내정보</button>}
+            {islogin ? (
+              <Link to="/mypage">내정보</Link>
+            ) : (
+              <button
+                className={styles.prof}
+                onClick={() => {
+                  alert("먼저 로그인 해주세요");
+                  navigate("/login");
+                }}
+              >
+                내정보
+              </button>
+            )}
           </div>
           <div className={styles.profileSelect}>
-            {islogin ?
-              <Link to="/mypage">정보수정</Link> :
-              <button className={styles.prof} onClick={() => { alert("먼저 로그인 해주세요"); navigate("/login") }}>정보수정</button>}
+            {islogin ? (
+              <Link to="/mypage">정보수정</Link>
+            ) : (
+              <button
+                className={styles.prof}
+                onClick={() => {
+                  alert("먼저 로그인 해주세요");
+                  navigate("/login");
+                }}
+              >
+                정보수정
+              </button>
+            )}
           </div>
           <div className={styles.profileSelect}>
-            {islogin ?
-              <div onClick={() => {
-                axios.get('http://localhost:3001/user/logout', { withCredentials: true });
-                window.location.reload();
-              }}>
+            {islogin ? (
+              <div
+                onClick={() => {
+                  axios.get("http://localhost:3001/user/logout", {
+                    withCredentials: true,
+                  });
+                  window.location.reload();
+                }}
+              >
                 로그아웃
-              </div> :
-              <Link to='/login'><div>로그인</div></Link>}
+              </div>
+            ) : (
+              <Link to="/login">
+                <div>로그인</div>
+              </Link>
+            )}
           </div>
         </div>
       </div>

@@ -13,6 +13,7 @@ const BoardView = () => {
   const [commentData, setCommentData] = useState([]);
   const [user, setUser] = useState();
   const [isLogin, setIsLogin] = useState();
+
   useEffect(() => {
     async function fetchData() {
       axios
@@ -41,6 +42,7 @@ const BoardView = () => {
         console.log("Error fetching profile:", error);
       }
     }
+
     fetchData();
     getUser();
   }, [commentData]);

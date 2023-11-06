@@ -82,8 +82,16 @@ function SearchDetail() {
                         ))}
                     </ul>
                 ) : (
-                    <p>Loading...</p>
+                    <>
+                        <div>검색된 데이터가 없습니다.</div>
+
+                    </>
                 )}
+                <div>찾으시는 데이터가 없나요?</div>
+                <button
+                    onClick={() => navigate('/addRegion')}>
+                    데이터 직접 추가하기
+                </button>
             </div>
         </div>
     );

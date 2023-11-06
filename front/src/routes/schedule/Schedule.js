@@ -100,8 +100,8 @@ function Schedule() {
                   dday === 0
                     ? "D-Day"
                     : dday < 0
-                      ? `D+${Math.abs(dday)}`
-                      : `D-${dday}`;
+                    ? `D+${Math.abs(dday)}`
+                    : `D-${dday}`;
 
                 const ddayColor =
                   dday === 0 ? "red" : dday < 0 ? "blue" : "black"; // 색상 조건에 따라 변경

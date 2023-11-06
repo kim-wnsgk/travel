@@ -16,6 +16,7 @@ import NearPlace from "./routes/schedule/NearPlace.js";
 
 import Regions from "./routes/region/Regions";
 import RegionDetail from "./routes/region/RegionDetail";
+import AddRegion from "./routes/region/AddRegion.js";
 
 import BoardList from "./routes/board/BoardList.js";
 import BoardView from "./routes/board/BoardView.js";
@@ -24,6 +25,8 @@ import BoardList_party from "./routes/board_party/BoardList_party.js";
 import BoardView_party from "./routes/board_party/BoardView_party.js";
 import BoardWrite_party from "./routes/board_party/BoardWrite_party.js";
 import BoardShareWrite from "./routes/board_share/BoardShareWrite.js";
+import BoardShareList from "./routes/board_share/BoardShareList.js";
+import BoardShareView from "./routes/board_share/BoardShareView.js";
 
 import Recommand from "./routes/recommand/Recommand.js";
 import RecommandDetail from "./routes/recommand/RecommandDetail.js";
@@ -60,6 +63,7 @@ function App() {
 
         <Route path="/regions" element={<Regions />} />
         <Route path="/regiondetail" element={<RegionDetail />} />
+        <Route path="/addRegion" element={<AddRegion />} />
 
         <Route path="/ScheduleModiOffset" element={<ScheduleModiOffset />} />
         <Route path="/BoardList" element={<BoardList />} />
@@ -69,6 +73,8 @@ function App() {
         <Route path="/BoardView_party" element={<BoardView_party />} />
         <Route path="/BoardWrite_party" element={<BoardWrite_party />} />
         <Route path="/BoardShareWrite" element={<BoardShareWrite />} />
+        <Route path="/BoardShareList" element={<BoardShareList />} />
+        <Route path="/BoardShareView" element={<BoardShareView />} />
 
         <Route path="/recommand" element={<Recommand />} />
         <Route path="/recommanddetail" element={<RecommandDetail />} />
