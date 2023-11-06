@@ -74,11 +74,44 @@ router.post("/insert", async (req, res, next) => {
 // 여행지 데이터 1개 추가
 router.post("/insertOne", async (req, res, next) => {
   const cat = req.body.cat;
-  connection.query(`INSERT INTO sight (title,addr,cat) VALUES(?, ?, ?)`, [req.body.title, req.body.addr, cat], function (error, results, fields) {
-    console.log(results);
-    if (error) throw error;
+  try {
+    const queryResult = await new Promise((resolve, reject) => {
+      connection.query(
+        `INSERT INTO sight (title, addr, cat) VALUES (?, ?, ?)`,
+        [req.body.title, req.body.addr, cat],
+        (error, results, fields) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(results);
+          }
+        }
+      );
+    });
+    res.send("Data inserted successfully.");
+  } catch (error) {
+    console.error('Error:', error.message);
+    res.status(500).send('Error: ' + error.message);
+  }
+});
+
+// 여행지 검색
+router.get("/search", async (req, res, next) => {
+  // 검색어를 안전하게 처리하기 위해 MySQL의 escape 함수를 사용합니다.
+  const searchText = req.query.text;
+
+  // 올바른 SQL 쿼리 작성
+  const sqlQuery = `SELECT * FROM sight WHERE title LIKE '%${searchText}%'`;
+
+  connection.query(sqlQuery, function (error, results, fields) {
+    if (error) {
+      console.error(error);
+      res.status(500).send('An error occurred.');
+    } else {
+      console.log(results);
+      res.json(results);
+    }
   });
-  res.send("Data inserted successfully.");
 });
 
 // 여행지 데이터 전부 삭제
