@@ -19,7 +19,7 @@ function NearPlace() {
   const spriteSize = { width: 36, height: 40 }
   const maxData = 100;//마커 최대 개수
   const [distance, setDistance] = useState(1);
-  const [tag, setTag] = useState(1);
+  const [tag, setTag] = useState(3);
   const [datas, setDatas] = useState([]);
   const [state, setState] = useState({ center: { lat: 33.450701, lng: 126.570667 } });
   const [level, setLevel] = useState(4);
@@ -375,10 +375,11 @@ function NearPlace() {
       <h1>주변 관광지</h1>
       <div>
         <div>
-          거리
+          거리&nbsp;
           <button className={distance === 1 ? styles.selectedButton : styles.button} onClick={() => setDistance(1)}>1km</button>
           <button className={distance === 3 ? styles.selectedButton : styles.button} onClick={() => setDistance(3)}>3km</button>
           <button className={distance === 5 ? styles.selectedButton : styles.button} onClick={() => setDistance(5)}>5km</button>
+          <button className={distance === 7 ? styles.selectedButton : styles.button} onClick={() => setDistance(7)}>7km</button>
           <button className={distance === 10 ? styles.selectedButton : styles.button} onClick={() => setDistance(10)}>10km</button>
         </div>
       </div>
@@ -450,7 +451,7 @@ function NearPlace() {
         </Map>
         <div className={styles.list}>
           <div className={styles.tag}>
-            태그
+            태그&nbsp;&nbsp;
             <button className={tag === 1 ? styles.selectedButton : styles.button} onClick={() => setTag(1)}>전체</button>
             <button className={tag === 39 ? styles.selectedButton : styles.button} onClick={() => setTag(39)}>음식점</button>
             <button className={tag === 38 ? styles.selectedButton : styles.button} onClick={() => setTag(38)}>쇼핑</button>

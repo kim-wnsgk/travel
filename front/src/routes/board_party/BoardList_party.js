@@ -14,7 +14,15 @@ const BoardList_party = () => {
 
   const [page, setPage] = useState(1);
   const [items] = useState(7);
-
+  function viewcount(id){
+    axios.get("http://localhost:3001/board/viewcount",{
+      params:{
+        id : id,
+        table : 'party'
+      }}).then(function(response){
+        console.log(response)
+      })
+  }
   const handlePageChange = (page) => {
     setPage(page);
   };
@@ -51,6 +59,7 @@ const BoardList_party = () => {
               .slice(items * (page - 1), items * (page - 1) + items)
               .map((p) => (
                 <Link
+                  onClick={()=>viewcount(p.board_id)}
                   to="/BoardView_party"
                   state={{
                     boardData: p,
@@ -64,9 +73,9 @@ const BoardList_party = () => {
                       }}
                     >
                       <li>{p.title}</li>
-                      <li>{p.view_count} 구현해야댐</li>
+                      <li>{p.view_count}</li>
                       <li>{dayjs(p.regdate).format("YYYY/MM/DD")}</li>
-                      <li>댓글수 구현</li>
+                      <li>{p.comment_count}</li>
                       <li>{p.writer}</li>
                     </ul>
                     <ul

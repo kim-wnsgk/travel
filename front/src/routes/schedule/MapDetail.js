@@ -13,6 +13,7 @@ function Gather_new({ setModalOpen, contentId, title, image }) {
           const response = await axios.get(
             `https://apis.data.go.kr/B551011/KorService1/detailCommon1?serviceKey=${API_KEY}&MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${contentId}&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=1&pageNo=1`
           );
+          console.log(response)
           const resData = response.data.response.body.items.item;
           setIntro(resData[0]);
         };

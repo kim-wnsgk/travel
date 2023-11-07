@@ -14,6 +14,7 @@
     padding: 8px 16px; /* 내부 여백 설정 */
     margin: 4px; /* 외부 여백 설정 */
     cursor: pointer; /* 커서를 포인터로 변경하여 버튼을 클릭할 수 있도록 함 */
+    border-radius: 3px;
   }
   
   /* 일반 버튼 (styles.button) */
@@ -25,6 +26,7 @@
     padding: 8px 16px; /* 내부 여백 설정 */
     margin: 4px; /* 외부 여백 설정 */
     cursor: pointer; /* 커서를 포인터로 변경하여 버튼을 클릭할 수 있도록 함 */
+    border-radius: 3px;
   }
   
   /* 버튼 호버 상태 스타일 */
@@ -50,7 +52,7 @@
 .list{
     flex:1;
     text-align: center;
-    height: 100%;
+    height: 97%;
 }
 .tag{
 }

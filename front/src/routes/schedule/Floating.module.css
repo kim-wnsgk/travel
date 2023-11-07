@@ -5,51 +5,56 @@
   flex-direction: column;
   margin: auto;
   margin-top: 30px;
-  border: 1px solid none;
+  border: 1px solid #ddd;
   border-radius: 15px;
-  background-color: rgba(109, 103, 34, 0.566);
-  padding-top:2%;
+  background: linear-gradient(to bottom, #eee, #ccc);
+  padding-top: 2%;
 }
+
 .selGath {
   flex: 1;
   display: flex;
   overflow-x: scroll;
 }
+
 .selGath::-webkit-scrollbar {
   width: 8px;
 }
 
 .selGath::-webkit-scrollbar-thumb {
   height: 30%;
-  background: #8af421;
+  background: #c5c5e6;
   border-radius: 10px;
 }
 
 .selGath::-webkit-scrollbar-track {
-  background: rgba(33, 122, 244, 0.1);
+  background: rgba(150, 150, 150, 0.1);
 }
+
 .selButton {
   align-items: center;
   margin: auto;
   margin-left: 10px;
-  background-color: orange;
+  background-color: #f0f0f0; /* 아이보리색 배경 */
   min-width: 100px;
   width: 50px;
   height: 70%;
   flex-grow: 1;
   border: none;
   border-radius: 15px;
+  color: #666;
 }
 
 .selButton:hover {
-  background-color: yellow;
+  background-color: #ddd;
   cursor: pointer;
 }
+
 .selButtons {
   align-items: center;
   margin: auto;
   margin-left: 10px;
-  background-color: #b2f76c;
+  background-color: #c5c5e6;
   color: white;
   min-width: 100px;
   width: 50px;
@@ -57,6 +62,7 @@
   flex-grow: 1;
   border: none;
   border-radius: 15px;
+  font-size: large;
 }
 
 .selButtons:hover {
@@ -71,49 +77,55 @@
   width: 100%;
   align-items: center;
   display: flex;
-  background-color: rgba(255, 255, 255, 0.404);
+  background: linear-gradient(to bottom, #eee, #ccc);
 }
+
 .pickdate {
   flex: 1;
   display: flex;
   overflow-x: scroll;
 }
+
 .pickdate::-webkit-scrollbar {
   width: 4px;
 }
 
 .pickdate::-webkit-scrollbar-thumb {
-  height: 10%; /* ?ㅽ겕濡ㅻ컮??湲몄씠 */
-  background: #b2f76c; /* ?ㅽ겕濡ㅻ컮???됱긽 */
+  height: 10%;
+  background: #c5c5e6;
   border-radius: 5px;
 }
 
 .pickdate::-webkit-scrollbar-track {
-  background: rgba(33, 122, 244, 0.1); /*?ㅽ겕濡ㅻ컮 ??諛곌꼍 ?됱긽*/
+  background: rgba(150, 150, 150, 0.1);
 }
+
 .selButton2 {
   align-items: center;
   margin: auto;
   margin-left: 10px;
-  background-color: white;
-
+  background-color: #f0f0f0; /* 아이보리색 배경 */
   min-width: 70px;
   width: 50px;
   height: 70%;
   flex-grow: 1;
   border: none;
   border-radius: 10px;
+  color: #666;
+  
 }
+
 .selButton2:hover {
   width: 55px;
   height: 75%;
   cursor: pointer;
 }
+
 .selButton2s {
   align-items: center;
   margin: auto;
   margin-left: 10px;
-  background-color: #b2f76c;
+  background-color: #c5c5e6;
   color: white;
   min-width: 70px;
   width: 50px;
@@ -121,27 +133,30 @@
   flex-grow: 1;
   border: none;
   border-radius: 10px;
+  font-size: large;
 }
+
 .selButton2s:hover {
   width: 55px;
   height: 75%;
 }
+
 .schedule {
   flex: 5;
   display: flex;
   overflow-y: scroll;
   flex-direction: column;
 }
+
 .schedule::-webkit-scrollbar {
   display: none;
 }
 
 .ele {
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 10px;
-  border-bottom: 1px solid rgb(184, 184, 184);
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
+
 .schduleSite {
   margin-bottom: 5px;
 }
@@ -150,26 +165,24 @@
   margin: auto;
 }
 
-.schDel{
-  cursor:pointer;
-  color : red;
+.schDel {
+  cursor: pointer;
+  color: red;
   font-size: x-large;
   font-weight: bolder;
 }
 
-.GoMap{
-  cursor:pointer;
+.GoMap {
+  cursor: pointer;
   height: 50px;
   width: 100px;
-  margin:10px;
+  margin: 10px;
   border-radius: 10%;
-  background-color: orange;
-  color:white;
+  background-color: #f0f0f0; /* 아이보리색 배경 */
+  color: #666;
   font-size: larger;
   text-align: center;
-  display : flex;
-	justify-content : center;
+  display: flex;
+  justify-content: center;
   align-items: center;
-
-  
 }

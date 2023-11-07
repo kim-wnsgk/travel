@@ -25,7 +25,7 @@ function NearPlaceDetail({ setModalOpen, id}) {
         };
         
         fetchData();
-      }, []);
+      }, [id]);
       function createMarkup() {
         return {__html: intro?.overview};
       }

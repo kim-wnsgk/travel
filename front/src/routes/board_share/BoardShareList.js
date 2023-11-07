@@ -11,7 +11,15 @@ const BoardShareList = () => {
   //pagination --
   //실제로 데이터 받아오면 여기다가 넣기
   const [data, setData] = useState([]);
-
+  function viewcount(id){
+    axios.get("http://localhost:3001/board/viewcount",{
+      params:{
+        id : id,
+        table : 'share'
+      }}).then(function(response){
+        console.log(response)
+      })
+  }
   const [page, setPage] = useState(1);
   const [items] = useState(7);
 
@@ -73,6 +81,7 @@ const BoardShareList = () => {
               .slice(items * (page - 1), items * (page - 1) + items)
               .map((p) => (
                 <Link
+                  onClick={()=>viewcount(p.board_id)}
                   to="/BoardShareView"
                   state={{
                     boardData: p,
@@ -83,7 +92,7 @@ const BoardShareList = () => {
                     <li>{p.title}</li>
                     <li>{p.view_count}</li>
                     <li>{dayjs(p.regdate).format("YYYY/MM/DD")}</li>
-                    <li>댓글수 구현</li>
+                    <li>{p.comment_count}</li>
                     <li>{p.writer}</li>
                   </ul>
                 </Link>
