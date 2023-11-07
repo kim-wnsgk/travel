@@ -15,13 +15,16 @@ function SearchDetail() {
     const [res, setRes] = useState(null);
 
     useEffect(() => {
-        axios
-            .get(
-                `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?serviceKey=SaXEWBrqfLH2I6uYF88gUq7wTPmI7VxP7lAvYCJmsAo80LmwmPB8tDMoZRM3%2Bo39PLk32tOm6exWqvROqh0aDg%3D%3D&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&keyword=${searchText}&contentTypeId=12`
-            )
+        console.log(searchText)
+        axios.get(
+            `http://localhost:3001/data/search`, {
+            params: {
+                text: searchText,
+            },
+        })
             .then(response => {
-                setRes(response.data.response.body.items.item);
-                console.log(response.data.response.body.items.item);
+                setRes(response.data);
+                console.log(response.data);
             })
             .catch(error => {
                 console.error(error);
@@ -62,20 +65,20 @@ function SearchDetail() {
                                         state: {
                                             data: {
                                                 title: item.title,
-                                                addr: item.addr1,
-                                                image: item.firstimage,
-                                                contentId: item.contentid
+                                                addr: item.addr,
+                                                image: item.image,
+                                                contentId: item.contentId
                                             }
                                         },
                                     })}>
                                 <div className={styles.imageContainer}>
-                                    <img src={item.firstimage ? item.firstimage : 'defaultImage.png'} width="200px" className={styles.image} />
+                                    <img src={item.image ? item.image : 'defaultImage.png'} width="200px" className={styles.image} />
                                 </div>
                                 <div className={styles.info}>
                                     <div>{item.title}</div>
-                                    <div>{item.addr1} {item.addr2}</div>
+                                    <div>{item.addr1} {item.addr}</div>
                                     <div>전화번호 : {item.tel}</div>
-                                    <div>관광타입 : {item.contenttypeid}</div>
+                                    <div>관광타입 : {item.contentTypeId}</div>
                                 </div>
 
                             </li>

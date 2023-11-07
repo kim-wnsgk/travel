@@ -8,7 +8,7 @@ function AddRegion() {
     const [title, setTitle] = useState('');
     const [addr, setAddr] = useState('');
     const [cat, setCat] = useState('');
-    const [selectedCat, setSelectedCat] = useState("");
+    const [selectedCat, setSelectedCat] = useState("A01010600");
 
     console.log(selectedCat);
     const onTitleChange = (e) => {
@@ -26,7 +26,7 @@ function AddRegion() {
     };
 
     const insertData = () => {
-        console.log(title, addr, selectedCat)
+        console.log(title, addr, selectedCat, cat)
         axios
             .post(
                 `http://localhost:3001/data/insertOne`, {
@@ -70,7 +70,7 @@ function AddRegion() {
                         type="text"
                         value={cat}
                         onChange={onCatChange}
-                        placeholder="ex) "
+                        placeholder="ex) A01010600"
                         className={styles.search}
                     />
                 </div>
