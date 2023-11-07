@@ -18,8 +18,8 @@ function NearPlace() {
   const imageSize = { width: 40, height: 40 }
   const spriteSize = { width: 36, height: 40 }
   const maxData = 100;//마커 최대 개수
-  const [distance, setDistance] = useState(1);
-  const [tag, setTag] = useState(3);
+  const [distance, setDistance] = useState(3);
+  const [tag, setTag] = useState(1);
   const [datas, setDatas] = useState([]);
   const [state, setState] = useState({ center: { lat: 33.450701, lng: 126.570667 } });
   const [level, setLevel] = useState(4);
