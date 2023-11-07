@@ -133,9 +133,6 @@ function NearPlace() {
       )
     }
 
-    // Cohen–Sutherland clipping algorithm
-    // 자세한 내용은 아래 위키에서...
-    // https://en.wikipedia.org/wiki/Cohen%E2%80%93Sutherland_algorithm
     const getClipPosition = useCallback(
       (top, right, bottom, left, inner, outer) => {
         const calcOutcode = (x, y) => {
@@ -380,17 +377,9 @@ function NearPlace() {
         <div>
           거리
           <button className={distance === 1 ? styles.selectedButton : styles.button} onClick={() => setDistance(1)}>1km</button>
-          <button className={distance === 2 ? styles.selectedButton : styles.button} onClick={() => setDistance(2)}>2km</button>
           <button className={distance === 3 ? styles.selectedButton : styles.button} onClick={() => setDistance(3)}>3km</button>
-          <button className={distance === 4 ? styles.selectedButton : styles.button} onClick={() => setDistance(4)}>4km</button>
           <button className={distance === 5 ? styles.selectedButton : styles.button} onClick={() => setDistance(5)}>5km</button>
-          <button className={distance === 6 ? styles.selectedButton : styles.button} onClick={() => setDistance(6)}>6km</button>
-          <button className={distance === 7 ? styles.selectedButton : styles.button} onClick={() => setDistance(7)}>7km</button>
-          <button className={distance === 8 ? styles.selectedButton : styles.button} onClick={() => setDistance(8)}>8km</button>
-          <button className={distance === 9 ? styles.selectedButton : styles.button} onClick={() => setDistance(9)}>9km</button>
           <button className={distance === 10 ? styles.selectedButton : styles.button} onClick={() => setDistance(10)}>10km</button>
-          <button className={distance === 12 ? styles.selectedButton : styles.button} onClick={() => setDistance(12)}>12km</button>
-          <button className={distance === 13 ? styles.selectedButton : styles.button} onClick={() => setDistance(13)}>13km</button>
         </div>
       </div>
       <div className={styles.main}>

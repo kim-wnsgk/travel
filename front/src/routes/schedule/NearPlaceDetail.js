@@ -5,6 +5,7 @@ import { useEffect,useState } from "react";
 import useDidMountEffect from "../useDidMountEffect";
 import AddSch from "./AddSch";
 function NearPlaceDetail({ setModalOpen, id}) {
+    console.log(id)
     const API_KEY = process.env.REACT_APP_API_KEY;
     const [intro, setIntro] = useState();
     const [data, setData] = useState();
