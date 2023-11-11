@@ -69,7 +69,7 @@ function AddRegion() {
                 <hr />
 
                 <div className={styles.title}>
-                    <span>카테고리</span>
+                    카테고리
                 </div>
                 {Object.keys(categoryData).map((topCategory) =>
                     Object.keys(categoryData[topCategory]).map((midCategory) => (
@@ -86,7 +86,7 @@ function AddRegion() {
                 )}
                 <hr />
 
-                <button onClick={() => insertData()}>추가하기</button>
+                <button className={styles.button} onClick={() => insertData()}>추가하기</button>
             </div>
 
         </div>

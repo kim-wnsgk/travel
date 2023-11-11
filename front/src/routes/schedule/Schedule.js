@@ -82,6 +82,17 @@ function Schedule() {
       });
   }
 
+  if (!user) 
+  return (
+  <div className={styles.container}>
+    <Header />
+    <div className={styles.content}>
+      <div>먼저 로그인을 해주세요</div>
+      <button onClick={() => navigate("/login")}>로그인 하러가기</button>
+    </div>
+  </div>
+  )
+
   return (
     <div className={styles.container}>
       <Header />
@@ -223,6 +234,7 @@ function Schedule() {
                         setStartDate(new Date());
                         setEndDate(new Date());
                         alert(`'${name}' 일정이 추가되었습니다.`);
+                        window.location.reload();
                       } else {
                         alert("일정 제목을 입력해주세요.");
                       }

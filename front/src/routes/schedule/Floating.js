@@ -38,7 +38,6 @@ function Floating() {
       })
       .then(function (response) {
         setData(response.data);
-        console.log("이거", response)
       });
   }
   async function fetchGathering() {
@@ -101,6 +100,7 @@ function Floating() {
     fetchSch();
   }, [selected2, date]);
   console.log(sch, selected2)
+  
   return (
     <div className={styles.container}>
       <div className={styles.selGath}>
