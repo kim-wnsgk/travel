@@ -45,7 +45,7 @@ function AddRegion() {
             <Header />
             <div className={styles.content}>
                 <div className={styles.title}>
-                    <span>title</span>
+                    <span>장소명</span>
                     <input
                         type="text"
                         value={title}
@@ -54,6 +54,8 @@ function AddRegion() {
                         className={styles.search}
                     />
                 </div>
+                <hr />
+
                 <div className={styles.title}>
                     <span>주소</span>
                     <input
@@ -64,27 +66,26 @@ function AddRegion() {
                         className={styles.search}
                     />
                 </div>
+                <hr />
+
                 <div className={styles.title}>
                     <span>카테고리</span>
-                    <input
-                        type="text"
-                        value={cat}
-                        onChange={onCatChange}
-                        placeholder="ex) A01010600"
-                        className={styles.search}
-                    />
                 </div>
                 {Object.keys(categoryData).map((topCategory) =>
                     Object.keys(categoryData[topCategory]).map((midCategory) => (
-                        <div
-                            key={midCategory}
-                            className={`${styles.cat} ${selectedCat === midCategory ? styles.selected : ""}`}
-                            onClick={() => handleCat(midCategory)}
-                        >
-                            {categoryData[topCategory][midCategory]?.title}
-                        </div>
+                        categoryData[topCategory][midCategory].title ?
+                            <div
+                                key={midCategory}
+                                className={`${styles.cat} ${selectedCat === midCategory ? styles.selected : ""}`}
+                                onClick={() => handleCat(midCategory)}
+                            >
+                                {categoryData[topCategory][midCategory]?.title}
+                            </div> : <br />
+
                     ))
                 )}
+                <hr />
+
                 <button onClick={() => insertData()}>추가하기</button>
             </div>
 

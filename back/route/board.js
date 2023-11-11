@@ -364,7 +364,7 @@ router.post("/insert", (req, res) => {
     }
   });
 });
-router.get("/viewcount",(req,res)=>{
+router.get("/viewcount", (req, res) => {
   connection.query(
     `UPDATE board_${req.query.table} SET view_count = view_count + 1 WHERE board_id=${req.query.id};`,
     function (error, results, fields) {

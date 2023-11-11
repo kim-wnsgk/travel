@@ -222,7 +222,11 @@ function Regions() {
               prevPageText={"<"}
               nextPageText={">"}
             ></Pagination>
+            <button
+              onClick={() => navigate('/addRegion')}>관광지 추가</button>
+
           </div>
+
         </div>
       </div>
     </div>
