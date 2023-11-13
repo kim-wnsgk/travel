@@ -148,7 +148,7 @@ function ScheduleInfo() {
                     <h1 className={styles.title}>{schedule.name}</h1>
                     <div className={styles.info}>
                         <p>시작일: {new Date(schedule.start).toLocaleDateString()}</p>
-                        <p>종료일: {new Date(new Date(schedule.start).setDate(new Date(schedule.start).getDate() + 3)).toLocaleDateString()}</p>
+                        <p>종료일: {new Date(new Date(schedule.start).setDate(new Date(schedule.start).getDate() + schedule.date - 1)).toLocaleDateString()}</p>
                         <p>일정 기간: {schedule.date} 일</p>
                         <p>여행 스타일: {schedule.style}</p>
                     </div>

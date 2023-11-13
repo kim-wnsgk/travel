@@ -247,7 +247,7 @@ var infowindow = new kakao.maps.InfoWindow({
             {schs?.length === 0 ? (
               <div>
           <p>아직 일정이 없습니다. 추가해주세요.</p>
-          <Link to="../recommand">여행지 추가하러 가기</Link>
+          <Link to="/regions">여행지 추가하러 가기</Link>
           </div>
         ) : (
           schs.map((item, index) => (index===curVal?(
