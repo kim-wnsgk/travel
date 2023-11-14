@@ -21,7 +21,7 @@ function ScheduleInfo() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3001/gathering/select/gathering-scheduleinfo-id?id=${id}`
+        `/gathering/select/gathering-scheduleinfo-id?id=${id}`
       ) // URL에 id 추가
       .then(function (response) {
         const { data } = response;
@@ -31,7 +31,7 @@ function ScheduleInfo() {
   }, [id]);
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/user/getUser`, { withCredentials: true })
+      .get(`/user/getUser`, { withCredentials: true })
       .then(function (response) {
         const { data } = response;
         // console.log(data);
@@ -51,7 +51,7 @@ function ScheduleInfo() {
 
   const delOneDay = () => {
     axios
-      .get("http://localhost:3001/schedule/delOneDay", {
+      .get("/schedule/delOneDay", {
         params: {
           offset: Number(dateText) - 1,
           id,
@@ -65,7 +65,7 @@ function ScheduleInfo() {
 
   const addOneDay = () => {
     axios
-      .get("http://localhost:3001/schedule/addOneDay", {
+      .get("/schedule/addOneDay", {
         params: {
           offset: Number(dateText) - 1,
           id,
@@ -79,7 +79,7 @@ function ScheduleInfo() {
 
   const deleteSchedule = () => {
     axios
-      .get("http://localhost:3001/gathering/delete", {
+      .get("/gathering/delete", {
         params: {
           id: schedule.id,
         },
@@ -92,7 +92,7 @@ function ScheduleInfo() {
   // 멤버 리스트 가져오기
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/gathering/select/members`, {
+      .get(`/gathering/select/members`, {
         params: {
           id,
         },
@@ -107,7 +107,7 @@ function ScheduleInfo() {
   // 멤버 추가
   const addMember = () => {
     axios
-      .get(`http://localhost:3001/gathering/add/member`, {
+      .get(`/gathering/add/member`, {
         params: {
           id,
           member: memberIdText,
@@ -125,7 +125,7 @@ function ScheduleInfo() {
     if (member !== user) {
       // 자신은 삭제 불가
       axios
-        .get(`http://localhost:3001/gathering/delete/member`, {
+        .get(`/gathering/delete/member`, {
           params: {
             id,
             member,

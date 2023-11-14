@@ -63,7 +63,7 @@ function Register() {
             UserBirth: birth
 
           };
-          fetch("http://localhost:3001/user/signup", { //signin 주소에서 받을 예정
+          fetch("/user/signup", { //signin 주소에서 받을 예정
             method: "post", // method :통신방법
             headers: {      // headers: API 응답에 대한 정보를 담음
               'Content-Type': "application/json",

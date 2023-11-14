@@ -29,7 +29,7 @@ function AddRegion() {
         console.log(title, addr, selectedCat, cat)
         axios
             .post(
-                `http://localhost:3001/data/insertOne`, {
+                `/data/insertOne`, {
                 title, addr, cat: selectedCat
             })
             .then(response => {

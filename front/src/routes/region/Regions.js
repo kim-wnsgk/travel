@@ -53,7 +53,7 @@ function Regions() {
 
   useEffect(() => {
     axios
-      .post("http://localhost:3001/data/recommand", {
+      .post("/data/recommand", {
         cat: selectedCat ? selectedCat : "",
         region: selectedSi ? selectedSi : selectedDo ? selectedDo : "",
       })

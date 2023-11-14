@@ -14,7 +14,7 @@ function Mypage() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/user/getUser`, { withCredentials: true })
+      .get(`/user/getUser`, { withCredentials: true })
       .then(function (response) {
         const { data } = response;
         setUser(data.user); // 데이터를 상태에 설정
@@ -23,7 +23,7 @@ function Mypage() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/user/getProfile`, {
+      .get(`/user/getProfile`, {
         params: {
           id: user,
         },
@@ -36,7 +36,7 @@ function Mypage() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/gathering/select/gathering-userlist`, {
+      .get(`/gathering/select/gathering-userlist`, {
         params: {
           user,
         },

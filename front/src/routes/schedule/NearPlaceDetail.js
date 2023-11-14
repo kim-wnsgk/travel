@@ -30,7 +30,7 @@ function NearPlaceDetail({ setModalOpen, id}) {
         return {__html: intro?.overview};
       }
       const getData = async(id)=>{
-        await axios.get('http://localhost:3001/schedule/getData',{params:{
+        await axios.get('/schedule/getData',{params:{
             id:id
         }}
         ).then(function(response){

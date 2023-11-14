@@ -48,7 +48,7 @@ function Map() {
   async function fetchSch() {
     if (location.id) {
       await axios
-        .get("http://localhost:3001/schedule/getSchedule", {
+        .get("/schedule/getSchedule", {
           params: {
             id: location.id,
             offset: selected,
@@ -63,7 +63,7 @@ function Map() {
   async function getDirection(origin, destination) {
     try {
       const response = await axios.get(
-        "http://localhost:3001/schedule/getDirection",
+        "/schedule/getDirection",
         {
           params: {
             origin: origin,
@@ -80,7 +80,7 @@ function Map() {
 
   async function convertAddr() {
     await axios
-      .get("http://localhost:3001/schedule/convertAddr", {
+      .get("/schedule/convertAddr", {
         params: {
           id: location.id,
           offset: selected,

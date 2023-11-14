@@ -22,7 +22,7 @@ function AddSch({ isOpen, contentName, contentId, closeModal }) {
   useEffect(() => {
     if (isOpen) {
       axios
-        .get("http://localhost:3001/user/getUser", { withCredentials: true })
+        .get("/user/getUser", { withCredentials: true })
         .then(function (response) {
           const session = response.data;
           console.log("이거 보자", response.data.logined);
@@ -49,7 +49,7 @@ function AddSch({ isOpen, contentName, contentId, closeModal }) {
 
   function fetchData() {
     axios
-      .get("http://localhost:3001/gathering/select", {
+      .get("/gathering/select", {
         params: {
           user: user,
         },
@@ -62,7 +62,7 @@ function AddSch({ isOpen, contentName, contentId, closeModal }) {
   function fetchGathering() {
     if (data[selected]?.name && data[selected]?.admin) {
       axios
-        .get("http://localhost:3001/schedule/checkDate", {
+        .get("/schedule/checkDate", {
           params: {
             id: data[selected].id,
           },
@@ -82,7 +82,7 @@ function AddSch({ isOpen, contentName, contentId, closeModal }) {
     }
 
     axios
-      .get("http://localhost:3001/schedule/addSch", {
+      .get("/schedule/addSch", {
         params: {
           id: date[0]?.id,
           start: value,

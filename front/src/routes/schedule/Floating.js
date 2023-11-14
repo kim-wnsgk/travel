@@ -20,7 +20,7 @@ function Floating() {
   }
   useEffect(() => {
     axios
-      .get("http://localhost:3001/user/getUser", { withCredentials: true })
+      .get("/user/getUser", { withCredentials: true })
       .then(function (response) {
         const session = response.data;
         console.log(session);
@@ -31,7 +31,7 @@ function Floating() {
   console.log(user)
   async function fetchData() {
     await axios
-      .get("http://localhost:3001/gathering/select", {  // gathering_members 테이블에서 자신의 group_id만 해당하는 gathering 테이블 받아오기
+      .get("/gathering/select", {  // gathering_members 테이블에서 자신의 group_id만 해당하는 gathering 테이블 받아오기
         params: {
           user: user
         },
@@ -43,7 +43,7 @@ function Floating() {
   async function fetchGathering() {
     if (data[selected]?.name && data[selected]?.admin) {
       await axios
-        .get("http://localhost:3001/schedule/checkDate", {
+        .get("/schedule/checkDate", {
           params: {
             id: data[selected].id
             // name: data[selected].name,
@@ -58,7 +58,7 @@ function Floating() {
   async function fetchSch() {
     if (date[0]?.id) {
       await axios
-        .get("http://localhost:3001/schedule/getSchedule", {
+        .get("/schedule/getSchedule", {
           params: {
             id: date[0]?.id,
             offset: selected2,
@@ -73,7 +73,7 @@ function Floating() {
   async function delSch(aid) {
     if (window.confirm("정말 삭제합니까?")) {
 
-    await axios.get("http://localhost:3001/schedule/delSch", {
+    await axios.get("/schedule/delSch", {
       params: {
         aid: aid
       },
