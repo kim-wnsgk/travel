@@ -23,7 +23,7 @@ function Mypage() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/user/getUser`, {
+      .get(`http://localhost:3001/user/getProfile`, {
         params: {
           id: user,
         },
@@ -62,7 +62,6 @@ function Mypage() {
       <div className={styles.content}>
         <div className={styles.title}>마이페이지</div>
         <div className={styles.profile}>
-          <div className={styles.image}></div>
           <div className={styles.detail}>
             <div className={styles.id}>아이디 : {user}</div>
             <div className={styles.name}>이름 : {profile?.name}</div>

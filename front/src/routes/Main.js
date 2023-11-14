@@ -13,7 +13,6 @@ import img3 from "./img/picnic5.jpg";
 import banner from "./img/banner.png";
 
 function Main() {
-  const [testId, setTestId] = useState("sls9905");
   const [user, setUser] = useState("");
   const getMeta = (url) =>
     new Promise((resolve, reject) => {
@@ -43,6 +42,16 @@ function Main() {
     }
   };
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/user/getUser", { withCredentials: true })
+      .then(function (response) {
+        const session = response.data;
+        console.log(session);
+        setUser(session.user);
+
+      });
+  }, []);
   const [data, setData] = useState({});
   const [random10FData, setRandom10FData] = useState([]);
 
@@ -364,10 +373,16 @@ function Main() {
           </div>
         </div>
         <div className={styles.floatingContainer}>
-          <div className={styles.floatingBanner}>
-            <Floating />
-          </div>
+
+        {
+          user ? 
+            <div className={styles.floatingBanner}>
+              <Floating />
+            </div>
+          :undefined
+        }
         </div>
+
       </div>
     </div>
   );

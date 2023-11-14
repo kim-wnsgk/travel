@@ -254,7 +254,6 @@ function Map({ name, id, offset, date }) {
         }
       }
       setIsOpen(true);
-      console.log("마커클릭" + name + id);
     };
   }
   function handleMouseOver(index) {

@@ -71,32 +71,7 @@ function Header() {
           <div className={styles.profileSelect}>
             {islogin ? (
               <Link to="/mypage">내정보</Link>
-            ) : (
-              <button
-                className={styles.prof}
-                onClick={() => {
-                  alert("먼저 로그인 해주세요");
-                  navigate("/login");
-                }}
-              >
-                내정보
-              </button>
-            )}
-          </div>
-          <div className={styles.profileSelect}>
-            {islogin ? (
-              <Link to="/mypage">정보수정</Link>
-            ) : (
-              <button
-                className={styles.prof}
-                onClick={() => {
-                  alert("먼저 로그인 해주세요");
-                  navigate("/login");
-                }}
-              >
-                정보수정
-              </button>
-            )}
+            ) : undefined}
           </div>
           <div className={styles.profileSelect}>
             {islogin ? (
@@ -115,6 +90,13 @@ function Header() {
                 <div>로그인</div>
               </Link>
             )}
+          </div>
+          <div className={styles.profileSelect}>
+            {!islogin ? (
+              <Link to="/register">
+                <div>회원가입</div>
+              </Link>
+            ):undefined}
           </div>
         </div>
       </div>

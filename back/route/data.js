@@ -74,11 +74,20 @@ router.post("/insert", async (req, res, next) => {
 // 여행지 데이터 1개 추가
 router.post("/insertOne", async (req, res, next) => {
   const cat = req.body.cat;
+  function catToContentTypeId(cat) {
+    for (const typeId in categoryData) {
+      if (categoryData[typeId][cat]) {
+        return parseInt(typeId, 10);
+      }
+    }
+    return 0; // 매칭되는 것이 없을 경우 기본값 (0)을 반환
+  }
+  const contentTypeId = catToContentTypeId(cat);
   try {
     const queryResult = await new Promise((resolve, reject) => {
       connection.query(
-        `INSERT INTO sight (title, addr, cat) VALUES (?, ?, ?)`,
-        [req.body.title, req.body.addr, cat],
+        `INSERT INTO sight (title, addr, cat, contentTypeId) VALUES (?, ?, ?, ?)`,
+        [req.body.title, req.body.addr, cat, contentTypeId],
         (error, results, fields) => {
           if (error) {
             reject(error);
@@ -230,3 +239,87 @@ router.get("/getDirection", function (req, res) {
 )
 
 module.exports = router;
+
+const categoryData = {
+  12: {
+    title: "관광지/문화시설",
+    A0101: {
+      title: "자연관광지"
+    },
+    A0102: {
+      title: "관광자원"
+    },
+    A0201: {
+      title: "역사관광지"
+    },
+    A0202: {
+      title: "휴양관광지"
+    },
+    A0203: {
+      title: "체험관광지"
+    },
+    A0204: {
+      title: "산업관광지"
+    },
+    A0205: {
+      title: "건축/조형물"
+    },
+    A0206: {
+      title: "문화시설"
+    }
+  },
+  28: {
+    title: "레포츠",
+    A0302: {
+      title: "육상 레포츠"
+    },
+    A0303: {
+      title: "수상 레포츠"
+    },
+    A0304: {
+      title: "항공 레포츠"
+    },
+    A0305: {
+      title: "복합 레포츠"
+    }
+  },
+  38: {
+    title: "쇼핑",
+    A04010120: {
+      title: "시장"
+    },
+    A04010340: {
+      title: "백화점/면세점"
+    },
+    A04010600: {
+      title: "전문매장/상가"
+    },
+    A04010700: {
+      title: "공예/공방"
+    },
+    A04010900: {
+      title: "특산물판매점"
+    },
+  },
+  39: {
+    title: "음식점",
+    A05020100: {
+      title: "한식"
+    },
+    A05020200: {
+      title: "양식"
+    },
+    A05020300: {
+      title: "일식"
+    },
+    A05020400: {
+      title: "중식"
+    },
+    A05020700: {
+      title: "이색음식점"
+    },
+    A05020900: {
+      title: "카페/전통찻집"
+    },
+  }
+};

@@ -22,13 +22,14 @@ const BoardList = () => {
   //session에서 유저 정보 받아오기
   const [user, setUser] = useState();
   const [isLogin, setIsLogin] = useState();
-  function viewcount(id){
-    axios.get("http://localhost:3001/board/viewcount",{
-      params:{
-        id : id,
-        table : 'free'
-      }}).then(function(response){
-      })
+  function viewcount(id) {
+    axios.get("http://localhost:3001/board/viewcount", {
+      params: {
+        id: id,
+        table: 'free'
+      }
+    }).then(function (response) {
+    })
   }
   useEffect(() => {
     async function fetchData() {
@@ -80,7 +81,7 @@ const BoardList = () => {
               .slice(items * (page - 1), items * (page - 1) + items)
               .map((p) => (
                 <Link
-                  onClick={()=>viewcount(p.board_id)}
+                  onClick={() => viewcount(p.board_id)}
                   to="/BoardView"
                   state={{
                     boardData: p,

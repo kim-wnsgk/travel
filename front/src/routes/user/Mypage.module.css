@@ -1,84 +1,95 @@
+/* 마이페이지 컨테이너 */
 .content {
-    width: 940px;
+    max-width: 1000px;
     margin: 0 auto;
-}
-
-.title {
-    font-size: 2rem;
-    font-weight: bold;
-}
-
-.profile {
-    display: flex;
-    height: 250px;
-    border: 1px solid #eeeeee;
     padding: 20px;
-}
-
-.image {
-    flex: 1;
-    background-color: antiquewhite;
-    margin: 20px;
-    border-radius: 150px;
-}
-
-.detail {
-    flex: 3;
+  }
+  
+  /* 페이지 제목 */
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* 프로필 섹션 */
+  .profile {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  
+  /* 프로필 상세 정보 */
+  .detail {
+    font-size: 16px;
+  }
+  
+  /* 아이디 */
+  .id {
+    margin-bottom: 5px;
+  }
+  
+  /* 이름 */
+  .name {
+    margin-bottom: 5px;
+  }
+  
+  /* 성별 */
+  .gender {
+    margin-bottom: 5px;
+  }
+  
+  /* 생년월일 */
+  .birth {
+    margin-bottom: 15px;
+  }
+  
+  /* 수정 및 삭제 버튼 */
+  .buttons {
     display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-.name {
-    flex: 1;
-    font-size: 1.5rem;
-}
-
-.gender {
-    flex: 1;
-    font-size: 1.2rem;
-}
-
-.birth {
-    flex: 1;
-    font-size: 1.2rem;
-}
-
-.buttons {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    overflow: hidden;
-    font-size: 1.2rem;
-}
-
-.edit {
-    float: left;
-    background-color: rgb(183, 232, 255);
-    padding: 5px;
-    border-radius: 10px;
+    gap: 10px;
+  }
+  
+  /* 정보 수정 버튼 */
+  .edit {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 15px;
     cursor: pointer;
-}
-
-.delete {
-    float: left;
-    background-color: rgba(254, 59, 59, 0.601);
-    padding: 5px;
-    border-radius: 10px;
+  }
+  
+  /* 회원 탈퇴 버튼 */
+  .delete {
+    background-color: #f44336;
+    color: white;
+    padding: 8px 15px;
     cursor: pointer;
-    margin-left: 10px;
-}
-
-.gathering {
-    margin-top: 20px;
-    border: 1px solid #eeeeee;
-}
-
-.gatheringTitle {
-    font-size: 1.5rem;
-}
-
-.gatheringList {
-    font-size: 1.2rem;
-    margin-left: 40px;
-}
+  }
+  
+  /* 참여중인 모임 섹션 */
+  .gathering {
+    border: 1px solid #ccc;
+    padding: 15px;
+  }
+  
+  /* 참여중인 모임 제목 */
+  .gatheringTitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  /* 참여중인 모임 리스트 */
+  .gatheringList {
+    cursor: pointer;
+    padding: 8px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .gatheringList:hover {
+    background-color: #f5f5f5;
+  }
+  

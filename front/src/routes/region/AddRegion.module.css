@@ -2,3 +2,46 @@
     margin: 0 auto;
     width: 1200px;
 }
+
+.title {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.search {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 25px;
+}
+
+.cat {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #494949;
+    color: #fff;
+}
+
+.button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
