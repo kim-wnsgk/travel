@@ -97,7 +97,7 @@ function Map({ name, id, offset, date }) {
   }, [schs]);
   useEffect(() => {
     fetchSch();
-  }, [selected]);
+  }, [selected,id]);
   useDidMountEffect(() => {
     markers = [];
     async function map() {
