@@ -11,7 +11,7 @@ function ScheduleModiOffset() {
     const [data, setData] = useState();
     useDidMountEffect(() => {
         axios
-            .get("http://localhost:3001/CheckDate",
+            .get("/CheckDate",
             {params: {
                 id : location.id
             }})

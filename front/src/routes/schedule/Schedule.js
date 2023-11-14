@@ -29,7 +29,7 @@ function Schedule() {
   const [schedule, setSchedule] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:3001/user/getUser", { withCredentials: true })
+      .get("/user/getUser", { withCredentials: true })
       .then(function (response) {
         const session = response.data;
         console.log(session);
@@ -41,7 +41,7 @@ function Schedule() {
   }, []);
   useEffect(() => {
     axios
-      .get("http://localhost:3001/gathering/select/gathering-userlist", {
+      .get("/gathering/select/gathering-userlist", {
         params: {
           user,
         },
@@ -68,7 +68,7 @@ function Schedule() {
     const oneDay = 24 * 60 * 60 * 1000; // 1일의 밀리초 수
     const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay)) + 1;
     axios
-      .get("http://localhost:3001/gathering/insert", {
+      .get("/gathering/insert", {
         params: {
           name,
           user,

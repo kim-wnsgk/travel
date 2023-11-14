@@ -52,7 +52,7 @@ function Recommand() {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:3001/data/recommand",
+          "/data/recommand",
           {
             type: selectedTopCategory,
             cat: selectedMidCategory
@@ -169,7 +169,7 @@ function Recommand() {
         <button
           onClick={() => {
             console.log("type : " + selectedTopCategory + "\ncat : " + selectedMidCategory + "\nregion : " + selectedDo + selectedSi);
-            axios.post("http://localhost:3001/data/recommand", {
+            axios.post("/data/recommand", {
               type: selectedTopCategory,
               cat: selectedMidCategory ? selectedMidCategory : "",
               region: selectedSi ? selectedSi : selectedDo ? selectedDo : "",

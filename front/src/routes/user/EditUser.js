@@ -17,7 +17,7 @@ function EditUser() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/user/getUser`, { withCredentials: true })
+      .get(`/user/getUser`, { withCredentials: true })
       .then(function (response) {
         const { data } = response;
         setUser(data.user);
@@ -27,7 +27,7 @@ function EditUser() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/user/getUser`, {
+      .get(`/user/getUser`, {
         params: {
           id: user,
         },
@@ -64,7 +64,7 @@ function EditUser() {
     };
 
     axios
-      .post(`http://localhost:3001/user/changeProfile`, updatedProfile)
+      .post(`/user/changeProfile`, updatedProfile)
       .then(function (response) {
         console.log("프로필이 변경되었습니다.");
       })

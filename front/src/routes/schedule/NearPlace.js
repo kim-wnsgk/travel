@@ -321,7 +321,7 @@ function NearPlace() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/schedule/nearPlace",
+      .get("/schedule/nearPlace",
         {
           params: {
             id: id,
