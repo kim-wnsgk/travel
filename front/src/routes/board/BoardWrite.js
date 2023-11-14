@@ -22,7 +22,7 @@ function BoardWrite() {
     async function getUser() {
       try {
         const testData = axios
-          .get("http://localhost:3001/user/getUser", {
+          .get("/user/getUser", {
             withCredentials: true,
           })
           .then(function (response) {
@@ -109,7 +109,7 @@ function BoardWrite() {
                   viewcount: null,
                   image: null,
                 };
-                fetch("http://localhost:3001/board/BoardWrite", {
+                fetch("/board/BoardWrite", {
                   method: "post",
                   headers: {
                     "content-type": "application/json",

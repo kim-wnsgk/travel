@@ -33,7 +33,7 @@ const BoardShareView = () => {
   useEffect(() => {
     async function fetchData() {
       axios
-        .get("http://localhost:3001/board/boardView_share_Comment2", {
+        .get("/board/boardView_share_Comment2", {
           params: {
             id: board_id,
           },
@@ -45,7 +45,7 @@ const BoardShareView = () => {
     async function getUser() {
       try {
         const testData = axios
-          .get("http://localhost:3001/user/getUser", {
+          .get("/user/getUser", {
             withCredentials: true,
           })
           .then(function (response) {
@@ -60,7 +60,7 @@ const BoardShareView = () => {
     }
     async function getBoardPid() {
       axios
-        .get("http://localhost:3001/board/getBoardPid", {
+        .get("/board/getBoardPid", {
           params: {
             id: board_id,
           },
@@ -72,7 +72,7 @@ const BoardShareView = () => {
     }
     async function getScheduleData() {
       axios
-        .get("http://localhost:3001/board/getBoardScheduleData", {
+        .get("/board/getBoardScheduleData", {
           params: {
             pid: pid,
           },
@@ -97,7 +97,7 @@ const BoardShareView = () => {
       console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
       console.log(JSON.stringify(scheduleData));
       axios
-        .get("http://localhost:3001/schedule/checkDate", {
+        .get("/schedule/checkDate", {
           params: {
             id: scheduleData[0].bid,
           },
@@ -124,7 +124,7 @@ const BoardShareView = () => {
     //댓글쓰는거 문제가있음.. ㅠㅠ
     //console.log(commentData);
     //comment의 내용을 db로 전송 -> 내용을 댓글 리스트에 표현.
-    fetch("http://localhost:3001/board/BoardWrite_share_Comment", {
+    fetch("/board/BoardWrite_share_Comment", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -165,7 +165,7 @@ const BoardShareView = () => {
     const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay)) + 1;
     var idData = 0;
     axios
-      .get("http://localhost:3001/gathering/insert", {
+      .get("/gathering/insert", {
         params: {
           name,
           user,
@@ -178,7 +178,7 @@ const BoardShareView = () => {
         idData = parseInt(response.data.insertId);
         console.log("받아온 ai id값 => " + JSON.parse(response.data.insertId));
         axios
-          .get("http://localhost:3001/schedule/addSch2", {
+          .get("/schedule/addSch2", {
             params: {
               id: idData,
               data: scheduleData,

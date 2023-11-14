@@ -60,7 +60,7 @@ function BoardSharedWrite() {
 
     console.log("아이템 변수" + JSON.stringify(item));
 
-    fetch("http://localhost:3001/board/BoardShareWrite3", {
+    fetch("/board/BoardShareWrite3", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -96,7 +96,7 @@ function BoardSharedWrite() {
     async function getUser() {
       try {
         const testData = axios
-          .get("http://localhost:3001/user/getUser", {
+          .get("/user/getUser", {
             withCredentials: true,
           })
           .then(function (response) {
@@ -112,7 +112,7 @@ function BoardSharedWrite() {
     async function getGateringUserList() {
       try {
         const listData = axios
-          .get("http://localhost:3001/gathering/select/gathering-userlist", {
+          .get("/gathering/select/gathering-userlist", {
             params: {
               user,
             },
@@ -237,7 +237,7 @@ function BoardSharedWrite() {
                   image: null,
                   pid: board_id,
                 };
-                fetch("http://localhost:3001/board/BoardShareWrite", {
+                fetch("/board/BoardShareWrite", {
                   method: "post",
                   headers: {
                     "content-type": "application/json",
@@ -257,7 +257,7 @@ function BoardSharedWrite() {
                 for (var i = 0; i < dataDetail.length; i++) {
                   dataDetail[i].board_id = board_id;
                 }
-                fetch("http://localhost:3001/board/BoardShareWrite2", {
+                fetch("/board/BoardShareWrite2", {
                   method: "post",
                   headers: {
                     "content-type": "application/json",

@@ -10,7 +10,7 @@ function Admin() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/user/getUser`, { withCredentials: true })
+      .get(`/user/getUser`, { withCredentials: true })
       .then(function (response) {
         const { data } = response;
         setUser(data.user); // 데이터를 상태에 설정
@@ -35,7 +35,7 @@ function Admin() {
 
       console.log(responseData);
       setData(responseData);
-      await axios.post("http://localhost:3001/data/insert", {
+      await axios.post("/data/insert", {
         data,
       });
       console.log("데이터 삽입 성공!");
@@ -45,14 +45,14 @@ function Admin() {
   };
 
   const showData = () => {
-    axios.get("http://localhost:3001/data/show").then(function (response) {
+    axios.get("/data/show").then(function (response) {
       console.log(response.data.length + "개의 데이터 : ");
       console.log(response.data);
     });
   };
 
   const initData = () => {
-    axios.get("http://localhost:3001/data/init").then(function (response) {
+    axios.get("/data/init").then(function (response) {
       console.log(response);
     });
   };
@@ -70,7 +70,7 @@ function Admin() {
       console.log("4444");
       console.log(`${resData.length}개의 데이터를 받아왔습니다.`); // 받아온 데이터
 
-      await axios.post("http://localhost:3001/festival/insert", {
+      await axios.post("/festival/insert", {
         data: resData,
       });
       console.log("데이터 삽입 성공!");
@@ -80,20 +80,20 @@ function Admin() {
   };
 
   const showFestival = () => {
-    axios.get("http://localhost:3001/festival/show").then(function (response) {
+    axios.get("/festival/show").then(function (response) {
       console.log(response.data.length + "개의 데이터 : ");
       console.log(response.data);
     });
   };
 
   const initFestival = () => {
-    axios.get("http://localhost:3001/data/init").then(function (response) {
+    axios.get("/data/init").then(function (response) {
       console.log(response);
     });
   };
 
   const addCoordinate = () => {
-    axios.get("http://localhost:3001/data/addCoordinate").then(function (response) {
+    axios.get("/data/addCoordinate").then(function (response) {
       console.log(JSON.parse(response.data).documents[0]);
       console.log(Object.keys(response.data))
     });

@@ -15,7 +15,7 @@ const BoardList_party = () => {
   const [page, setPage] = useState(1);
   const [items] = useState(7);
   function viewcount(id){
-    axios.get("http://localhost:3001/board/viewcount",{
+    axios.get("/board/viewcount",{
       params:{
         id : id,
         table : 'party'
@@ -30,7 +30,7 @@ const BoardList_party = () => {
     async function fetchData() {
       try {
         const td = await axios.get(
-          "http://localhost:3001/board/BoardList_party"
+          "/board/BoardList_party"
         );
         console.log(td.data);
         setData(td.data);

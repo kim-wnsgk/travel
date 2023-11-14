@@ -22,7 +22,7 @@ function Gather_new({setModalOpen, user}) {
   };
     function insert() {
         axios
-          .get("http://localhost:3001/gathering/insert", {
+          .get("/gathering/insert", {
             params: {
               name: name,
               user: user,

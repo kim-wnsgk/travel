@@ -27,7 +27,7 @@ function BoardWrite_party() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/user/getUser", { withCredentials: true })
+      .get("/user/getUser", { withCredentials: true })
       .then(function (response) {
         const session = response.data;
         console.log(session);
@@ -81,7 +81,7 @@ function BoardWrite_party() {
     const oneDay = 24 * 60 * 60 * 1000; // 1일의 밀리초 수
     const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay)) + 1;
     axios
-      .get("http://localhost:3001/gathering/insert", {
+      .get("/gathering/insert", {
         params: {
           name,
           user,
@@ -244,7 +244,7 @@ function BoardWrite_party() {
               console.log(boardData.start_date);
               console.log(boardData.end_date);
               console.log("테스트중이용~");
-              fetch("http://localhost:3001/board/BoardWrite_party", {
+              fetch("/board/BoardWrite_party", {
                 method: "post",
                 headers: {
                   "content-type": "application/json",

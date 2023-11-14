@@ -14,7 +14,7 @@ const BoardView_party = () => {
 
   function addMem(user) {
     axios
-      .get("http://localhost:3001/gathering/addMem", {
+      .get("/gathering/addMem", {
         params: {
           name: board_data.gather_name,
           user: user,
@@ -28,7 +28,7 @@ const BoardView_party = () => {
   useEffect(() => {
     async function fetchData() {
       axios
-        .get("http://localhost:3001/board/BoardView_party_Comment2", {
+        .get("/board/BoardView_party_Comment2", {
           params: {
             id: board_id,
           },
@@ -51,7 +51,7 @@ const BoardView_party = () => {
       id: board_id,
     };
     //comment의 내용을 db로 전송 -> 내용을 댓글 리스트에 표현.
-    fetch("http://localhost:3001/board/BoardWrite_party_Comment", {
+    fetch("/board/BoardWrite_party_Comment", {
       method: "post",
       headers: {
         "content-type": "application/json",

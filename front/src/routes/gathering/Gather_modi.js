@@ -10,7 +10,7 @@ function Gather_modi() {
 
   function fetchData() {
     axios
-      .get("http://localhost:3001/gathering/selMem", {
+      .get("/gathering/selMem", {
         params: {
           user: 12345,
           name: location.name,
@@ -24,7 +24,7 @@ function Gather_modi() {
 
   function deleteMem(user, admin) {
     axios
-      .get("http://localhost:3001/gathering/delete", {
+      .get("/gathering/delete", {
         params: {
           name: location.name,
           user: user,

@@ -44,7 +44,7 @@ function Main() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/user/getUser", { withCredentials: true })
+      .get("/user/getUser", { withCredentials: true })
       .then(function (response) {
         const session = response.data;
         console.log(session);
@@ -60,7 +60,7 @@ function Main() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const td = await axios.get("http://localhost:3001/board/boardList");
+        const td = await axios.get("/board/boardList");
         setBoardFreeData(td.data);
       } catch (e) {
         console.log(e);
@@ -74,7 +74,7 @@ function Main() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const td = await axios.get("http://localhost:3001/board/BoardList_party");
+        const td = await axios.get("/board/BoardList_party");
         //console.log(td.data);
         setBoardPartyData(td.data);
       } catch (e) {
@@ -87,7 +87,7 @@ function Main() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post("http://localhost:3001/query", {
+        const response = await axios.post("/query", {
           query:
             "SELECT * FROM sight WHERE cat LIKE 'A0101%' and image LIKE 'h%'",
         });
@@ -130,7 +130,7 @@ function Main() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.post("http://localhost:3001/query", {
+        const response = await axios.post("/query", {
           query: "SELECT * FROM festival WHERE image LIKE 'h%'",
         });
         console.log(response.data);

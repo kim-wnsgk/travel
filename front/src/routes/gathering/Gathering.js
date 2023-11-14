@@ -9,7 +9,7 @@ function Gathering() {
 //   const [data, setData] = useState([]);
 //   function drop(item) {
 //     axios
-//       .get("http://localhost:3001/gathering/drop", {
+//       .get("/gathering/drop", {
 //         params: {
 //           name: item,
 //           user: 12345,

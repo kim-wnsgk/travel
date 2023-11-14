@@ -12,7 +12,7 @@ const BoardShareList = () => {
   //실제로 데이터 받아오면 여기다가 넣기
   const [data, setData] = useState([]);
   function viewcount(id){
-    axios.get("http://localhost:3001/board/viewcount",{
+    axios.get("/board/viewcount",{
       params:{
         id : id,
         table : 'share'
@@ -34,7 +34,7 @@ const BoardShareList = () => {
     async function fetchData() {
       try {
         const td = await axios.get(
-          "http://localhost:3001/board/boardShareList"
+          "/board/boardShareList"
         );
         setData(td.data);
       } catch (e) {
@@ -44,7 +44,7 @@ const BoardShareList = () => {
     async function getUser() {
       try {
         const testData = axios
-          .get("http://localhost:3001/user/getUser", {
+          .get("/user/getUser", {
             withCredentials: true,
           })
           .then(function (response) {

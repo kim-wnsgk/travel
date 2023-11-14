@@ -17,7 +17,7 @@ const BoardView = () => {
   useEffect(() => {
     async function fetchData() {
       axios
-        .get("http://localhost:3001/board/BoardViewComment2", {
+        .get("/board/BoardViewComment2", {
           params: {
             id: board_id,
           },
@@ -29,7 +29,7 @@ const BoardView = () => {
     async function getUser() {
       try {
         const testData = axios
-          .get("http://localhost:3001/user/getUser", {
+          .get("/user/getUser", {
             withCredentials: true,
           })
           .then(function (response) {
@@ -58,7 +58,7 @@ const BoardView = () => {
       id: board_id,
     };
     //comment의 내용을 db로 전송 -> 내용을 댓글 리스트에 표현.
-    fetch("http://localhost:3001/board/BoardWriteComment", {
+    fetch("/board/BoardWriteComment", {
       method: "post",
       headers: {
         "content-type": "application/json",

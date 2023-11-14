@@ -23,7 +23,7 @@ const BoardList = () => {
   const [user, setUser] = useState();
   const [isLogin, setIsLogin] = useState();
   function viewcount(id) {
-    axios.get("http://localhost:3001/board/viewcount", {
+    axios.get("/board/viewcount", {
       params: {
         id: id,
         table: 'free'
@@ -34,7 +34,7 @@ const BoardList = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const td = await axios.get("http://localhost:3001/board/boardList");
+        const td = await axios.get("/board/boardList");
         console.log(td.data)
         setData(td.data);
       } catch (e) {
@@ -44,7 +44,7 @@ const BoardList = () => {
     async function getUser() {
       try {
         const testData = axios
-          .get("http://localhost:3001/user/getUser", {
+          .get("/user/getUser", {
             withCredentials: true,
           })
           .then(function (response) {

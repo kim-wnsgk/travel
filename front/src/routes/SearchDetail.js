@@ -17,7 +17,7 @@ function SearchDetail() {
     useEffect(() => {
         console.log(searchText)
         axios.get(
-            `http://localhost:3001/data/search`, {
+            `/data/search`, {
             params: {
                 text: searchText,
             },
