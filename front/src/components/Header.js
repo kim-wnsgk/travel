@@ -12,7 +12,7 @@ function Header() {
   useEffect(() => {
     // 로그인 확인
     axios
-      .get("http://localhost:3001/user/authcheck", { withCredentials: true })
+      .get("/user/authcheck", { withCredentials: true })
       .then((response) => {
         // 서버로부터 받은 데이터를 사용하여 isLogin 값을 설정
         const { data } = response;
@@ -77,7 +77,7 @@ function Header() {
             {islogin ? (
               <div
                 onClick={() => {
-                  axios.get("http://localhost:3001/user/logout", {
+                  axios.get("/user/logout", {
                     withCredentials: true,
                   });
                   window.location.reload();
