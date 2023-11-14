@@ -8,7 +8,6 @@ import MapDetail from "./MapDetail";
 let markers = [];
 const { kakao } = window;
 function Map({ name, id, offset, date }) {
-  console.log("확인용=>" + name + " " + id + " " + offset + " " + date + " ");
   const infowindows = [];
   const map = {};
   const NAVER = process.env.REACT_APP_NAVER_MAP;
@@ -97,7 +96,7 @@ function Map({ name, id, offset, date }) {
   }, [schs]);
   useEffect(() => {
     fetchSch();
-  }, [selected]);
+  }, [selected, id]);
   useDidMountEffect(() => {
     markers = [];
     async function map() {
