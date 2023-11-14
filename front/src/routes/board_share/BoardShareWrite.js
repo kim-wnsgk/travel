@@ -178,6 +178,7 @@ function BoardSharedWrite() {
                         console.log("클릭됨!");
                         setItem(item);
                         setTimeout(onClickShare, 300);
+                        // console.log("item 값 => " + JSON.stringify(item));
                         //onClickShare();
                       }}
                     >
@@ -205,9 +206,6 @@ function BoardSharedWrite() {
                 prevPageText={"<"}
                 nextPageText={">"}
               ></Pagination>
-            </div>
-            <div className={styles.addSchedule} onClick={onClickShare}>
-              일정 공유
             </div>
           </div>
           <div className={styles.boardFileUpload}>

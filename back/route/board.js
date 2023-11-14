@@ -16,53 +16,61 @@ router.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 router.use(bodyParser.json({ limit: "50mb" }));
 
 router.get("/boardList", (req, res) => {
-  connection.query("SELECT * FROM board_free", async function (error, results, fields) {
-
-    const getCommentCount = (data) => {
-      return new Promise((resolve, reject) => {
-        connection.query(
-          `SELECT COUNT(*) AS comment_count FROM board_free_comment WHERE id = ${data.board_id}`,
-          function (err, commentResults, fields1) {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(commentResults[0].comment_count || 0);
+  connection.query(
+    "SELECT * FROM board_free",
+    async function (error, results, fields) {
+      const getCommentCount = (data) => {
+        return new Promise((resolve, reject) => {
+          connection.query(
+            `SELECT COUNT(*) AS comment_count FROM board_free_comment WHERE id = ${data.board_id}`,
+            function (err, commentResults, fields1) {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(commentResults[0].comment_count || 0);
+              }
             }
-          }
-        );
-      });
-    };
+          );
+        });
+      };
 
-    await Promise.all(results.map(async (data, index) => {
-      data.comment_count = await getCommentCount(data);
-    }));
-    res.send(results);
-  });
+      await Promise.all(
+        results.map(async (data, index) => {
+          data.comment_count = await getCommentCount(data);
+        })
+      );
+      res.send(results);
+    }
+  );
 });
 
 router.get("/BoardList_party", (req, res) => {
-  connection.query("SELECT * FROM board_party", async function (error, results, fields) {
-
-    const getCommentCount = (data) => {
-      return new Promise((resolve, reject) => {
-        connection.query(
-          `SELECT COUNT(*) AS comment_count FROM board_party_comment WHERE id = ${data.board_id}`,
-          function (err, commentResults, fields1) {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(commentResults[0].comment_count || 0);
+  connection.query(
+    "SELECT * FROM board_party",
+    async function (error, results, fields) {
+      const getCommentCount = (data) => {
+        return new Promise((resolve, reject) => {
+          connection.query(
+            `SELECT COUNT(*) AS comment_count FROM board_party_comment WHERE id = ${data.board_id}`,
+            function (err, commentResults, fields1) {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(commentResults[0].comment_count || 0);
+              }
             }
-          }
-        );
-      });
-    };
+          );
+        });
+      };
 
-    await Promise.all(results.map(async (data, index) => {
-      data.comment_count = await getCommentCount(data);
-    }));
-    res.send(results);
-  });
+      await Promise.all(
+        results.map(async (data, index) => {
+          data.comment_count = await getCommentCount(data);
+        })
+      );
+      res.send(results);
+    }
+  );
 });
 
 router.get("/boardViewComment2", (req, res) => {
@@ -173,8 +181,6 @@ router.post("/BoardWrite_party", (req, res) => {
   }
 });
 
-
-
 router.post("/BoardShareWrite", (req, res) => {
   const writer = req.body.writer;
   const title = req.body.title;
@@ -204,7 +210,7 @@ router.post("/BoardShareWrite2", (req, res) => {
   // const end = req.body.end;
   // const offset = req.body.offset;
   // const date = new Date(req.body.date);
-  console.log("여기옴");
+
   const dataDetail = req.body;
   console.log("데이터 베이스에 들어갈 배열==>" + dataDetail);
   const sendData = { isSuccess: "" };
@@ -217,8 +223,9 @@ router.post("/BoardShareWrite2", (req, res) => {
   //   sendData.isSuccess = "오류발생.";
   // }
   for (const item of dataDetail) {
+    console.log("item.id=>" + item.id);
     connection.query(
-      "INSERT INTO board_share_schedule (board_id, sight_id, start, end, offset, date) VALUES(?,?,?,?,?,?)",
+      "INSERT INTO board_share_schedule (board_id, sight_id, start, end, offset, date, bid) VALUES(?,?,?,?,?,?,?)",
       [
         item.board_id,
         item.sight_id,
@@ -226,6 +233,7 @@ router.post("/BoardShareWrite2", (req, res) => {
         item.end,
         item.offset,
         new Date(item.date).toISOString().slice(0, 19).replace("T", " "),
+        item.id,
       ],
       function (error, results, fields) {
         console.log("에러의 발생 => " + error);
@@ -274,28 +282,32 @@ router.get("/boardView_share_Comment2", (req, res) => {
 });
 
 router.get("/boardShareList", (req, res) => {
-  connection.query("SELECT * FROM board_share", async function (error, results, fields) {
-
-    const getCommentCount = (data) => {
-      return new Promise((resolve, reject) => {
-        connection.query(
-          `SELECT COUNT(*) AS comment_count FROM board_share_comment WHERE id = ${data.board_id}`,
-          function (err, commentResults, fields1) {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(commentResults[0].comment_count || 0);
+  connection.query(
+    "SELECT * FROM board_share",
+    async function (error, results, fields) {
+      const getCommentCount = (data) => {
+        return new Promise((resolve, reject) => {
+          connection.query(
+            `SELECT COUNT(*) AS comment_count FROM board_share_comment WHERE id = ${data.board_id}`,
+            function (err, commentResults, fields1) {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(commentResults[0].comment_count || 0);
+              }
             }
-          }
-        );
-      });
-    };
+          );
+        });
+      };
 
-    await Promise.all(results.map(async (data, index) => {
-      data.comment_count = await getCommentCount(data);
-    }));
-    res.send(results);
-  });
+      await Promise.all(
+        results.map(async (data, index) => {
+          data.comment_count = await getCommentCount(data);
+        })
+      );
+      res.send(results);
+    }
+  );
 });
 
 router.get("/getBoardPid", (req, res) => {
@@ -364,18 +376,18 @@ router.post("/insert", (req, res) => {
     }
   });
 });
-router.get("/viewcount",(req,res)=>{
+router.get("/viewcount", (req, res) => {
   connection.query(
     `UPDATE board_${req.query.table} SET view_count = view_count + 1 WHERE board_id=${req.query.id};`,
     function (error, results, fields) {
       if (error) {
         console.log(error);
       } else {
-        console.log(results)
+        console.log(results);
         res.json(results);
       }
     }
   );
-})
+});
 
 module.exports = router;
