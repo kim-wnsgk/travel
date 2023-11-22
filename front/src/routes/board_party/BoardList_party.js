@@ -106,7 +106,7 @@ const BoardList_party = () => {
           </div>
           <div>
             <Link to="/BoardWrite_party">
-              <div>글작성</div>
+              <button className={styles.button}>글작성</button>
             </Link>
           </div>
         </div>

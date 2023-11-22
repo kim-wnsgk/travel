@@ -154,7 +154,10 @@ function Regions() {
                 {dataLength}
               </span>
               개의 데이터가 존재합니다.
+              <button className={styles.addbutton}
+              onClick={() => navigate('/addRegion')}>관광지 추가</button>
             </div>
+            
             <div className={styles.search}>
               <input
                 placeholder="검색어를 입력해주세요"
@@ -222,8 +225,7 @@ function Regions() {
               prevPageText={"<"}
               nextPageText={">"}
             ></Pagination>
-            <button
-              onClick={() => navigate('/addRegion')}>관광지 추가</button>
+            
 
           </div>
 

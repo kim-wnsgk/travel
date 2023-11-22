@@ -97,6 +97,9 @@
 .banner {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-left:3%;
+  margin-right: 3%;
 }
 
 .lists {
@@ -188,4 +191,36 @@
 .PaginationBox li a:hover,
 .PaginationBox li a.active {
   color: black;
+}
+.addbutton {
+  display: inline-block;
+  padding: 2px 4px;
+  font-size: 16px;
+  margin-left:20px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid #3498db;
+  border-radius: 5px;
+  color: #3498db;
+  background-color: transparent;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.addbutton:hover {
+  background-color: #3498db;
+  color: white;
+}
+.input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }

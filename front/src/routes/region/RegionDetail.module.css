@@ -19,11 +19,15 @@
   background-color: white;
   cursor: pointer;
   font-size: x-large;
-
+  margin:7px;
 }
 .title {
   flex:1;
   color: #222222;
+}
+
+.writer {
+  margin-bottom:10px;
 }
 
 .addr {
@@ -86,6 +90,11 @@
   padding: 50px 0;
   border-top: 1px solid #333;
   margin-bottom: 20px;
+
+  & div {
+    font-size:1.2rem;
+    line-height: 35px;
+  }
 }
 .title {
   overflow: hidden;
@@ -204,15 +213,22 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.button{
-  font-size: large;
-  border:none;
-  background-color: #7690f1;
+.button {
+  display: inline-block;
+  padding: 2px 4px;
+  font-size: 16px;
+  margin:5px;
+  text-align: center;
+  text-decoration: none;
   cursor: pointer;
-  color:white;
-  width:100px;
-  height:50px;
+  border: 2px solid #3498db;
   border-radius: 5px;
-  position: relative;
-  margin-left: none;
+  color: #3498db;
+  background-color: transparent;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+      background-color: #3498db;
+      color: white;
+  }
 }

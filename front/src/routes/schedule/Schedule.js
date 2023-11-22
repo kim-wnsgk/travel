@@ -151,11 +151,13 @@ function Schedule() {
               nextPageText={">"}
             ></Pagination>
           </div>
-          <div className={styles.addSchedule} onClick={toggleModal}>
+          <>
+          <button className={styles.addSchedule} onClick={toggleModal}>
             {" "}
             {/* 모달 열기 함수를 호출 */}
             일정 추가
-          </div>
+          </button>
+          </>
           {showModal && (
             <div className={styles.modalBackdrop}>
               <div className={styles.modal}>
