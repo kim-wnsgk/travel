@@ -20,6 +20,7 @@
     flex: 1;
     display: flex;
     overflow-x: scroll;
+    margin: 20px;
   }
   
   .dates::-webkit-scrollbar {
@@ -30,15 +31,18 @@
     align-items: center;
     margin: auto;
     margin-left: 10px;
-    background-color: rgb(184, 184, 184);
+    background-color: #eeeeeeb2;
     min-width: 200px;
-    width: 100px;
-    height: 70%;
+    width: 40px;
+    height: 100%;
     flex-grow: 1;
     border: none;
     border-radius: 5px;
   }
   
+  .map{
+    border-radius: 10px;
+  }
   .selButton:hover {
     cursor: pointer;
   }
@@ -47,12 +51,12 @@
     align-items: center;
     margin: auto;
     margin-left: 10px;
-    background-color: black;
+    background-color: #cccccc;
     color: white;
     font-size: x-large;
     min-width: 200px;
     width: 100px;
-    height: 70%;
+    height: 100%;
     flex-grow: 1;
     border: none;
     border-radius: 5px;
@@ -61,7 +65,7 @@
   .selButtons:hover {
     cursor: pointer;
     width: 55px;
-    height: 75%;
+    height: 100%;
   }
   
   .noneInfo {
@@ -86,10 +90,10 @@
   .list {
     padding-top: 1%;
     flex: 1;
-    background-color: rgb(184, 184, 184);
+    background-color: #eeeeeeb2;
     height: 620px;
     margin: 20px;
-    border-radius: 50px 50px 50px 50px / 50px 50px 50px 50px;
+    border-radius: 10px;
     overflow-y: scroll;
   }
   
@@ -105,6 +109,10 @@
     border-bottom: 1px solid rgb(184, 184, 184);
     transition: all 0.3s ease-in-out;
   }
+  .schduleTime{
+    margin-bottom: 30px;
+
+  }
   
   .eles {
     margin: 5%;
@@ -112,7 +120,7 @@
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 10px;
-    border-bottom: 1px solid rgb(184, 184, 184);
+    border-bottom: 1px solid #cccccc;
     transition: all 0.3s ease-in-out;
   }
   
