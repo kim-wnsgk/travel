@@ -13,7 +13,7 @@ const { kakao } = window;
 function NearPlace() {
   var selImageSrc = process.env.PUBLIC_URL + '/selMarker.png';
   const location = useLocation().state;
-  var imageSrc = process.env.PUBLIC_URL + 'Marker.png';
+  var imageSrc = process.env.PUBLIC_URL + '/Marker.png';
   const selImageSize = { width: 60, height: 60 }
   const imageSize = { width: 40, height: 40 }
   const spriteSize = { width: 36, height: 40 }
@@ -128,7 +128,7 @@ function NearPlace() {
           ></div>
           <img style={{
             transform: `none`,
-          }}className={styles.trackerMarker} src={process.env.PUBLIC_URL+'./selMarker.png'}></img>
+          }}className={styles.trackerMarker} src={selImageSrc}></img>
         </div>
       )
     }
