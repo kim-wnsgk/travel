@@ -7,6 +7,7 @@ require("dotenv").config();
 router.use(cors());
 const connection = require("../db");
 const { seq } = require("async");
+const { json } = require("body-parser");
 connection.connect((error) => {
   if (error) {
     console.error("Error connecting to MySQL server(schedule): " + error.stack);
@@ -200,38 +201,42 @@ router.get("/addOneDay", function (req, res) {
     }
   });
 });
-router.get("/nearPlace", function (req, res) {
-  id = req.query.id;
+router.get("/nearPlace",function(req,res){
+  id = req.query.id
+  tag = req.query.tag
   //경도 변환
-  dis_lon = req.query.distance * 0.0115;
+  dis_lon = req.query.distance *  0.0115 
   //위도 변환
-  dis_lat = req.query.distance * 0.007;
-  console.log(id, req.query.distance, req.query.tag);
-  connection.query(
-    `select title, addr, lat, lon, image from sight where contentId=${req.query.id}`,
-    function (err, result, fields) {
-      if (err) {
-        console.log(err);
-      } else {
-        connection.query(
-          `select contentId,title,addr,lat,lon,image from sight where lat between ${
-            result[0].lat - dis_lat
-          } and ${result[0].lat + dis_lat} and lon between ${
-            result[0].lon - dis_lon
-          } and ${result[0].lon + dis_lon} AND contentId!=${id};`,
-          function (err1, res1, fields1) {
-            if (err) {
-              console.log(err);
-            } else {
-              res.json(result.concat(res1));
-            }
-          }
-        );
-      }
+  dis_lat = req.query.distance * 0.007
+  console.log(id,req.query.distance, req.query.tag)
+  connection.query(`select title, addr, lat, lon, image from sight where contentId=${req.query.id}`,function(err,result,fields){
+    if(err){
+      console.log(err)
     }
-  );
-});
-router.get("/getData", function (req, res) {
+    else{
+      sql = `select contentId,title,addr,lat,lon,image from sight where lat between ${result[0].lat-dis_lat} and ${result[0].lat+dis_lat} and lon between ${result[0].lon-dis_lon} and ${result[0].lon+dis_lon} AND contentId!=${id}`
+      if(tag==12){
+        sql+= ` and contentTypeId in (12,14); `
+      }
+      else if(tag==1){
+        sql+=';'
+      }
+      else{
+        sql += ` and contentTypeId=${tag};`
+      }
+      connection.query(sql,
+      function(err1,res1,fields1){
+        if(err){
+          console.log(err)
+        }
+        else{
+          res.json(result.concat(res1))
+        }
+      })
+    }
+    })
+  })
+  router.get("/getData", function (req, res) {
   connection.query(
     `select title,image from sight where contentId=${req.query.id}`,
     function (error, results, fields) {
