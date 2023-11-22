@@ -55,6 +55,16 @@ function BoardSharedWrite() {
 
   const [dataDetail, setDataDetail] = useState({});
 
+  function removePTags(inputString) {
+    // p태그 삭제용
+    var outputString = inputString
+      .replace(/<p>/g, "")
+      .replace(/<\/p>/g, "")
+      .replace(/<br>/g, "");
+
+    return outputString;
+  }
+
   function onClickShare() {
     setDesc(" ");
 
@@ -230,7 +240,7 @@ function BoardSharedWrite() {
                 const boardData = {
                   writer: user,
                   title: title,
-                  content: desc,
+                  content: removePTags(desc),
                   regdate: date,
                   updatedate: null,
                   viewcount: null,
@@ -274,26 +284,6 @@ function BoardSharedWrite() {
                       alert(json.isSuccess);
                     }
                   });
-
-                // for (var i = 0; i < dataDetail.length; i++) {
-                //   console.log("반복중");
-                //   //const id = schedule[i].id;
-                //   console.log("확인용" + dataDetail);
-                //   const sight_id = dataDetail[i].sight_id;
-                //   const start = dataDetail[i].start;
-                //   const end = dataDetail[i].end;
-                //   const offset = dataDetail[i].offset;
-                //   const date = dataDetail[i].date;
-                //   console.log("offset잘 뜨나 확인 => " + offset);
-                //   const boardData = {
-                //     board_id: board_id,
-                //     sight_id: sight_id,
-                //     start: start,
-                //     end: end,
-                //     offset: offset,
-                //     date: date,
-                //   };
-
                 console.log(boardData);
                 navigate(-1);
               }}
