@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import useDidMountEffect from '../useDidMountEffect';
 import { useLocation } from "react-router-dom";
 import NearPlaceDetail from './NearPlaceDetail'
+import Header from "../../components/Header";
 const { kakao } = window;
 
 // import useKakaoLoader from "./useKakaoLoader"
@@ -372,6 +373,7 @@ function NearPlace() {
   }
   return (
     <div className={styles.container}>
+      <Header />
       <h1>주변 관광지</h1>
       <div>
         <div>
