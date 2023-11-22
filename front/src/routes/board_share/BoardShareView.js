@@ -16,7 +16,7 @@ const BoardShareView = () => {
 
   const board_id = location.state.boardData.board_id;
   //console.log(board_id);
-  // 이거 기반으로 pid 가져와서
+  // 이거 기반으로 pid 가져와서f
   // 여행 일정 변수로 받아와서
   // 공유받기 누르면 그 작성자 일정에 추가하는 것.
   // 구현하기 ㅋㅋ
@@ -257,6 +257,7 @@ const BoardShareView = () => {
                       여행 시작일 선택
                     </span>
                     <DatePicker
+                    portalId="root-portal"
                       showIcon
                       selected={startDate}
                       onChange={(date) => setStartDate(date)}

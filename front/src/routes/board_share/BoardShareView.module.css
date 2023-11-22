@@ -142,3 +142,4 @@
   border-radius: 5px;
   outline: none;
 }
+.react-datepicker-popper {  z-index: 100 !important }
