@@ -1,8 +1,10 @@
 import react from 'react'
 import { useState } from 'react';
 import styles from "./Register.module.css";
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 function Register() {
+  const naviagte = useNavigate();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
@@ -75,6 +77,7 @@ function Register() {
             .then((json) => {
               if (json.isSuccess === "True") {
                 alert('회원가입이 완료되었습니다!')
+                naviagte("../login")
 
               }
               else {

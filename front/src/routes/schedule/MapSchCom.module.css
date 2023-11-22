@@ -30,17 +30,16 @@
     align-items: center;
     margin: auto;
     margin-left: 10px;
-    background-color: orange;
+    background-color: rgb(184, 184, 184);
     min-width: 200px;
     width: 100px;
     height: 70%;
     flex-grow: 1;
     border: none;
-    border-radius: 15px;
+    border-radius: 5px;
   }
   
   .selButton:hover {
-    background-color: yellow;
     cursor: pointer;
   }
   
@@ -48,7 +47,7 @@
     align-items: center;
     margin: auto;
     margin-left: 10px;
-    background-color: #b2f76c;
+    background-color: black;
     color: white;
     font-size: x-large;
     min-width: 200px;
@@ -56,7 +55,7 @@
     height: 70%;
     flex-grow: 1;
     border: none;
-    border-radius: 15px;
+    border-radius: 5px;
   }
   
   .selButtons:hover {
@@ -67,7 +66,7 @@
   
   .noneInfo {
     color: red;
-    font-size: xx-large;
+    font-size: x-large;
   }
   
   .mainEles {
@@ -87,7 +86,7 @@
   .list {
     padding-top: 1%;
     flex: 1;
-    background-color: #b2f76c;
+    background-color: rgb(184, 184, 184);
     height: 620px;
     margin: 20px;
     border-radius: 50px 50px 50px 50px / 50px 50px 50px 50px;

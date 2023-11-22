@@ -31,7 +31,7 @@ function Login() {
           const res = response.data;
           if (res.isLogin === 'True') {
             alert('로그인에 성공했습니다.');
-            navigate(-1);
+            navigate("../");
           } else {
             alert(res.isLogin);
           }
