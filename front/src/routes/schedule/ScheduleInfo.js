@@ -145,7 +145,6 @@ function ScheduleInfo() {
       <Header />
       <div className={styles.content}>
         <div className={styles.schedule}>
-          <h1 className={styles.title}>{schedule.name}</h1>
           <div className={styles.info}>
             <p>시작일: {new Date(schedule.start).toLocaleDateString()}</p>
             <p>
@@ -160,11 +159,14 @@ function ScheduleInfo() {
             <p>여행 스타일: {schedule.style}</p>
           </div>
           {user === schedule.admin ? (
-            <button onClick={toggleModal1}>일정 관리</button>
+            <>
+            <button className={styles.modalButton} onClick={toggleModal1}>일정 관리</button>
+            <button className={styles.modalButton} onClick={toggleModal2}>
+              여행 멤버
+            </button>
+            </>
           ) : null}
-          <button className={styles.modalButton} onClick={toggleModal2}>
-            여행 멤버
-          </button>
+          
         </div>
         <div className={styles.map}>
           <Map
@@ -186,10 +188,10 @@ function ScheduleInfo() {
               onChange={(e) => setDateText(e.target.value)}
               placeholder={`일자를 입력하세요 1 ~ ${schedule.date}`}
             />
-            <button onClick={addOneDay}>일차 추가</button>
-            <button onClick={delOneDay}>일차 삭제</button>
-            <button onClick={deleteSchedule}>(주의) 일정 전체 삭제</button>
-            <button onClick={toggleModal1}>Close</button>
+            <button className={styles.button} onClick={addOneDay}>일차 추가</button>
+            <button className={styles.button} onClick={delOneDay}>일차 삭제</button>
+            <button className={styles.button} onClick={deleteSchedule}>(주의) 일정 전체 삭제</button>
+            <button className={styles.button} onClick={toggleModal1}>Close</button>
           </div>
         </div>
       ) : null}
@@ -219,8 +221,8 @@ function ScheduleInfo() {
               onChange={(e) => setMemberIdText(e.target.value)}
               placeholder="Enter member ID"
             />
-            <button onClick={addMember}>Add Member</button>
-            <button onClick={toggleModal2}>Close</button>
+            <button className={styles.button} onClick={addMember}>Add Member</button>
+            <button className={styles.button} onClick={toggleModal2}>Close</button>
           </div>
         </div>
       ) : null}

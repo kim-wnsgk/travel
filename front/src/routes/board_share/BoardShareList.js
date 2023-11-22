@@ -113,7 +113,7 @@ const BoardShareList = () => {
           <div>
             {!isLogin ? (
               <Link to="/BoardShareWrite">
-                <div>글작성</div>
+                <button className={styles.button}>글작성</button>
               </Link>
             ) : (
               <div>로그인 후 글을 작성해보세요.</div>
