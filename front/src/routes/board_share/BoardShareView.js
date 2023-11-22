@@ -162,7 +162,8 @@ const BoardShareView = () => {
   function insert() {
     //여기 구간은 큰 일정 틀(모임생성)을 저장하는 것.
     const oneDay = 24 * 60 * 60 * 1000; // 1일의 밀리초 수
-    const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay)) + 1;
+    //const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay)) + 1;
+    const diffDays = scheduleInfoData[0].date;
     var idData = 0;
     axios
       .get("/gathering/insert", {
@@ -264,7 +265,7 @@ const BoardShareView = () => {
                       minDate={new Date()}
                     ></DatePicker>
                   </div>
-                  <div className={styles.boardStartParty}>
+                  {/* <div className={styles.boardStartParty}>
                     <span
                       style={{
                         marginRight: 10,
@@ -281,7 +282,7 @@ const BoardShareView = () => {
                       dateFormat={"yyyy년 MM월 dd일"}
                       minDate={new Date()}
                     ></DatePicker>
-                  </div>
+                  </div> */}
                   <div className={styles.name}>
                     여행 스타일
                     <input
