@@ -3,6 +3,7 @@ import styles from "./Floating.module.css";
 import axios from "axios";
 import * as dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import useDidMountEffect from "../useDidMountEffect";
 function Floating() {
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState(0);
@@ -10,6 +11,7 @@ function Floating() {
   const [date, setDate] = useState([]);
   const [sch, setSch] = useState([]);
   const [user, setUser] = useState();
+  const [curstyles, setCurstyles] = useState();
   const navigate = useNavigate();
   function select(index) {
     setSelected(index);
@@ -28,7 +30,23 @@ function Floating() {
 
       });
   }, []);
-  console.log(user)
+  useDidMountEffect(()=>{
+    var index
+    if(selected){
+      index = selected
+    }
+    else{
+      index = 0
+    }
+    axios
+      .get("/schedule/getGathering",{
+        params:{ id : sch[selected].id
+      }})
+      .then(function (response) {
+        setCurstyles(response.data[0].style)
+        console.log("여기",response.data[0].style)
+      })
+    },[sch,selected])
   async function fetchData() {
     await axios
       .get("/gathering/select", {  // gathering_members 테이블에서 자신의 group_id만 해당하는 gathering 테이블 받아오기
@@ -130,7 +148,7 @@ function Floating() {
         <div className={styles.floatingBannerMain}>
           {dayjs(date[0]?.start).format("YY-MM-DD")}
           <br />
-          맛집투어
+          {curstyles}
         </div>
       </div>
       <div className={styles.pickdate}>

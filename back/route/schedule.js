@@ -35,6 +35,19 @@ router.get("/checkDate", function (req, res) {
     }
   );
 });
+router.get("/getGathering", function (req, res) {
+  connection.query(
+    `SELECT * FROM gathering where id = ${req.query.id};`,
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(results);
+        res.json(results);
+      }
+    }
+  );
+});
 
 router.get("/addSch", function (req, res) {
   console.log(req.query);
