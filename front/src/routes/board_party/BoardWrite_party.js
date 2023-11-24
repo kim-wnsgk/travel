@@ -18,8 +18,12 @@ function BoardWrite_party() {
   const [checked, setChecked] = useState(false);
   const [user, setUser] = useState("")
   const date = "22-05-05"; //테스트용 데이트
+  const [data,setData] = useState();
   const [name, setName] = useState("");
   const [dateDifference, setDateDifference] = useState(0);
+  const [gather_id,setGather_id] = useState(null);
+  const [gatherSelect, setGatherSelect] = useState('0');
+
 
   const handleCheckboxChange = (event) => {
     setChecked(event.target.checked);
@@ -37,6 +41,21 @@ function BoardWrite_party() {
         // navigate("/");  로그인 안될시 알림띄우거나 하는식으로 수정
       });
   }, []);
+  async function fetchData() {
+    await axios
+      .get("/gathering/select", {  // gathering_members 테이블에서 자신의 group_id만 해당하는 gathering 테이블 받아오기
+        params: {
+          user: user
+        },
+      })
+      .then(function (response) {
+        console.log("여기",response)
+        setData(response.data);
+      });
+  }
+  useEffect(()=>{
+    fetchData();
+  },[user])
   async function onClickSearch() {
     await uploadReferenece.current
       .upload()
@@ -77,7 +96,7 @@ function BoardWrite_party() {
   const [endDate, setEndDate] = useState(new Date());
   const [style, setStyle] = useState('');
 
-  function insert() {
+  async function insert() {
     const oneDay = 24 * 60 * 60 * 1000; // 1일의 밀리초 수
     const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay)) + 1;
     axios
@@ -91,7 +110,8 @@ function BoardWrite_party() {
         },
       })
       .then(function (response) {
-        console.log(response);
+        console.log("여기",response.data.insertId);
+        setGather_id(response.data.insertId)
       });
   }
   const [num, setNum] = useState(2);
@@ -128,6 +148,20 @@ function BoardWrite_party() {
             </textarea>
           </div>
         </div>
+        <div className={styles.buttonBox}>
+        <button
+        className={gatherSelect=='1' ? styles.buttonActive : styles.buttonInactive}
+        onClick={()=>setGatherSelect('1')}
+      >
+        기존 모임
+      </button>
+      <button
+        className={gatherSelect=='0' ? styles.buttonActive : styles.buttonInactive}
+        onClick={()=>setGatherSelect('0')}
+      >새로운 모임</button>
+      </div>
+      {gatherSelect=='0'?
+      <>
         <div className={styles.boardTitle}>
           모임 이름
           <div className={styles.boaderTitleWrite}>
@@ -141,10 +175,7 @@ function BoardWrite_party() {
             </textarea>
           </div>
         </div>
-        <div className={styles.boardFileUpload}>
-          {/*파일 올리고 내리고...*/}
-          <UploadFiles ref={uploadReferenece} />
-        </div>
+        
         <div className={styles.boardDatePicker}>
           <div className={styles.boardStartParty}>
             <span
@@ -181,7 +212,7 @@ function BoardWrite_party() {
               dateFormat={"yyyy년 MM월 dd일"}
               minDate={new Date()}
             ></DatePicker>
-            <div>
+            {/* <div>
               <span
                 style={{
                   marginLeft: 10,
@@ -192,6 +223,7 @@ function BoardWrite_party() {
                 함께 할 인원수
               </span>
             </div>
+            
             <div>
               <select onChange={onChangeHandler} value={num}>
                 {Options.map((item, index) => (
@@ -200,18 +232,33 @@ function BoardWrite_party() {
                   </option>
                 ))}
               </select>
-            </div>
+            </div> */}
           </div>
-        </div>
+          
+       
+        
         <div className={styles.style}>
           <input
             className={styles.styleInput}
             placeholder="여행 스타일을 입력하세요 (ex. 액티비티)"
             value={style}
             onChange={handelStyle}
-          />
+          />&nbsp;&nbsp;
+          <button className={styles.customButton} onClick={()=>insert()}>모임 생성</button>
         </div>
-
+        </div>
+        </>
+        :
+        <div style={{marginTop:'1%',marginLeft:'1%'}}>
+          {data.map((item,index) => (
+            <button onClick = {()=>setGather_id(item.id)}className={gather_id==item.id?styles.buttonActive : styles.buttonInactive} key={item.id}>{item.name}</button>
+          ))}
+        </div>
+        }
+        <div className={styles.boardFileUpload}>
+          {/*파일 올리고 내리고...*/}
+          <UploadFiles ref={uploadReferenece} />
+        </div>
         <div className={styles.boardContent}>
           <div>
             <EditorComponent
@@ -222,11 +269,16 @@ function BoardWrite_party() {
         </div>
         <div className="text-center pd12">
           <button
-            className="lf-button primary"
+            style={{marginLeft:'1%'}}
+            // className={"lf-button primary"}
+            className={styles.customButton}
             onClick={() => {
-              if (checked == true) {
-                insert();
+              if(gather_id==null){
+                alert("선택된 모임이 없습니다. 기존 모임을 선택하거나 새로운 모임을 만들어주세요")
               }
+              // if (checked == true) {
+              //   gather_id = insert();
+              // }
               const boardData = {
                 writer: user,
                 title: title,
@@ -239,6 +291,7 @@ function BoardWrite_party() {
                 image: null,
                 number: num,
                 gather_name: name,
+                gather_id: gather_id,
               };
               console.log("테스트중이용~");
               console.log(boardData.start_date);
@@ -266,12 +319,12 @@ function BoardWrite_party() {
           >
             저장
           </button>
-          모임 생성
+          {/* 모임 생성
           <input
             type="checkbox"
             checked={checked}
             onChange={handleCheckboxChange}
-          />
+          /> */}
         </div>
       </div>
     </div>

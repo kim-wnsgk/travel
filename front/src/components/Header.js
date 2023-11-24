@@ -34,7 +34,7 @@ function Header() {
         <div className={styles.menus}>
           <div className={styles.menu}>
             <Link to="/recommand" className={styles.link}>
-              여행지 추천
+              여행지 Random Pick!
             </Link>
           </div>
           <div className={styles.menu}>

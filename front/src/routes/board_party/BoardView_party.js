@@ -4,14 +4,35 @@ import Header from "../../components/Header";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import * as dayjs from "dayjs";
+import Map from "../schedule/MapSchCom";
 
 const BoardView_party = () => {
   const location = useLocation();
   const board_id = location.state.boardData.board_id;
   const board_data = location.state.boardData;
-  const writer = "sls9905";
+  const [user, setUser] = useState();
   const [commentData, setCommentData] = useState([]);
-
+  const [schedule, setSchedule] = useState();
+  useEffect(() => {
+    axios
+      .get(
+        `/gathering/select/gathering-scheduleinfo-id?id=${board_data.gather_id}`
+      ) // URL에 id 추가
+      .then(function (response) {
+        const { data } = response;
+        console.log(data[0]);
+        setSchedule(data[0]); // 데이터를 상태에 설정
+      });
+  }, [board_data]);
+  useEffect(() => {
+    axios
+      .get(`/user/getUser`, { withCredentials: true })
+      .then(function (response) {
+        const { data } = response;
+        setUser(data.user); // 데이터를 상태에 설정
+      });
+  }, [user]);
+  console.log("board_id", board_id)
   function addMem(user) {
     axios
       .get("/gathering/addMem", {
@@ -47,7 +68,7 @@ const BoardView_party = () => {
   const submitComment = () => {
     const commentData = {
       comment: comment,
-      writer: writer,
+      writer: user,
       id: board_id,
     };
     //comment의 내용을 db로 전송 -> 내용을 댓글 리스트에 표현.
@@ -72,18 +93,30 @@ const BoardView_party = () => {
           {dayjs(board_data.regdate).format("YYYY/MM/DD")}
         </div>
         <div className={styles.viewAndWriter}>
-          <div>102 Views</div>
+          <div>{board_data.view_count + 1} Views</div>
           <div className={styles.bar}> </div>
           <div className={styles.writer}>{board_data.writer}</div>
         </div>
         <div className={styles.contentBox}>
+          <div className={styles.mapBox}>
+            <div className={styles.map}>
+              <Map
+                id={board_data?.gather_id}
+                offset={0}
+                date={schedule?.date}
+                name={""}
+              />
+            </div>
+          </div>
           <div>{board_data.content}</div>
         </div>
+
         <div className={styles.comment}>
           <div className={styles.commentBox}>
             <div className={styles.profileArea}>
               여기에 댓글작성하는 본인 아이디
             </div>
+
             <div className={styles.writeArea}>
               <div className={styles.wirteAreaInner}>
                 <textarea
@@ -107,7 +140,7 @@ const BoardView_party = () => {
               <div className={styles.commentBox}>
                 <div className={styles.commentWriterBox}>
                   <span className={styles.commentWriter}>{p.writer}</span>
-                  {board_data.writer === writer ? (
+                  {board_data.writer === user ? (
                     <button className={styles.commentAddParty} onClick={() => addMem(p.writer)}>
                       모임원 추가
                     </button>

@@ -208,9 +208,9 @@ function Map() {
                     (points[index].Ma + points[index - 1].Ma) / 2,
                     (points[index].La + points[index - 1].La) / 2
                   );
-                  var customOv = `<div style="margin:auto;background-color:white;border:1px solid black"><span class="left"></span><span class="center">시간 : ${Math.ceil(
+                  var customOv = `<div style="margin:auto;background-color:white;border:1px solid black"><span class="left"></span><span class="center"> 이동거리 : ${Math.ceil(
                     results[index - 1][0] / 1000
-                  )}km<br>이동거리 : ${
+                  )}km<br>시간 : ${
                     Math.ceil(results[index - 1][1] / 360000) / 10
                   }시간</span><span class="right"></span></div>`;
                   var customOverlay = new kakao.maps.CustomOverlay({

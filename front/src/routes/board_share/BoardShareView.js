@@ -204,7 +204,7 @@ const BoardShareView = () => {
           {dayjs(board_data.regdate).format("YYYY/MM/DD")}
         </div>
         <div className={styles.viewAndWriter}>
-          <div>102 Views</div>
+          <div>{board_data.view_count+1} Views</div>
           <div className={styles.bar}> </div>
           <div className={styles.writer}>{board_data.writer}</div>
         </div>
