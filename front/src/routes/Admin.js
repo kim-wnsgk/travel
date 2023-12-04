@@ -95,46 +95,45 @@ function Admin() {
   const addCoordinate = () => {
     axios.get("/data/addCoordinate").then(function (response) {
       console.log(JSON.parse(response.data).documents[0]);
-      console.log(Object.keys(response.data))
+      console.log(Object.keys(response.data));
     });
-  }
-  if (!(adminList.includes(user))) {
+  };
+  if (!adminList.includes(user)) {
     return (
       <>
         <div>접근 거부 {user}</div>
         <button onClick={() => navigate(-1)}>뒤로가기</button>
       </>
-    )
-  }
-  else return (
-    <div>
-      <Header />
+    );
+  } else
+    return (
       <div>
-        <button onClick={() => insertData()}>data 삽입</button>
-        <button onClick={() => showData()}>data 출력</button>
-        <button onClick={() => initData()}>data 초기화</button>
-        <button onClick={() => addCoordinate()}>좌표 추가</button>
+        <Header />
+        <div>
+          <button onClick={() => insertData()}>data 삽입</button>
+          <button onClick={() => showData()}>data 출력</button>
+          <button onClick={() => initData()}>data 초기화</button>
+          <button onClick={() => addCoordinate()}>좌표 추가</button>
+        </div>
+        <div>
+          <button onClick={() => insertFestival()}>festival 삽입</button>
+          <button onClick={() => showFestival()}>festival 출력</button>
+          <button onClick={() => initFestival()}>festival 초기화</button>
+        </div>
+        <div>
+          <button
+            onClick={() => {
+              const response = axios.get(
+                `https://apis.data.go.kr/B551011/KorService1/searchFestival1?serviceKey=${API_KEY}&numOfRows=1000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&eventStartDate=${20230511}`
+              );
+              const resData = response.data.response.body.items.item;
+            }}
+          >
+            분류 조회
+          </button>
+        </div>
       </div>
-      <div>
-        <button onClick={() => insertFestival()}>festival 삽입</button>
-        <button onClick={() => showFestival()}>festival 출력</button>
-        <button onClick={() => initFestival()}>festival 초기화</button>
-
-      </div>
-      <div>
-        <button
-          onClick={() => {
-            const response = axios.get(
-              `https://apis.data.go.kr/B551011/KorService1/searchFestival1?serviceKey=${API_KEY}&numOfRows=1000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&eventStartDate=${20230511}`
-            );
-            const resData = response.data.response.body.items.item;
-          }}
-        >
-          분류 조회
-        </button>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default Admin;

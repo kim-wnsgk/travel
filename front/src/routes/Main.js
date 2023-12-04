@@ -49,7 +49,6 @@ function Main() {
         const session = response.data;
         console.log(session);
         setUser(session.user);
-
       });
   }, []);
   const [data, setData] = useState({});
@@ -186,11 +185,15 @@ function Main() {
   const [page2, setPage2] = useState(1);
   const [page, setPage] = useState(1);
   const [items] = useState(7);
+  const [items2] = useState(7);
 
   const handlePageChange = (page) => {
     setPage(page);
   };
 
+  const handlePageChange2 = (page2) => {
+    setPage(page2);
+  };
   ////////
   return (
     <div className={styles.container}>
@@ -322,18 +325,18 @@ function Main() {
                     <div className={styles.line2}></div>
                   </Link>
                 ))}
-                <div className={styles.PaginationBox}>
-                  <Pagination
-                    className={styles.Pagination}
-                    activePage={page}
-                    itemsCountPerPage={items}
-                    totalItemsCount={boardFreeData.length - 1}
-                    pageRangeDisplayed={5}
-                    onChange={handlePageChange}
-                    prevPageText={"<"}
-                    nextPageText={">"}
-                  ></Pagination>
-                </div>
+              </div>
+              <div className={styles.PaginationBox}>
+                <Pagination
+                  className={styles.Pagination}
+                  activePage={page}
+                  itemsCountPerPage={items}
+                  totalItemsCount={boardFreeData.length - 1}
+                  pageRangeDisplayed={5}
+                  onChange={handlePageChange}
+                  prevPageText={"<"}
+                  nextPageText={">"}
+                ></Pagination>
               </div>
             </div>
             <div className={styles.boardParty}>
@@ -356,33 +359,29 @@ function Main() {
                     <div className={styles.line2}></div>
                   </Link>
                 ))}
-                <div className={styles.PaginationBox}>
-                  <Pagination
-                    className={styles.Pagination}
-                    activePage={page}
-                    itemsCountPerPage={items}
-                    totalItemsCount={boardPartyData.length - 1}
-                    pageRangeDisplayed={5}
-                    onChange={handlePageChange}
-                    prevPageText={"<"}
-                    nextPageText={">"}
-                  ></Pagination>
-                </div>
+              </div>
+              <div className={styles.PaginationBox}>
+                <Pagination
+                  className={styles.Pagination}
+                  activePage={page2}
+                  itemsCountPerPage={items2}
+                  totalItemsCount={boardPartyData.length - 1}
+                  pageRangeDisplayed={5}
+                  onChange={handlePageChange2}
+                  prevPageText={"<"}
+                  nextPageText={">"}
+                ></Pagination>
               </div>
             </div>
           </div>
         </div>
         <div className={styles.floatingContainer}>
-
-        {
-          user ? 
+          {user ? (
             <div className={styles.floatingBanner}>
               <Floating />
             </div>
-          :undefined
-        }
+          ) : undefined}
         </div>
-
       </div>
     </div>
   );

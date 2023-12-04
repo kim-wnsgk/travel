@@ -34,7 +34,7 @@ function Header() {
         <div className={styles.menus}>
           <div className={styles.menu}>
             <Link to="/recommand" className={styles.link}>
-              여행지 추천
+              여행지 Random Pick!
             </Link>
           </div>
           <div className={styles.menu}>
@@ -69,9 +69,7 @@ function Header() {
         <CgProfile size={"50px"} color="rgb(72, 72, 72)" cursor="pointer" />
         <div className={styles.profileSelector}>
           <div className={styles.profileSelect}>
-            {islogin ? (
-              <Link to="/mypage">내정보</Link>
-            ) : undefined}
+            {islogin ? <Link to="/mypage">내정보</Link> : undefined}
           </div>
           <div className={styles.profileSelect}>
             {islogin ? (
@@ -96,7 +94,7 @@ function Header() {
               <Link to="/register">
                 <div>회원가입</div>
               </Link>
-            ):undefined}
+            ) : undefined}
           </div>
         </div>
       </div>

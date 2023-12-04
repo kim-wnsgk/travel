@@ -16,7 +16,7 @@ function BoardWrite_party() {
   const navigate = useNavigate();
   const uploadReferenece = React.createRef();
   const [checked, setChecked] = useState(false);
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState("");
   const date = "22-05-05"; //테스트용 데이트
   const [name, setName] = useState("");
   const [dateDifference, setDateDifference] = useState(0);
@@ -44,7 +44,7 @@ function BoardWrite_party() {
         const files = result;
         alert("저장 완료");
       })
-      .catch(function (err) { });
+      .catch(function (err) {});
   }
 
   const [boaderTitleText, setBoaderTitleText] = useState("");
@@ -75,7 +75,7 @@ function BoardWrite_party() {
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [style, setStyle] = useState('');
+  const [style, setStyle] = useState("");
 
   function insert() {
     const oneDay = 24 * 60 * 60 * 1000; // 1일의 밀리초 수
@@ -110,6 +110,17 @@ function BoardWrite_party() {
     { key: 7, value: "7인" },
     { key: 8, value: "8인" },
   ];
+
+  function removePTags(inputString) {
+    // p태그 삭제용
+    var outputString = inputString
+      .replace(/<p>/g, "")
+      .replace(/<\/p>/g, "")
+      .replace(/<br>/g, "");
+
+    return outputString;
+  }
+
   console.log(name);
   return (
     <div className={styles.mainPageContainer}>
@@ -230,7 +241,7 @@ function BoardWrite_party() {
               const boardData = {
                 writer: user,
                 title: title,
-                content: desc,
+                content: removePTags(desc),
                 regdate: date,
                 start_date: dayjs(startDate).format("YYYY/MM/DD HH:mm:ss"),
                 end_date: dayjs(endDate).format("YYYY/MM/DD HH:mm:ss"),

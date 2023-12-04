@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const router = express.Router();
 const cors = require("cors");
+const router = express.Router();
 var request = require("request");
 router.use(cors());
 const connection = require("../db");

@@ -11,6 +11,8 @@ const BoardView_party = () => {
   const board_data = location.state.boardData;
   const writer = "sls9905";
   const [commentData, setCommentData] = useState([]);
+  const [user, setUser] = useState();
+  const [isLogin, setIsLogin] = useState();
 
   function addMem(user) {
     axios
@@ -21,8 +23,7 @@ const BoardView_party = () => {
           admin: board_data.writer,
         },
       })
-      .then(function (response) {
-      });
+      .then(function (response) {});
   }
 
   useEffect(() => {
@@ -37,7 +38,24 @@ const BoardView_party = () => {
           setCommentData(response.data);
         });
     }
+    async function getUser() {
+      try {
+        const testData = axios
+          .get("/user/getUser", {
+            withCredentials: true,
+          })
+          .then(function (response) {
+            const session = response.data;
+            //console.log(session.isLogin);
+            setUser(session.user);
+            setIsLogin(session.isLogin);
+          });
+      } catch (error) {
+        console.log("Error fetching profile:", error);
+      }
+    }
     fetchData();
+    getUser();
   }, []);
   const [comment, setComment] = useState("");
 
@@ -47,7 +65,7 @@ const BoardView_party = () => {
   const submitComment = () => {
     const commentData = {
       comment: comment,
-      writer: writer,
+      writer: user,
       id: board_id,
     };
     //comment의 내용을 db로 전송 -> 내용을 댓글 리스트에 표현.
@@ -82,7 +100,7 @@ const BoardView_party = () => {
         <div className={styles.comment}>
           <div className={styles.commentBox}>
             <div className={styles.profileArea}>
-              여기에 댓글작성하는 본인 아이디
+              {!isLogin ? user : "로그인 후 댓글을 작성해보세요."}
             </div>
             <div className={styles.writeArea}>
               <div className={styles.wirteAreaInner}>
@@ -96,9 +114,13 @@ const BoardView_party = () => {
               </div>
             </div>
             <div className={styles.uploadBox}>
-              <button className={styles.uploadButton} onClick={submitComment}>
-                등록
-              </button>
+              {!isLogin ? (
+                <button className={styles.uploadButton} onClick={submitComment}>
+                  등록
+                </button>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <div className={styles.commentList}>댓글 리스트</div>
@@ -107,8 +129,11 @@ const BoardView_party = () => {
               <div className={styles.commentBox}>
                 <div className={styles.commentWriterBox}>
                   <span className={styles.commentWriter}>{p.writer}</span>
-                  {board_data.writer === writer ? (
-                    <button className={styles.commentAddParty} onClick={() => addMem(p.writer)}>
+                  {board_data.writer === user ? (
+                    <button
+                      className={styles.commentAddParty}
+                      onClick={() => addMem(p.writer)}
+                    >
                       모임원 추가
                     </button>
                   ) : null}

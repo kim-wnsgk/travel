@@ -66,6 +66,17 @@ function BoardWrite() {
     setDesc(value);
     console.log(desc);
   }
+
+  function removePTags(inputString) {
+    // p태그 삭제용
+    var outputString = inputString
+      .replace(/<p>/g, "")
+      .replace(/<\/p>/g, "")
+      .replace(/<br>/g, "");
+
+    return outputString;
+  }
+
   return (
     <div className={styles.mainPageContainer}>
       <Header />
@@ -103,7 +114,7 @@ function BoardWrite() {
                 const boardData = {
                   writer: user,
                   title: title,
-                  content: desc,
+                  content: removePTags(desc),
                   regdate: date,
                   updatedate: null,
                   viewcount: null,
