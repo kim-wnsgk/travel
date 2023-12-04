@@ -12,6 +12,19 @@ const BoardView_party = () => {
   const board_data = location.state.boardData;
   const [user, setUser] = useState();
   const [commentData, setCommentData] = useState([]);
+  const [schedule, setSchedule] = useState();
+  const [isLogin, setIsLogin] = useState('');
+  useEffect(() => {
+    axios
+      .get(
+        `/gathering/select/gathering-scheduleinfo-id?id=${board_data.gather_id}`
+      ) // URL에 id 추가
+      .then(function (response) {
+        const { data } = response;
+        console.log(data[0]);
+        setSchedule(data[0]); // 데이터를 상태에 설정
+      });
+  }, [board_data]);
 
   function addMem(user) {
     axios
@@ -140,7 +153,7 @@ const BoardView_party = () => {
               <div className={styles.commentBox}>
                 <div className={styles.commentWriterBox}>
                   <span className={styles.commentWriter}>{p.writer}</span>
-                  {board_data.writer === writer ? (
+                  {board_data.writer === user ? (
                     <button
                       className={styles.commentAddParty}
                       onClick={() => addMem(p.writer)}
