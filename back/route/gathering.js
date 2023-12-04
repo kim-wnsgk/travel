@@ -221,7 +221,7 @@ router.get("/drop", function (req, res) {
 
 router.get("/addMem", function (req, res) {
   connection.query(
-    `INSERT INTO gathering (name, user, admin) VALUES ('${req.query.name}', '${req.query.user}', '${req.query.admin}');`,
+    `INSERT INTO gathering_members (name, user, admin) VALUES ('${req.query.name}', '${req.query.user}', '${req.query.admin}');`,
     function (error, results, fields) {
       if (error) {
         console.log(error);

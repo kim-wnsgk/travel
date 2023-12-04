@@ -81,6 +81,7 @@
 }
 
 .map {
+  border-radius: 10px;
   flex: 3;
   height: 100%;
   margin: 20px;

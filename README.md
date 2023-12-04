@@ -19,7 +19,7 @@
 
 ## 사용 기술
 - Front-end - React.js
-- Bacn-end - Node.js (express), MYSQL
+- Back-end - Node.js (express), MYSQL
 - Open source API - 한국관광공사 오픈 api
 
 ## LICENSE

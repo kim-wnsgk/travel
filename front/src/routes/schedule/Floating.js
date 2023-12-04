@@ -40,7 +40,7 @@ function Floating() {
     }
     axios
       .get("/schedule/getGathering",{
-        params:{ id : sch[selected].id
+        params:{ id : sch[selected]?.id
       }})
       .then(function (response) {
         setCurstyles(response.data[0].style)

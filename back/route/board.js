@@ -162,11 +162,12 @@ router.post("/BoardWrite_party", (req, res) => {
   const number = req.body.number;
   const sendData = { isSuccess: "" };
   const name = req.body.gather_name;
+  const gather_id = req.body.gather_id;
 
   if (writer && title && content && regdate) {
     connection.query(
-      "INSERT INTO board_party (writer, title, content,  start_date, end_date, number,regdate,gather_name) VALUES(?,?,?,?,?,?,CURRENT_TIMESTAMP,?)",
-      [writer, title, content, start_date, end_date, number, name]
+      "INSERT INTO board_party (writer, title, content,  start_date, end_date, number,regdate,gather_name,gather_id) VALUES(?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?)",
+      [writer, title, content, start_date, end_date, number, name,gather_id]
       // 여기 에러남 알아봐야함 ㅠㅠ
       // function (error, data) {
       //   if (error) throw error;

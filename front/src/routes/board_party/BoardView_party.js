@@ -4,15 +4,14 @@ import Header from "../../components/Header";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import * as dayjs from "dayjs";
+import Map from "../schedule/MapSchCom";
 
 const BoardView_party = () => {
   const location = useLocation();
   const board_id = location.state.boardData.board_id;
   const board_data = location.state.boardData;
-  const writer = "sls9905";
-  const [commentData, setCommentData] = useState([]);
   const [user, setUser] = useState();
-  const [isLogin, setIsLogin] = useState();
+  const [commentData, setCommentData] = useState([]);
 
   function addMem(user) {
     axios
@@ -90,18 +89,30 @@ const BoardView_party = () => {
           {dayjs(board_data.regdate).format("YYYY/MM/DD")}
         </div>
         <div className={styles.viewAndWriter}>
-          <div>102 Views</div>
+          <div>{board_data.view_count + 1} Views</div>
           <div className={styles.bar}> </div>
           <div className={styles.writer}>{board_data.writer}</div>
         </div>
         <div className={styles.contentBox}>
+          <div className={styles.mapBox}>
+            <div className={styles.map}>
+              <Map
+                id={board_data?.gather_id}
+                offset={0}
+                date={schedule?.date}
+                name={""}
+              />
+            </div>
+          </div>
           <div>{board_data.content}</div>
         </div>
+
         <div className={styles.comment}>
           <div className={styles.commentBox}>
             <div className={styles.profileArea}>
               {!isLogin ? user : "로그인 후 댓글을 작성해보세요."}
             </div>
+
             <div className={styles.writeArea}>
               <div className={styles.wirteAreaInner}>
                 <textarea
@@ -129,7 +140,7 @@ const BoardView_party = () => {
               <div className={styles.commentBox}>
                 <div className={styles.commentWriterBox}>
                   <span className={styles.commentWriter}>{p.writer}</span>
-                  {board_data.writer === user ? (
+                  {board_data.writer === writer ? (
                     <button
                       className={styles.commentAddParty}
                       onClick={() => addMem(p.writer)}

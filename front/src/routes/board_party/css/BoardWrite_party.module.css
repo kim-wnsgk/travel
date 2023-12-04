@@ -57,6 +57,7 @@
 .boardTitleWrite {
 }
 .boardFileUpload {
+  margin-top: 1%;
   padding-left: 10px;
 }
 .boardDatePicker {
@@ -68,4 +69,68 @@
   font-size: 13px;
   margin-top: 6px;
   margin-right: 20px;
+}
+.buttonBox{
+  display: flex;
+  margin-left: 1%;
+  justify-content: flex-start;
+  width:30%;
+  margin-top:1%;
+}
+.buttonActive {
+  flex:1;
+  background-color: #007bff;
+  color: #fff; 
+  width: 10%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px; 
+}
+
+.buttonActive:hover {
+  background-color: #0056b3; 
+}
+
+
+.buttonInactive {
+  flex:1;
+  width: 10%;
+  background-color: #ced4da;
+  color: #6c757d;
+  padding: 10px 20px; 
+  border: none;
+  border-radius: 5px; 
+  cursor: pointer;
+  margin-right: 10px; 
+}
+.buttonInactive:hover{
+  background-color: #aaacac;
+}
+.styleInput {
+  padding: 10px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  font-size: 14px;
+}
+
+.styleInput:focus {
+  outline: none; 
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+.customButton {
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  cursor: pointer;
+  background-color: #007bff;
+  color: #ffffff;
+  transition: background-color 0.3s ease; 
+}
+
+.customButton:hover {
+  background-color: #0056b3; 
 }
